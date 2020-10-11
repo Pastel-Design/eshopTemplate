@@ -1,0 +1,12 @@
+<?php if (isset($message)) : ?>
+<h3><?=$message?></h3>
+<?php endif; ?>
+    <?php foreach ($products as $product) : ?>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="product/<?= $product["dash_name"] ?>"><?= $product["name"] ?></a></h5>
+                <p class="card-text"><?= $product["shortdesc"] ?></p>
+                <p class="card-subtitle"><?= $product["price"] ?> Kč</p>
+            </div>
+        </div>
+    <?php endforeach; ?>

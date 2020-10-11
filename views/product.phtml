@@ -1,0 +1,7 @@
+<h2>
+    <?=$product["name"]?>
+</h2>
+<p><?=$product["longdesc"]?></p>
+<h6>Cena <?=$product["price"]?> Kč</h6>
+<h6>Cena bez dph <?=($product["price"]-($product["price"]*($product["dph"]/100)))?> Kč</h6>
+<h6>hodnocení: <?=$product["rating"]?></h6>

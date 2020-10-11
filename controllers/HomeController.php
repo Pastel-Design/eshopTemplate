@@ -1,13 +1,13 @@
 <?php
 class HomeController extends Controller
 {
-    public function process($parametry)
+    public function process($params)
     {
-        $this->hlavicka = array(
+        $this->head = array(
             'title' => "Domovská stránka",
             'keywords' => "eshop",
-            'popis' => "Domovská stránka eshopu Zlatá Loď",
+            'description' => "Domovská stránka eshopu Zlatá Loď",
         );
-        $this->pohled = 'home';
+        $this->view = 'home';
     }
 }

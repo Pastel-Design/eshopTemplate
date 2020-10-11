@@ -4,7 +4,7 @@ abstract class Controller
 
     protected $data = array();
     protected $view = "";
-    protected $hlavicka = array('title' => '', 'keywords' => '', 'popis' => '');
+    protected $head = array('title' => '', 'keywords' => '', 'description' => '');
 
     abstract function process($params);
 

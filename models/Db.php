@@ -1,45 +1,45 @@
 <?php
 class Db
 {
-    private static $spojeni;
-    private static $nastaveni = array(
+    private static $connection;
+    private static $settings = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         PDO::ATTR_EMULATE_PREPARES => false,
     );
 
-    public static function pripoj($host, $uzivatel, $heslo, $databaze)
+    public static function connect($host, $user, $password, $database)
     {
-        if (!isset(self::$spojeni)) {
-            self::$spojeni = @new PDO(
-                "mysql:host=$host;dbname=$databaze",
-                $uzivatel,
-                $heslo,
-                self::$nastaveni
+        if (!isset(self::$connection)) {
+            self::$connection = @new PDO(
+                "mysql:host=$host;dbname=$database",
+                $user,
+                $password,
+                self::$settings
             );
         }
     }
-    public static function dotazJeden($dotaz, $parametry = array())
+    public static function requestSingle($sql, $params = array())
     {
-        $navrat = self::$spojeni->prepare($dotaz);
-        $navrat->execute($parametry);
-        return $navrat->fetch();
+        $result = self::$connection->prepare($sql);
+        $result->execute($params);
+        return $result->fetch();
     }
-    public static function dotazVsechny($dotaz, $parametry = array())
+    public static function requestMultiple($sql, $params = array())
     {
-        $navrat = self::$spojeni->prepare($dotaz);
-        $navrat->execute($parametry);
-        return $navrat->fetchAll();
+        $result = self::$connection->prepare($sql);
+        $result->execute($params);
+        return $result->fetchAll();
     }
-    public static function dotazSamotny($dotaz, $parametry = array())
+    public static function requestUnit($sql, $params = array())
     {
-        $vysledek = self::dotazJeden($dotaz, $parametry);
-        return $vysledek[0];
+        $result = self::requestSingle($sql, $params);
+        return $result[0];
     }
-    public static function dotaz($dotaz, $parametry = array())
+    public static function requestAffect($sql, $params = array())
     {
-        $navrat = self::$spojeni->prepare($dotaz);
-        $navrat->execute($parametry);
-        return $navrat->rowCount();
+        $result = self::$connection->prepare($sql);
+        $result->execute($params);
+        return $result->rowCount();
     }
 }
