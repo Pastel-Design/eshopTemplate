@@ -36,4 +36,8 @@ abstract class Controller
         } else
             return $x;
     }
+    public function basicToDash($argument){
+        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
+        return preg_replace("[\W+]","-",$transliterator->transliterate($argument));
+    }
 }
