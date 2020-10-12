@@ -27,7 +27,8 @@
                         <?php if (!empty($subCategories[$mainCategory["id"]])) : ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown<?= $mainCategory["name"] ?>" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <?= $mainCategory["name"] ?>
+                                <img src="images/category/thumbnail/<?=$mainCategory["image"]?>" alt="" height="50" width="50">    
+                                <?= $mainCategory["name"] ?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown<?= $mainCategory["name"] ?>">
                                 <?php foreach ($subCategories[$mainCategory["id"]] as $subCategory) : ?>
