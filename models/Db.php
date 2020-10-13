@@ -23,13 +23,13 @@ class Db
     {
         $result = self::$connection->prepare($sql);
         $result->execute($params);
-        return $result->fetch();
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
     public static function requestMultiple($sql, $params = array())
     {
         $result = self::$connection->prepare($sql);
         $result->execute($params);
-        return $result->fetchAll();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function requestUnit($sql, $params = array())
     {

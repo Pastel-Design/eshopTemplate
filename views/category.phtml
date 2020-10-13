@@ -4,6 +4,7 @@
     <?php foreach ($products as $product) : ?>
         <div class="card">
             <div class="card-body">
+                <div class="product-main-image" style="background-image:url(images/product/thumbnail/<?=$product["main_image"]?>)"></div>
                 <h5 class="card-title"><a href="product/<?= $product["dash_name"] ?>"><?= $product["name"] ?></a></h5>
                 <p class="card-text"><?= $product["shortdesc"] ?></p>
                 <p class="card-subtitle"><?= $product["price"] ?> Kč</p>

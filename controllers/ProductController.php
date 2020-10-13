@@ -3,7 +3,6 @@ class ProductController extends Controller
 {
     public function process($params)
     {
-        // Vytvoření instance modelu, který nám umožní pracovat s články
         $ProductsManager = new ProductsManager();
 
         $product = $ProductsManager->getProductInfo($params[0]);

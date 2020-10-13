@@ -3,10 +3,9 @@ class CategoryController extends Controller
 {
     public function process($params)
     {
-        // Vytvoření instance modelu, který nám umožní pracovat s články
-        $CategoriesManager = new CategoriesManager();
+        $productsManager = new ProductsManager;
 
-        $products = $CategoriesManager->getCategoryProducts($params[0]);
+        $products = $productsManager->getCategoryProducts($params[0]);
         if (empty($products)) {
             $this->head = array(
                 'title' => "Kategorie " . $params[0],

@@ -1,0 +1,8 @@
+.product-main-image{
+    display: block;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 120px;
+    width: 120px;
+}

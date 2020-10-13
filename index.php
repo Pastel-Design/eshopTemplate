@@ -3,7 +3,6 @@ mb_internal_encoding("UTF-8");
 
 function autoloadFunction($class)
 {
-    // Končí název třídy řetězcem "Controller" ?
     if (preg_match('/Controller$/', $class))
         require("controllers/" . $class . ".php");
     else

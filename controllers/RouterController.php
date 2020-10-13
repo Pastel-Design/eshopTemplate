@@ -23,7 +23,6 @@ class RouterController extends Controller
         $this->data['keywords'] = $this->controller->head['keywords'];
         $this->data['mainCategories'] = $CategoriesManager->getMainCategories();
         $this->data['subCategories'] = $CategoriesManager->getAllSubcategories();
-        // Nastavení hlavní šablony
         $this->view = 'layout';
     }
     private function parseURL($url)
