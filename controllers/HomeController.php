@@ -1,6 +1,9 @@
 <?php
 class HomeController extends Controller
 {
+    /**
+     * výchozí domácí stránka
+     */
     public function process($params)
     {
         $this->head = array(

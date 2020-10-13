@@ -1,6 +1,9 @@
 <?php
 class ErrorController extends Controller
 {
+    /**
+     * nastavování chybových hlášení podle příslušného chybového kodu
+     */
     public function process($params)
     {
         if (!empty($params[0])) {
