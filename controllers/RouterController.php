@@ -1,8 +1,6 @@
 <?php
-
-use MatthiasMullie\Minify;
-
 require("vendor/autoload.php");
+use MatthiasMullie\Minify;
 
 class RouterController extends Controller
 {
@@ -26,8 +24,7 @@ class RouterController extends Controller
         if (empty($parsedURL[0]))
             $this->reroute('home');
         //Jako aktuálně obsluhovaný kontroler se nastaví první parametr z URL v Camel notaci aby seděl název s případným názvem souboru 
-        $controllerName = $this->dashToCamel(array_shift($parsedURL));
-        $controllerClass =  $controllerName . 'Controller';
+        $controllerClass =  $this->dashToCamel(array_shift($parsedURL)) . 'Controller';
         //Pokud soubor s názvem kontroleru existuje, nastaví se název třídy kontroleru jako obsluhovaný kontroler do vlastnosti objektu směrovače
         if (file_exists('controllers/' . $controllerClass . '.php'))
             $this->controller = new $controllerClass;
@@ -35,16 +32,18 @@ class RouterController extends Controller
         else
             $this->reroute('error/404');
 
-        //Knihovna Minify zminimalizuje css a js soubor pro daný pohled
-        $minifier = new Minify\CSS;
-        $minifier->add("styles/".$controllerName.".css","styles/style.css");
-        $minifier->minify("styles/minified/".$controllerName.".min.css");
-        $minifier = new Minify\CSS;
-        $minifier->add("scripts/".$controllerName.".js","scripts/script.js");
-        $minifier->minify("scripts/minified/".$controllerName.".min.js");
         //Vybraný kontroler si zpracuje parametry z URL
         $this->controller->process($parsedURL);
-        //do hlavičky se nastaví obsah hlavičky tak jak je vytvořil kontroler 
+        $controllerName = $this->controller->view;
+        //Knihovna Minify zminimalizuje css a js soubor pro daný pohled, pro více info https://packagist.org/packages/matthiasmullie/minify
+        $minifier = new Minify\CSS;
+        $minifier->add("styles/" . $controllerName . ".css", "styles/style.css");
+        $minifier->minify("styles/minified/" . $controllerName . ".min.css");
+        $minifier = new Minify\CSS;
+        $minifier->add("scripts/" . $controllerName . ".js", "scripts/script.js");
+        $minifier->minify("scripts/minified/" . $controllerName . ".min.js");
+
+        //do hlavičky se nastaví obsah hlavičky tak jak je vytvořil kontroler
         $this->data['title'] = $this->controller->head['title'];
         $this->data['description'] = $this->controller->head['description'];
         $this->data['keywords'] = $this->controller->head['keywords'];

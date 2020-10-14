@@ -11,6 +11,11 @@ class HomeController extends Controller
             'keywords' => "eshop",
             'description' => "Domovská stránka eshopu Zlatá Loď",
         );
+        $this->data["uploadMessage"] = "";
+
+        $this->data["uploadMessage"] = FileUpload::uploadSingleFile()[1];
+
+
         $this->view = 'home';
     }
 }

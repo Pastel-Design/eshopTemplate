@@ -1,4 +1,5 @@
 <?php
+$config = include('configs/config.php');
 mb_internal_encoding("UTF-8");
 //Funkce pro autoload třídy, php ji používá automaticky díky "zaregistrování" níže
 function autoloadFunction($class)
@@ -13,7 +14,7 @@ function autoloadFunction($class)
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
 //připojení k db
-Db::connect("127.0.0.1", "root", "", "mydb");
+Db::connect($config->host, $config->username, $config->pass, $config->database);
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu
 $router = new RouterController();
 $router->process(array($_SERVER['REQUEST_URI']));
