@@ -14,7 +14,7 @@ function autoloadFunction($class)
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
 //připojení k db
-Db::connect($config->host, $config->username, $config->pass, $config->database);
+Db::connect($config->db->host, $config->db->username, $config->db->pass, $config->db->database);
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu
 $router = new RouterController();
 $router->process(array($_SERVER['REQUEST_URI']));
