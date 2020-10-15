@@ -2,5 +2,18 @@
     <h1>Domovská stránka</h1>
 </header>
 <section>
+    <div class="custom-file">
+        <form method="post" enctype="multipart/form-data">
+            <input id="my-input" class="custom-file-input" type="file" name="upfile[]" multiple>
+            <label for="my-input" class="custom-file-label">single multiple</label>
+            <input type="submit" value="Upload Image" name="submit">
+        </form>
+        <form method="post" enctype="multipart/form-data">
+            <input id="my-input" class="custom-file-input" type="file" name="upfile">
+            <input id="my-input2" class="custom-file-input" type="file" name="upfile2">
+            <label for="my-input" class="custom-file-label">multiple singles</label>
+            <input type="submit" value="Upload Image" name="submit">
+        </form>
+    </div>
 
 </section>
