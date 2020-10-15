@@ -37,7 +37,7 @@ class FileUpload
                 $finfo = new finfo(FILEINFO_MIME_TYPE);
                 if (false === $ext = array_search(
                     $finfo->file($_FILES[$upfileName]['tmp_name']),
-                    $config->mimeTypes,
+                    $config->FileUpload,
                     true
                 )) {
                     throw new RuntimeException('Invalid file format.', 1);

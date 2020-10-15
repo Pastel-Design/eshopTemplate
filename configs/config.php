@@ -1,9 +1,9 @@
 <?php
 return (object) array(
 
-    "db" => include("Db.php"),
+    "Db" => include("Db.php"),
 
-    "mimeTypes" => include("mimeTypes.php"),
+    "FileUpload" => include("FileUpload.php"),
 
-    "imageResolutions" => include("imageResolutions.php"),
+    "ImageOptimizer" => include("ImageOptimizer.php"),
 );

@@ -6,7 +6,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class ImageOptimizer
 {
     /**
-     * Upraví obrázek do výchozího rozlišení definovaného v config file imageResolutions.php
+     * Upraví obrázek do výchozího rozlišení definovaného v config file ImageOptimizer.php
      *
      * @param  $imgURL url obrázku
      *
@@ -20,16 +20,16 @@ class ImageOptimizer
         $height = $img->height();
         $width = $img->width();
         if ($width > $height) { //na šířku
-            if ($width > $config->imageResolutions->defaultImageWidth) {
-                $img->resize($config->imageResolutions->defaultImageWidth, null, function ($constraint) {
+            if ($width > $config->ImageOptimizer->defaultImageWidth) {
+                $img->resize($config->ImageOptimizer->defaultImageWidth, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             } else {
                 $img->save($imgURL);
             }
         } else { //na výšku
-            if ($height > $config->imageResolutions->defaultImageHeight) {
-                $img->resize(null, $config->imageResolutions->defaultImageHeight, function ($constraint) {
+            if ($height > $config->ImageOptimizer->defaultImageHeight) {
+                $img->resize(null, $config->ImageOptimizer->defaultImageHeight, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             } else {
@@ -39,7 +39,7 @@ class ImageOptimizer
         $img->save($imgURL);
     }
     /**
-     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file imageResolutions.php do složky thumbnails
+     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file ImageOptimizer.php do složky thumbnails
      *
      * @param $imgURL
      *
@@ -54,16 +54,16 @@ class ImageOptimizer
         $height = $img->height();
         $width = $img->width();
         if ($width > $height) { //na šířku
-            if ($width > $config->imageResolutions->thumbnailWidth) {
-                $img->resize($config->imageResolutions->thumbnailWidth, null, function ($constraint) {
+            if ($width > $config->ImageOptimizer->thumbnailWidth) {
+                $img->resize($config->ImageOptimizer->thumbnailWidth, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             } else {
                 $img->save("images/thumbnails/" . $imgName);
             }
         } else { //na výšku
-            if ($height > $config->imageResolutions->thumbnailHeight) {
-                $img->resize(null, $config->imageResolutions->thumbnailHeight, function ($constraint) {
+            if ($height > $config->ImageOptimizer->thumbnailHeight) {
+                $img->resize(null, $config->ImageOptimizer->thumbnailHeight, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             } else {
