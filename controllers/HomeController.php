@@ -11,7 +11,7 @@ class HomeController extends Controller
             'keywords' => "eshop",
             'description' => "Domovská stránka eshopu Zlatá Loď",
         );
-        FileUpload::uploadFiles();
+        FileUpload::processFiles();
         var_dump($_FILES);
         $this->view = 'home';
     }
