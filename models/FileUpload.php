@@ -4,14 +4,13 @@ class FileUpload
 {
     static function uploadFiles()
     {
-
         if (count($_FILES) === 1) {
             if (count($_FILES[array_keys($_FILES)[0]]["name"]) === 1) {
                 return self::uploadMultipleInputs();
             } else {
                 return self::uploadSingleInputMultipleFiles();
             }
-        }else{
+        } else {
             return self::uploadMultipleInputs();
         }
     }
@@ -193,7 +192,6 @@ class FileUpload
                 )) {
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
-                var_dump("optimalizuju");
                 ImageOptimizer::defaultImage($fileNameWDir);
                 ImageOptimizer::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
@@ -213,7 +211,6 @@ class FileUpload
                 )) {
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
-                var_dump("optimalizuju");
                 ImageOptimizer::defaultImage($fileNameWDir);
                 ImageOptimizer::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
