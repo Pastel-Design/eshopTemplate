@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+
+<head>
+    <base href="/eshopZaklad" />
+    <meta charset="UTF-8" />
+    <title>{$head['title']}</title>
+    <meta name="description" content="{$head["description"]}" />
+    <meta name="keywords" content="{$head["keywords"]}" />
+    <link rel="stylesheet" href="styles/minified/<?= $css ?>?v=<?= time() ?>" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+    {block head}{/block}
+</head>
+
+<body>
+<header>
+    <nav>
+
+    </nav>
+</header>
+
+<article>
+    {include content}
+</article>
+
+<footer>
+
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+<script src="scripts/minified/<?= $js ?>?v=<?= time() ?>"></script>
+</body>
+
+</html>

@@ -11,6 +11,6 @@ class HomeController extends Controller
             'keywords' => "eshop",
             'description' => "Domovská stránka eshopu Zlatá Loď",
         );
-        $this->view = 'home';
+        $this->view = 'home.latte';
     }
 }

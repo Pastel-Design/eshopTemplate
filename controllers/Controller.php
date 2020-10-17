@@ -1,10 +1,29 @@
 <?php
+
+
 abstract class Controller
 {
     /**Třída kontroleru má vlastnosti data, pohled který se má vypsat v defaultní šabloně a hlavičku kvůli SEO */
     protected $data = array();
     protected $view = "";
     protected $head = array('title' => '', 'keywords' => '', 'description' => '');
+
+    /**
+     * @var $latte
+     * Proměnná pro objekt třídy Latte\Engine
+     */
+    protected $latte;
+
+
+    /**
+     * Controller constructor.
+     */
+    public function __construct()
+    {
+        $this->latte = new Latte\Engine();
+        $this->latte->setTempDirectory('/templates');
+
+    }
 
     /**Definice abstraktní třídy pro ostatní kontrolery které ji dědí */
     abstract function process($params);
@@ -20,9 +39,7 @@ abstract class Controller
     public function writeView()
     {
         if ($this->view) {
-            extract($this->xssSecure($this->data));
-            extract($this->data, EXTR_PREFIX_ALL, ""); /* !neošetřená data s prefixem */
-            require("views/" . $this->view . ".phtml");
+            $this->latte->render($this->view, [$this->head, $this->data]);
         }
     }
 
