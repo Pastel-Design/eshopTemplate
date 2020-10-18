@@ -6,11 +6,9 @@ class HomeController extends Controller
      */
     public function process($params)
     {
-        $this->head = array(
-            'title' => "Domovská stránka",
-            'keywords' => "eshop",
-            'description' => "Domovská stránka eshopu Zlatá Loď",
-        );
-        $this->view = 'home';
+        $this->head['title'] = "Domovská stránka";
+        $this->head['keywords'] = "eshop";
+        $this->head['description'] = "Domovská stránka eshopu Zlatá Loď";
+        $this->setView('home');
     }
 }

@@ -6,7 +6,7 @@ abstract class Controller
     /**Třída kontroleru má vlastnosti data, pohled který se má vypsat v defaultní šabloně a hlavičku kvůli SEO */
     protected $data = array();
     protected $view = "";
-    protected $head = array('title' => '', 'keywords' => '', 'description' => '');
+    protected $head = ['title' => '', 'keywords' => '', 'description' => '', 'css'=>'', 'js'=>''];
 
     /**
      * @var $latte
@@ -22,7 +22,6 @@ abstract class Controller
     {
         $this->latte = new Latte\Engine();
         $this->latte->setTempDirectory('/templates');
-
     }
 
     /**Definice abstraktní třídy pro ostatní kontrolery které ji dědí */
@@ -52,23 +51,13 @@ abstract class Controller
         exit;
     }
     /**
-     * Pro neinicializovanou proměnnou vrátíme null, pro řetězec vrátíme jeho zentitovanou hodnotu, 
-     * pro pole ošetříme rekurzivně všechny jeho prvky, další datové typy vrátíme jak jsou. 
-     * Samotné volání htmlspecialchars() má ještě parametr quotes, aby ošetřoval i jednoduché uvozovky. Je to tak bezpečnější.
+     *Sets value of $this->$view and sets css and js variables
+     * @param String $view
      */
-    private function xssSecure($x = null)
-    {
-        if (!isset($x))
-            return null;
-        elseif (is_string($x))
-            return htmlspecialchars($x, ENT_QUOTES);
-        elseif (is_array($x)) {
-            foreach ($x as $k => $v) {
-                $x[$k] = $this->xssSecure($v);
-            }
-            return $x;
-        } else
-            return $x;
+    public function setView($view){
+        $this->view = $view;
+        $this->head['css'] = $this->view . ".min.css";
+        $this->head['js'] = $this->view . ".min.js";
     }
     /**
      * Funkce pro převedení klasického formátu názvu do pomlčkového formátu

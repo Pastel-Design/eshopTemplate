@@ -39,14 +39,11 @@ class RouterController extends Controller
         $minifier = new Minify\CSS;
         $minifier->add("styles/" . $controllerName . ".css", "styles/style.css");
         $minifier->minify("styles/minified/" . $controllerName . ".min.css");
-        $minifier = new Minify\CSS;
+        $minifier = new Minify\JS;
         $minifier->add("scripts/" . $controllerName . ".js", "scripts/script.js");
         $minifier->minify("scripts/minified/" . $controllerName . ".min.js");
 
         //do hlavičky se nastaví obsah hlavičky tak jak je vytvořil kontroler
-        $this->data['title'] = $this->controller->head['title'];
-        $this->data['description'] = $this->controller->head['description'];
-        $this->data['keywords'] = $this->controller->head['keywords'];
         $this->data['css'] = $controllerName . ".min.css";
         $this->data['js'] = $controllerName . ".min.js";
         //nastavíme základní layout šablonu
