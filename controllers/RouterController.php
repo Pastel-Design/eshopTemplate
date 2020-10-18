@@ -36,12 +36,12 @@ class RouterController extends Controller
         $this->controller->process($parsedURL);
         $controllerName = $this->controller->view;
         //Knihovna Minify zminimalizuje css a js soubor pro daný pohled, pro více info https://packagist.org/packages/matthiasmullie/minify
-        $minifier = new Minify\CSS;
+       /* $minifier = new Minify\CSS;
         $minifier->add("styles/" . $controllerName . ".css", "styles/style.css");
         $minifier->minify("styles/minified/" . $controllerName . ".min.css");
         $minifier = new Minify\CSS;
         $minifier->add("scripts/" . $controllerName . ".js", "scripts/script.js");
-        $minifier->minify("scripts/minified/" . $controllerName . ".min.js");
+        $minifier->minify("scripts/minified/" . $controllerName . ".min.js");*/
 
         //do hlavičky se nastaví obsah hlavičky tak jak je vytvořil kontroler
         $this->data['title'] = $this->controller->head['title'];
@@ -50,7 +50,7 @@ class RouterController extends Controller
         $this->data['css'] = $controllerName . ".min.css";
         $this->data['js'] = $controllerName . ".min.js";
         //nastavíme základní layout šablonu
-        $this->view = 'layout';
+        $this->controller->writeView();
     }
     private function parseURL($url)
     {

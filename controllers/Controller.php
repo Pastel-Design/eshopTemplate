@@ -39,7 +39,8 @@ abstract class Controller
     public function writeView()
     {
         if ($this->view) {
-            $this->latte->render($this->view, [$this->head, $this->data]);
+            $this->view = __DIR__ . "/templates/" . $this->view . ".latte";
+            $this->latte->render($this->view, ["head" => $this->head,"data"=> $this->data]);
         }
     }
 
