@@ -54,10 +54,15 @@ abstract class Controller
      *Sets value of $this->$view and sets css and js variables
      * @param String $view
      */
-    public function setView($view){
+    public function setView($view)
+    {
         $this->view = $view;
         $this->head['css'] = "styles/".$this->view . ".min.css";
         $this->head['js'] = "scripts/".$this->view . ".min.js";
+    }
+    public function getView()
+    {
+        return $this->view;
     }
     /**
      * Funkce pro převedení klasického formátu názvu do pomlčkového formátu

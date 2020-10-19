@@ -3,7 +3,7 @@ return (object) array(
 
     "Db" => include("Db.php"),
 
-    "FileUpload" => include("FileUpload.php"),
+    "FileManager" => include("FileUpload.php"),
 
-    "ImageOptimizer" => include("ImageOptimizer.php"),
+    "ImageManager" => include("ImageOptimizer.php"),
 );

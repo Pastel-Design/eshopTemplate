@@ -3,10 +3,10 @@ require("vendor/autoload.php");
 
 use Intervention\Image\ImageManagerStatic as Image;
 // pro více info http://image.intervention.io/getting_started/introduction
-class ImageOptimizer
+class ImageManager
 {
     /**
-     * Upraví obrázek do výchozího rozlišení definovaného v config file ImageOptimizer.php
+     * Upraví obrázek do výchozího rozlišení definovaného v config file ImageManager.php
      *
      * @param  $imgURL url obrázku
      *
@@ -39,7 +39,7 @@ class ImageOptimizer
         $img->save($imgURL);
     }
     /**
-     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file ImageOptimizer.php do složky thumbnails
+     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file ImageManager.php do složky thumbnails
      *
      * @param $imgURL
      *

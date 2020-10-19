@@ -1,5 +1,5 @@
 <?php
-class Db
+class DbManager
 {
     private static $connection;
     private static $settings = array(

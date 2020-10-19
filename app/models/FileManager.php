@@ -1,6 +1,6 @@
 <?php
 
-class FileUpload
+class FileManager
 {
     static function processFiles()
     {
@@ -184,8 +184,8 @@ class FileUpload
                 )) {
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
-                ImageOptimizer::defaultImage($fileNameWDir);
-                ImageOptimizer::makeThumbnail($fileNameWDir);
+                ImageManager::defaultImage($fileNameWDir);
+                ImageManager::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
             } catch (RuntimeException $e) {
                 return [$e->getCode(), $e->getMessage()];
@@ -203,8 +203,8 @@ class FileUpload
                 )) {
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
-                ImageOptimizer::defaultImage($fileNameWDir);
-                ImageOptimizer::makeThumbnail($fileNameWDir);
+                ImageManager::defaultImage($fileNameWDir);
+                ImageManager::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
             } catch (RuntimeException $e) {
                 return [$e->getCode(), $e->getMessage()];
