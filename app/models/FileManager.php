@@ -1,7 +1,17 @@
 <?php
 
+namespace app\models;
+use RuntimeException;
+
+/**
+ * Class FileManager
+ * @package app\models
+ */
 class FileManager
 {
+    /**
+     * @return mixed
+     */
     static function processFiles()
     {
         $return = array();
@@ -27,6 +37,11 @@ class FileManager
             return "Files uploaded successfully.";
         endif;
     }
+
+    /**
+     * @param $upfileName
+     * @return string
+     */
     static function uploadFileSingle($upfileName)
     {
         $config = include('app/configs/config.php');
@@ -98,6 +113,12 @@ class FileManager
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $key
+     * @return mixed
+     */
     static function uploadFileMultiple($upfileName, $key)
     {
 
@@ -169,6 +190,13 @@ class FileManager
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadImage($upfileName, $ext, $key = null)
     {
         if ($key === null) {
@@ -211,6 +239,13 @@ class FileManager
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadVideo($upfileName, $ext, $key = null)
     {
         if ($key === null) {
@@ -251,6 +286,13 @@ class FileManager
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadApplication($upfileName, $ext, $key = null)
     {
         if ($key === null) {
@@ -289,6 +331,13 @@ class FileManager
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadTextfile($upfileName, $ext, $key = null)
     {
         if ($key === null) {
