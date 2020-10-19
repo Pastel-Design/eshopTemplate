@@ -36,12 +36,14 @@ class RouterController extends Controller
         $this->controller->process($parsedURL);
         $controllerName = $this->controller->view;
         //Knihovna Minify zminimalizuje css a js soubor pro daný pohled, pro více info https://packagist.org/packages/matthiasmullie/minify
+            /*
         $minifier = new Minify\CSS;
-        $minifier->add("www/styles/" . $controllerName . ".css", "www/styles/style.css");
+        $minifier->add("/www/styles/" . $controllerName . ".css");
         $minifier->minify("www/styles/minified/" . $controllerName . ".min.css");
         $minifier = new Minify\JS;
         $minifier->add("www/scripts/" . $controllerName . ".js", "www/scripts/script.js");
         $minifier->minify("www/scripts/minified/" . $controllerName . ".min.js");
+        */
         //nastavíme základní layout šablonu
         $this->controller->writeView();
     }
