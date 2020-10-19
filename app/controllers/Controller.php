@@ -1,10 +1,28 @@
 <?php
+
+
 abstract class Controller
 {
     /**Třída kontroleru má vlastnosti data, pohled který se má vypsat v defaultní šabloně a hlavičku kvůli SEO */
     protected $data = array();
     protected $view = "";
-    protected $head = array('title' => '', 'keywords' => '', 'description' => '');
+    protected $head = ['title' => '', 'keywords' => '', 'description' => '', 'css'=>'', 'js'=>''];
+
+    /**
+     * @var $latte
+     * Proměnná pro objekt třídy Latte\Engine
+     */
+    protected $latte;
+
+
+    /**
+     * Controller constructor.
+     */
+    public function __construct()
+    {
+        $this->latte = new Latte\Engine();
+        $this->latte->setTempDirectory('/app/views');
+    }
 
     /**Definice abstraktní třídy pro ostatní kontrolery které ji dědí */
     abstract function process($params);
@@ -20,9 +38,8 @@ abstract class Controller
     public function writeView()
     {
         if ($this->view) {
-            extract($this->xssSecure($this->data));
-            extract($this->data, EXTR_PREFIX_ALL, ""); /* !neošetřená data s prefixem */
-            require("views/" . $this->view . ".phtml");
+            $this->view = __DIR__ . "/app/views/" . $this->view . ".latte";
+            $this->latte->render($this->view, ["head" => $this->head,"data"=> $this->data]);
         }
     }
 
@@ -34,23 +51,13 @@ abstract class Controller
         exit;
     }
     /**
-     * Pro neinicializovanou proměnnou vrátíme null, pro řetězec vrátíme jeho zentitovanou hodnotu, 
-     * pro pole ošetříme rekurzivně všechny jeho prvky, další datové typy vrátíme jak jsou. 
-     * Samotné volání htmlspecialchars() má ještě parametr quotes, aby ošetřoval i jednoduché uvozovky. Je to tak bezpečnější.
+     *Sets value of $this->$view and sets css and js variables
+     * @param String $view
      */
-    private function xssSecure($x = null)
-    {
-        if (!isset($x))
-            return null;
-        elseif (is_string($x))
-            return htmlspecialchars($x, ENT_QUOTES);
-        elseif (is_array($x)) {
-            foreach ($x as $k => $v) {
-                $x[$k] = $this->xssSecure($v);
-            }
-            return $x;
-        } else
-            return $x;
+    public function setView($view){
+        $this->view = $view;
+        $this->head['css'] = "styles/".$this->view . ".min.css";
+        $this->head['js'] = "scripts/".$this->view . ".min.js";
     }
     /**
      * Funkce pro převedení klasického formátu názvu do pomlčkového formátu

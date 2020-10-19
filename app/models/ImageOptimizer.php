@@ -14,7 +14,7 @@ class ImageOptimizer
      */
     static function defaultImage($imgURL)
     {
-        $config = include('configs/config.php');
+        $config = include('app/configs/config.php');
         $img = Image::make($imgURL);
 
         $height = $img->height();
@@ -47,7 +47,7 @@ class ImageOptimizer
      */
     static function makeThumbnail($imgURL)
     {
-        $config = include('configs/config.php');
+        $config = include('app/configs/config.php');
         $img = Image::make($imgURL);
         $imgName = array_reverse(explode("/", $imgURL))[0];
 
