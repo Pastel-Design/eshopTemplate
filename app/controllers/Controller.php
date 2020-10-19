@@ -21,7 +21,7 @@ abstract class Controller
     public function __construct()
     {
         $this->latte = new Latte\Engine();
-        $this->latte->setTempDirectory('/app/views');
+       // $this->latte->setTempDirectory('/app/views');
     }
 
     /**Definice abstraktní třídy pro ostatní kontrolery které ji dědí */
@@ -38,7 +38,7 @@ abstract class Controller
     public function writeView()
     {
         if ($this->view) {
-            $this->view = __DIR__ . "/app/views/" . $this->view . ".latte";
+            $this->view = __DIR__. "/../../app/views/" . $this->view . ".latte";
             $this->latte->render($this->view, ["head" => $this->head,"data"=> $this->data]);
         }
     }

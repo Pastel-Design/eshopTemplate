@@ -1,5 +1,5 @@
 <?php
-require("vendor/autoload.php");
+require(__DIR__."/../../vendor/autoload.php");
 use MatthiasMullie\Minify;
 
 class RouterController extends Controller
@@ -26,7 +26,7 @@ class RouterController extends Controller
         //Jako aktuálně obsluhovaný kontroler se nastaví první parametr z URL v Camel notaci aby seděl název s případným názvem souboru 
         $controllerClass =  $this->dashToCamel(array_shift($parsedURL)) . 'Controller';
         //Pokud soubor s názvem kontroleru existuje, nastaví se název třídy kontroleru jako obsluhovaný kontroler do vlastnosti objektu směrovače
-        if (file_exists('app/controllers/' . $controllerClass . '.php'))
+        if (file_exists('../app/controllers/' . $controllerClass . '.php'))
             $this->controller = new $controllerClass;
         //v opačném případě přesměrujeme na chybovou stránku s errorem 404
         else
