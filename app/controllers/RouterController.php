@@ -26,7 +26,7 @@ class RouterController extends Controller
         //Jako aktuálně obsluhovaný kontroler se nastaví první parametr z URL v Camel notaci aby seděl název s případným názvem souboru 
         $controllerClass =  $this->dashToCamel(array_shift($parsedURL)) . 'Controller';
         //Pokud soubor s názvem kontroleru existuje, nastaví se název třídy kontroleru jako obsluhovaný kontroler do vlastnosti objektu směrovače
-        if (file_exists('controllers/' . $controllerClass . '.php'))
+        if (file_exists('app/controllers/' . $controllerClass . '.php'))
             $this->controller = new $controllerClass;
         //v opačném případě přesměrujeme na chybovou stránku s errorem 404
         else
@@ -37,11 +37,11 @@ class RouterController extends Controller
         $controllerName = $this->controller->view;
         //Knihovna Minify zminimalizuje css a js soubor pro daný pohled, pro více info https://packagist.org/packages/matthiasmullie/minify
         $minifier = new Minify\CSS;
-        $minifier->add("styles/" . $controllerName . ".css", "styles/style.css");
-        $minifier->minify("styles/minified/" . $controllerName . ".min.css");
+        $minifier->add("www/styles/" . $controllerName . ".css", "www/styles/style.css");
+        $minifier->minify("www/styles/minified/" . $controllerName . ".min.css");
         $minifier = new Minify\JS;
-        $minifier->add("scripts/" . $controllerName . ".js", "scripts/script.js");
-        $minifier->minify("scripts/minified/" . $controllerName . ".min.js");
+        $minifier->add("www/scripts/" . $controllerName . ".js", "www/scripts/script.js");
+        $minifier->minify("www/scripts/minified/" . $controllerName . ".min.js");
         //nastavíme základní layout šablonu
         $this->controller->writeView();
     }

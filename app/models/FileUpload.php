@@ -29,7 +29,7 @@ class FileUpload
     }
     static function uploadFileSingle($upfileName)
     {
-        $config = include('configs/config.php');
+        $config = include('app/configs/config.php');
         try {
             // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.
@@ -101,7 +101,7 @@ class FileUpload
     static function uploadFileMultiple($upfileName, $key)
     {
 
-        $config = include('configs/config.php');
+        $config = include('app/configs/config.php');
         try {
             // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.

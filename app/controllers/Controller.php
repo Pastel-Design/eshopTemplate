@@ -21,7 +21,7 @@ abstract class Controller
     public function __construct()
     {
         $this->latte = new Latte\Engine();
-        $this->latte->setTempDirectory('/templates');
+        $this->latte->setTempDirectory('/app/views');
     }
 
     /**Definice abstraktní třídy pro ostatní kontrolery které ji dědí */
@@ -38,7 +38,7 @@ abstract class Controller
     public function writeView()
     {
         if ($this->view) {
-            $this->view = __DIR__ . "/templates/" . $this->view . ".latte";
+            $this->view = __DIR__ . "/app/views/" . $this->view . ".latte";
             $this->latte->render($this->view, ["head" => $this->head,"data"=> $this->data]);
         }
     }
@@ -56,8 +56,8 @@ abstract class Controller
      */
     public function setView($view){
         $this->view = $view;
-        $this->head['css'] = $this->view . ".min.css";
-        $this->head['js'] = $this->view . ".min.js";
+        $this->head['css'] = "styles/".$this->view . ".min.css";
+        $this->head['js'] = "scripts/".$this->view . ".min.js";
     }
     /**
      * Funkce pro převedení klasického formátu názvu do pomlčkového formátu
