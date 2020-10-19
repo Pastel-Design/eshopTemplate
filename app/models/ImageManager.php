@@ -1,18 +1,26 @@
 <?php
-require("vendor/autoload.php");
 
+
+namespace app\models;
+
+require("vendor/autoload.php");
 use Intervention\Image\ImageManagerStatic as Image;
-// pro více info http://image.intervention.io/getting_started/introduction
-class ImageOptimizer
+
+
+/**
+ * Class ImageManager
+ * @package app\models
+ */
+class ImageManager
 {
+
+// pro více info http://image.intervention.io/getting_started/introduction
     /**
-     * Upraví obrázek do výchozího rozlišení definovaného v config file ImageOptimizer.php
-     *
-     * @param  $imgURL url obrázku
-     *
+     * Upraví obrázek do výchozího rozlišení definovaného v config file ImageManager.php
+     * @param string $imgURL //urlobrázku
      * @return void
      */
-    static function defaultImage($imgURL)
+    static function defaultImage(string $imgURL) : void
     {
         $config = include('app/configs/config.php');
         $img = Image::make($imgURL);
@@ -39,13 +47,12 @@ class ImageOptimizer
         $img->save($imgURL);
     }
     /**
-     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file ImageOptimizer.php do složky thumbnails
+     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file ImageManager.php do složky thumbnails
      *
-     * @param $imgURL
-     *
+     * @param string $imgURL
      * @return void
      */
-    static function makeThumbnail($imgURL)
+    static function makeThumbnail(string $imgURL) : void
     {
         $config = include('app/configs/config.php');
         $img = Image::make($imgURL);

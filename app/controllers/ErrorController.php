@@ -1,10 +1,14 @@
 <?php
 
+namespace app\controllers;
+
+/**
+ * Class ErrorController
+ * @package app\controllers
+ */
 class ErrorController extends Controller
 {
-    /**
-     * nastavování chybových hlášení podle příslušného chybového kodu
-     */
+     //nastavování chybových hlášení podle příslušného chybového kódu
     public function process($params)
     {
         if (!empty($params[0])) {

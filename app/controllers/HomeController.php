@@ -1,9 +1,13 @@
 <?php
+namespace app\controllers;
+
+/**
+ * Class HomeController
+ * @package app\controllers
+ */
 class HomeController extends Controller
 {
-    /**
-     * výchozí domácí stránka
-     */
+    //výchozí domácí stránka
     public function process($params)
     {
         $this->head['title'] = "Domovská stránka";

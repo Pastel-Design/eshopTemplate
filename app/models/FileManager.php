@@ -1,7 +1,17 @@
 <?php
 
-class FileUpload
+namespace app\models;
+use RuntimeException;
+
+/**
+ * Class FileManager
+ * @package app\models
+ */
+class FileManager
 {
+    /**
+     * @return mixed
+     */
     static function processFiles()
     {
         $return = array();
@@ -27,6 +37,11 @@ class FileUpload
             return "Files uploaded successfully.";
         endif;
     }
+
+    /**
+     * @param $upfileName
+     * @return string
+     */
     static function uploadFileSingle($upfileName)
     {
         $config = include('app/configs/config.php');
@@ -98,6 +113,12 @@ class FileUpload
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $key
+     * @return mixed
+     */
     static function uploadFileMultiple($upfileName, $key)
     {
 
@@ -169,6 +190,13 @@ class FileUpload
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadImage($upfileName, $ext, $key = null)
     {
         if ($key === null) {
@@ -184,8 +212,8 @@ class FileUpload
                 )) {
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
-                ImageOptimizer::defaultImage($fileNameWDir);
-                ImageOptimizer::makeThumbnail($fileNameWDir);
+                ImageManager::defaultImage($fileNameWDir);
+                ImageManager::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
             } catch (RuntimeException $e) {
                 return [$e->getCode(), $e->getMessage()];
@@ -203,14 +231,21 @@ class FileUpload
                 )) {
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
-                ImageOptimizer::defaultImage($fileNameWDir);
-                ImageOptimizer::makeThumbnail($fileNameWDir);
+                ImageManager::defaultImage($fileNameWDir);
+                ImageManager::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
             } catch (RuntimeException $e) {
                 return [$e->getCode(), $e->getMessage()];
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadVideo($upfileName, $ext, $key = null)
     {
         if ($key === null) {
@@ -251,6 +286,13 @@ class FileUpload
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadApplication($upfileName, $ext, $key = null)
     {
         if ($key === null) {
@@ -289,6 +331,13 @@ class FileUpload
             }
         }
     }
+
+    /**
+     * @param $upfileName
+     * @param $ext
+     * @param null $key
+     * @return array
+     */
     static function uploadTextfile($upfileName, $ext, $key = null)
     {
         if ($key === null) {
