@@ -3,7 +3,7 @@
     <header>
         <h1>Domovská stránka</h1>
     </header>
-    <section>
-
+    <section n:foreach="$data as $product">
+        <h2>{$product["name"]}</h2>
     </section>
 {/block}

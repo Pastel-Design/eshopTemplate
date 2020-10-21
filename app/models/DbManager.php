@@ -49,7 +49,7 @@ class DbManager
     {
         $result = self::$connection->prepare($sql);
         $result->execute($params);
-        return $result->fetch(PDO::FETCH_ASSOC);
+        return $result->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -61,7 +61,7 @@ class DbManager
     {
         $result = self::$connection->prepare($sql);
         $result->execute($params);
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $result->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

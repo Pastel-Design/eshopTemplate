@@ -68,17 +68,7 @@ abstract class Controller
         }
     }
 
-    /**
-     * Funkce pro přesměrování z jakýhokoliv důvodu, nejčastěji použita pokud hledaná stránka není nalezena
-     * @param string $url
-     * @return void
-     */
-    public function reroute(string $url) : void
-    {
-        header("Location: /$url");
-        header("Connection: close");
-        exit;
-    }
+
     /**
      * Sets value of $this->$view and sets css and js variables
      * @param string $view

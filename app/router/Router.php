@@ -9,7 +9,8 @@ use MatthiasMullie\Minify;
  * Class Router
  * @package app\router
  */
-final class Router{
+final class Router
+{
 
     protected $controller;
 
@@ -69,5 +70,17 @@ final class Router{
     private function dashToCamel(string  $text)
     {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $text)));
+    }
+
+    /**
+     * Funkce pro přesměrování z jakýhokoliv důvodu, nejčastěji použita pokud hledaná stránka není nalezena
+     * @param string $url
+     * @return void
+     */
+    public function reroute(string $url) : void
+    {
+        header("Location: /$url");
+        header("Connection: close");
+        exit;
     }
 }
