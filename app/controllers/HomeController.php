@@ -25,6 +25,6 @@ class HomeController extends Controller
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         $this->setView('home');
 
-        $this->data = $this->productsManager->selectAllProducts();
+        $this->data = ["products"=>$this->productsManager->selectAllProducts()];
     }
 }
