@@ -27,7 +27,7 @@ abstract class Controller
     /**
      * @var array $head
      */
-    protected $head = ['title' => '', 'keywords' => '', 'description' => '', 'css'=>'', 'js'=>''];
+    protected $head = ['page_title' => '', 'page_keywords' => '', 'page_page_description' => '', 'css' => '', 'js' => ''];
 
     /**
      * @var Engine $latte
@@ -60,42 +60,33 @@ abstract class Controller
      *  na konec se requieruje pohled ze složky views
      * @return void
      */
-    public function writeView() : void
+    public function writeView($controllerName): void
     {
         if ($this->view) {
-            $this->view = __DIR__. "/../../app/views/" . $this->view . ".latte";
-            $this->latte->render($this->view, ["head" => $this->head,"data"=> $this->data]);
+            $this->view = __DIR__ . "/../../app/views/" . $controllerName . "/" . $this->view . ".latte";
+            $params = array_merge($this->head,$this->data);
+            $this->latte->render($this->view, $params);
         }
     }
 
-    /**
-     * Funkce pro přesměrování z jakýhokoliv důvodu, nejčastěji použita pokud hledaná stránka není nalezena
-     * @param string $url
-     * @return void
-     */
-    public function reroute(string $url) : void
-    {
-        header("Location: /$url");
-        header("Connection: close");
-        exit;
-    }
+
     /**
      * Sets value of $this->$view and sets css and js variables
      * @param string $view
      * @return void
      */
-    public function setView(string $view) : void
+    public function setView(string $view): void
     {
         $this->view = $view;
-        $this->head['css'] = "styles/".$this->view . ".min.css";
-        $this->head['js'] = "scripts/".$this->view . ".min.js";
+        $this->head['css'] = "styles/" . $this->view . ".min.css";
+        $this->head['js'] = "scripts/" . $this->view . ".min.js";
     }
 
     /**
      * View getter
      * @return string|null
      */
-    public function getView() : ?string
+    public function getView(): ?string
     {
         return $this->view;
     }
@@ -106,9 +97,9 @@ abstract class Controller
      * @param string $argument
      * @return string
      */
-    public function basicToDash(string $argument) : string
+    public function basicToDash(string $argument): string
     {
-        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
-        return preg_replace("[\W+]","-",$transliterator->transliterate($argument));
+        $transliterator = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', \Transliterator::FORWARD);
+        return preg_replace("[\W+]", "-", $transliterator->transliterate($argument));
     }
 }
