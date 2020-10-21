@@ -10,9 +10,9 @@ class HomeController extends Controller
     //výchozí domácí stránka
     public function process($params)
     {
-        $this->head['title'] = "Domovská stránka";
-        $this->head['keywords'] = "eshop";
-        $this->head['description'] = "Domovská stránka eshopu Zlatá Loď";
+        $this->head['page_title'] = "Domovská stránka";
+        $this->head['page_keywords'] = "eshop";
+        $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         $this->setView('home');
     }
 }

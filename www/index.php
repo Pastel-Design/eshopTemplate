@@ -1,12 +1,12 @@
 <?php
+$config = include('../app/config/config.php');
 
 use app\models\DbManager;
 use app\router\Router;
 
-$config = include('../app/config/config.php');
 mb_internal_encoding("UTF-8");
 
-
+require("../vendor/autoload.php");
 //Funkce pro autoload třídy, php ji používá automaticky díky "zaregistrování" níže
 /**
  * @param $class
@@ -14,13 +14,6 @@ mb_internal_encoding("UTF-8");
 function autoloadFunction($class)
 {
     require ("../". preg_replace("/[\\ ]+/", "/", $class). ".php");
-   /* if (preg_match('/Controller$/', $class))
-        require("../app/controllers/" . $class . ".php");
-    //jinak se php snaží requirovat ze složky models
-    else if(preg_match('/Manager$/', $class))
-        require("../app/models/" . $class . ".php");
-    else
-        require("../app/router/" . $class . ".php");*/
 }
 
 //registrace funkce pro její použití jako php autoload funkce
