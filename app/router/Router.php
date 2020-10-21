@@ -10,7 +10,7 @@ use App\controllers\Controller;
  * Class Router
  * @package app\router
  */
-final class Router extends Controller
+final class Router
 {
 
     protected $controller;
@@ -33,7 +33,7 @@ final class Router extends Controller
             $controllerClass = "\app\controllers\\" . $controllerClass;
             $this->controller = new $controllerClass;
             //v opačném případě přesměrujeme na chybovou stránku s errorem 404
-        } else {
+        }else {
             $this->reroute('error/404');
         }
         //Vybraný kontroler si zpracuje parametry z URL

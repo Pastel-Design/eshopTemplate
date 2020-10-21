@@ -11,9 +11,9 @@
    RewriteRule !\.(css|js|icon|zip|rar|png|jpg|gif|pdf)$ www/index.php [L]
    AddType application/x-httpd-php .php .phtml
 
-   RewriteRule ^$ /www/ [L]
-   RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteCond %{REQUEST_FILENAME} !-d
-   RewriteCond %{REQUEST_URI} !^/www/
-   RewriteRule ^(.*)$ /www/$1
+    RewriteRule ^$ /www/ [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/www/
+    RewriteRule ^(.*)$ /www/$1
 </IfModule>
