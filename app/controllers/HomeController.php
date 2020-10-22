@@ -1,7 +1,10 @@
 <?php
+
 namespace app\controllers;
 
 use app\models\ProductsManager;
+use app\classes\User;
+use app\classes\Address;
 
 /**
  * Class HomeController
@@ -24,7 +27,13 @@ class HomeController extends Controller
         $this->head['page_keywords'] = "eshop";
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         $this->setView('home');
-
-        $this->data = ["products"=>$this->productsManager->selectAllProducts()];
+        $invoice = new Address;
+        $shipping = new Address;
+        $invoice->setValues("Železničního pluku 2182","","Pardubice","Česká republika","53002","15978","16516","Jakub","Kováč");
+        $shipping->setValues("Železničního pluku 2182","","Pardubice","Česká republika","53002",null,null,"Jakub","Kováč");
+        $user = new User;
+        $user->setValues("kukivac@gmail.com","kukivac","xHeslo123",0,"admin","2020-10-21 23:21:34","2020-10-21","Jakub","Kováč",$invoice,$shipping);
+        var_dump(\SignManager::SignUp($user));
+        $this->data = ["products" => $this->productsManager->selectAllProducts()];
     }
 }
