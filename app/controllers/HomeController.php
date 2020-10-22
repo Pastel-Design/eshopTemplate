@@ -33,7 +33,7 @@ class HomeController extends Controller
         $shipping->setValues("Železničního pluku 2182","","Pardubice","Česká republika","53002",null,null,"Jakub","Kováč");
         $user = new User;
         $user->setValues("kukivac@gmail.com","kukivac","xHeslo123",0,"admin","2020-10-21 23:21:34","2020-10-21","Jakub","Kováč",$invoice,$shipping);
-        var_dump(\SignManager::SignIn($user));
+        var_dump(\SignManager::SignUp($user));
         $this->data = ["products" => $this->productsManager->selectAllProducts()];
     }
 }
