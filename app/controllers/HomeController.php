@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ProductsManager;
+use app\models\SignManager;
 use app\classes\User;
 use app\classes\Address;
 
@@ -29,11 +30,12 @@ class HomeController extends Controller
         $this->setView('home');
         $invoice = new Address;
         $shipping = new Address;
-        $invoice->setValues("Železničního pluku 2182","","Pardubice","Česká republika","53002","15978","16516","Jakub","Kováč");
-        $shipping->setValues("Železničního pluku 2182","","Pardubice","Česká republika","53002",null,null,"Jakub","Kováč");
+        $invoice->setValues("Jakub","Kováč","","+420724162439","Železničního pluku 2182","","Pardubice","Česká republika","53002","15978","16516");
+        $shipping->setValues("Jakub","Kováč","","+420724162439","Železničního pluku 2182","","Pardubice","Česká republika","53002","","");
         $user = new User;
-        $user->setValues("kukivac@gmail.com","kukivac","xHeslo123",0,"admin","2020-10-21 23:21:34","2020-10-21","Jakub","Kováč",$invoice,$shipping);
-        var_dump(\SignManager::SignUp($user));
+
+        $user->setValues("kukivac@gmail.com","kukivac","xHeslo123","+420724162439",0,"user",1,0,"2020-10-21 23:21:34","2020-10-21","Jakub","Kováč",$invoice,$shipping);
+        var_dump(SignManager::SignUp($user));
         $this->data = ["products" => $this->productsManager->selectAllProducts()];
     }
 }

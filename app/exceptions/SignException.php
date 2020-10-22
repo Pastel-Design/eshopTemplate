@@ -1,5 +1,5 @@
 <?php
-namespace exceptions;
+namespace app\exceptions;
 
 class SignException extends \Exception
 {

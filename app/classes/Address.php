@@ -5,14 +5,15 @@ namespace app\classes;
 class Address
 {
 
-    public $id, $first_name, $last_name, $firm_name, $address1, $address2, $city, $country, $zipcode, $dic, $ic, $user_id;
+    public $id, $first_name, $last_name, $firm_name, $phone, $address1, $address2, $city, $country, $zipcode, $dic, $ic, $user_id;
 
-    public function setValues(string $address1, string $address2, string $city, string $country, string $zipcode, string $dic = null, string $ic = null, string $first_name = null, string $last_name = null, string $firm_name = null, int $id = null, int $user_id = null)
+    public function setValues(string $first_name, string $last_name, string $firm_name, string $phone, string $address1, string $address2, string $city, string $country, string $zipcode, string $dic, string $ic, int $id = null, int $user_id = null)
     {
         $this->id = $id;
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->firm_name = $firm_name;
+        $this->phone = $phone;
         $this->address1 = $address1;
         $this->address2 = $address2;
         $this->city = $city;
@@ -38,6 +39,10 @@ class Address
     public function getFirm_name(): string
     {
         return $this->firm_name;
+    }
+    public function getPhone(): string
+    {
+        return $this->phone;
     }
     public function getAddress1(): string
     {
