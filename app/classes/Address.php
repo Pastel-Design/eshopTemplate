@@ -1,7 +1,7 @@
 <?php
 
 namespace app\classes;
-
+use app\exceptions\AddressException;
 class Address
 {
 
@@ -10,6 +10,61 @@ class Address
     public function setValues(string $first_name, string $last_name, string $firm_name, string $phone, string $address1, string $address2, string $city, string $country, string $zipcode, string $dic, string $ic, int $id = null, int $user_id = null)
     {
         $this->id = $id;
+        //if (preg_match('', $first_name) === 1) {
+            $this->first_name = $first_name;
+        //} else {
+        //    throw new AddressException("Invalid first name");
+        //}
+        //if (preg_match('', $last_name) === 1) {
+            $this->last_name = $last_name;
+        //} else {
+        //    throw new AddressException("Invalid last name");
+        //}
+        //if (preg_match('', $firm_name) === 1) {
+            $this->firm_name = $firm_name;
+        //} else {
+        //    throw new AddressException("Invalid firm name");
+        //}
+        //if (preg_match('', $phone) === 1) {
+            $this->phone = $phone;
+        //} else {
+        //    throw new AddressException("Invalid phone");
+        //}
+        //if (preg_match('', $address1) === 1) {
+            $this->address1 = $address1;
+        //} else {
+        //    throw new AddressException("Invalid address1");
+        //}
+        //if (preg_match('', $address2) === 1) {
+            $this->address2 = $address2;
+        //} else {
+        //    throw new AddressException("Invalid address2");
+        //}
+        //if (preg_match('', $city) === 1) {
+            $this->city = $city;
+        //} else {
+        //    throw new AddressException("Invalid city");
+        //}
+        //if (preg_match('', $country) === 1) {
+            $this->country = $country;
+        //} else {
+        //    throw new AddressException("Invalid country");
+        //}
+        //if (preg_match('', $zipcode) === 1) {
+            $this->zipcode = $zipcode;
+        //} else {
+        //    throw new AddressException("Invalid zipcode");
+        //}
+        //if (preg_match('', $dic) === 1) {
+            $this->dic = $dic;
+        //} else {
+        //    throw new AddressException("Invalid dic");
+        //}
+        //if (preg_match('', $ic) === 1) {
+            $this->ic = $ic;
+        //} else {
+        //    throw new AddressException("Invalid ic");
+        //}
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->firm_name = $firm_name;
