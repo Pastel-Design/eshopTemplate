@@ -12,7 +12,7 @@ class DbManager
     /**
      * @var $connection
      */
-    private static $connection;
+    public static $connection;
 
     /**
      * @var array $settings
