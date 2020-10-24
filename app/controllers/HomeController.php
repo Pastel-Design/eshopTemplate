@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ProductsManager;
 use app\models\SignManager;
+use app\models\DbManager;
 use app\classes\User;
 use app\classes\Address;
 
@@ -36,7 +37,7 @@ class HomeController extends Controller
 
         $user->setValues("kukivac@gmail.com","kukivac","xHeslo123","724162439","+420",0,"user",1,0,"","Jakub","Kováč",$invoice,$shipping);
         $user = SignManager::SignUp($user);
-        var_dump($_SESSION);
+        //var_dump($_SESSION);
         $this->data = ["products" => $this->productsManager->selectAllProducts()];
     }
 }
