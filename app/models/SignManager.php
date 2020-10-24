@@ -14,7 +14,9 @@ class SignManager
         if (!self::userExists($login, $login)) {
             if (self::userActivated($login)) {
                 $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?");
-                if (!password_verify($password, $DBPass)) {
+                if (password_verify($password, $DBPass)) {
+
+                }else{
                     throw new SignException("Wrong password or login");
                 }
             } else {
