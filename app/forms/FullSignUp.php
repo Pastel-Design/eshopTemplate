@@ -1,7 +1,7 @@
 <?php
 namespace app\forms;
 
-require("vendor/autoload.php");
+require("../vendor/autoload.php");
 
 use app\classes\Address;
 use app\classes\User;
@@ -52,65 +52,65 @@ final class  FullSignUp{
     {
         $this->form->addEmail('email', 'E-mail:')
             ->setHtmlAttribute('placeholder', 'E-mail *')
-            ->addCondition('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', "Zadejte platný email")
+            ->addRule($this->form::PATTERN,"Zadejte platný email", "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/")
             ->setRequired(true);
         $this->form->addSelect("areaCode", "Předvolba: ", ["+420"=>"+420", "+421"=>"+421", "+48"=>"+48"])
             ->setRequired();
         $this->form->addText('phone', 'Telefon:')
             ->setHtmlAttribute('placeholder', 'Telefon *')
-            ->addCondition('/^\d{3,3}(\ )?\d{3,3}(\ )?\d{3,3}$/', " Zadejte platné telefonní číslo")
+            ->addRule($this->form::PATTERN, " Zadejte platné telefonní číslo",'/^\d{3,3}(\ )?\d{3,3}(\ )?\d{3,3}$/')
             ->setRequired(true);
         $this->form->addText('firstName', 'Jméno:')
             ->setHtmlAttribute("placeholder", "Jméno *")
-            ->addCondition('/^[A-ž-]{3,}$/', "Zadejte platné jméno")
+            ->addRule($this->form::PATTERN, "Zadejte platné jméno",'/^[A-ž-]{3,}$/')
             ->setRequired(true);
         $this->form->addText('lastName', 'Příjmení:')
             ->setHtmlAttribute("placeholder", "Příjmení *")
-            ->addCondition('/^[A-ž-]{3,}$/', "Zadejte platné příjmení")
+            ->addRule($this->form::PATTERN, "Zadejte platné příjmení",'/^[A-ž-]{3,}$/')
             ->setRequired(true);
 
 
         $this->form->addText('username', 'Uživatelské jméno:')
             ->setHtmlAttribute("placeholder", "Uživatelské jméno *")
-            ->addCondition('/^([A-ž]+[\d\_\-\.]*){3,}$/', "Uživatelské jméno nesplňuje podmínky")
+            ->addRule($this->form::PATTERN, "Uživatelské jméno nesplňuje podmínky",'/^([A-ž]+[\d\_\-\.]*){3,}$/')
             ->setRequired(true);
         $this->form->addPassword('password', 'Heslo:')
             ->setHtmlAttribute("placeholder", "Heslo *")
-            ->addCondition('/^(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}$/', "Heslo je příliš slabé")
+            ->addRule($this->form::PATTERN, "Heslo je příliš slabé",'/^(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}$/')
             ->setRequired(true);
 
 
         $this->form->addCheckbox("firmCheckbox", "Nakupuji na firmu");
         $this->form->addText('ic', 'IČ:')
             ->setHtmlAttribute('placeholder', 'IČ *')
-            ->addCondition('/^\d{8,8}$/', 'Neplatný formát IČ')
+            ->addRule($this->form::PATTERN, 'Neplatný formát IČ','/^\d{8,8}$/')
             ->setRequired(true);
         $this->form->addText('dic', 'DIČ:')
             ->setHtmlAttribute('placeholder', 'DIČ *')
-            ->addCondition('/^(CZ\d{8,10})|(SK\d{10,10})$/', 'Neplatný formát DIČ')
+            ->addRule($this->form::PATTERN, 'Neplatný formát DIČ','/^(CZ\d{8,10})|(SK\d{10,10})$/')
             ->setRequired(true);
         $this->form->addCheckbox("dphCheckbox", "Nakupuji na firmu");
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
-            ->addCondition('/^(([A-ž]+)([\d\_\-\.\&]*)){3,}$/', "Neplatné jméno firmy");
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'/^(([A-ž]+)([\d\_\-\.\&]*)){3,}$/');
 
 
-        $this->form->addSelect("country", "Předvolba: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
+        $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
             ->setRequired();
         $this->form->addText("address1", "Ulice a č. p.")
             ->setHtmlAttribute("placeholder", "Ulice a č. p. *")
-            ->addCondition('/^[A-ž\ \,\.\-\/\d]{2,}$/', "Neplatný adresní řádek")
+            ->addRule($this->form::PATTERN, "Neplatný adresní řádek",'/^[A-ž\ \,\.\-\/\d]{2,}$/')
             ->setRequired(true);
         $this->form->addText("address2", "2. adresní řádek")
             ->setHtmlAttribute("placeholder", "2. adresní řádek")
-            ->addCondition('/^[A-ž\ \,\.\-\/\d]{2,}$/', "Neplatný adresní řádek");
+            ->addRule($this->form::PATTERN, "Neplatný adresní řádek", '/^[A-ž\ \,\.\-\/\d]{2,}$/');
         $this->form->addText("city", "Obec:")
             ->setHtmlAttribute("placeholder", "Obec *")
-            ->addCondition('/^([A-ž]+(\ )*){2,}$/', "Neplatný název města")
+            ->addRule($this->form::PATTERN, "Neplatný název města",'/^([A-ž]+(\ )*){2,}$/')
             ->setRequired(true);
         $this->form->addText("zipCode", "PSČ:")
             ->setHtmlAttribute("placeholder", "PSČ *")
-            ->addCondition('/^\d{3,3}(\ )?\d{2,2}$/', "Neplatné PSČ")
+            ->addRule($this->form::PATTERN, "Neplatné PSČ",'/^\d{3,3}(\ )?\d{2,2}$/')
             ->setRequired(true);
 
         $this->form->addSubmit("submit", "Registrovat");
@@ -134,7 +134,8 @@ final class  FullSignUp{
                     $values["ic"]
                 );
             }catch (AddressException $exception){
-                echo $exception->getMessage(); //! DOČASNĚ
+                $this->form->addError($exception->getMessage());
+                return;
             }
 
             try{
@@ -156,13 +157,15 @@ final class  FullSignUp{
                     new Address()
                 );
             }catch (UserException $exception){
-                echo $exception->getMessage(); //! DOČASNĚ
+                $this->form->addError($exception->getMessage());
+                return;
             }
 
             try {
                 $this->manager::SignUp($this->user);
             }catch (SignException $exception){
-                echo $exception->getMessage(); //! DOČASNĚ
+                $this->form->addError($exception->getMessage());
+                return;
             }
 
             $onSuccess();
