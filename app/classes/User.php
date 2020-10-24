@@ -5,10 +5,34 @@ namespace app\classes;
 use app\classes\Address;
 use app\exceptions\UserException;
 
+/**
+ * Class User
+ * @package app\classes
+ */
 class User
 {
+
     public $id, $email, $username, $password, $phone, $area_code, $no_orders, $role, $role_id, $role_level, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address;
 
+    /**
+     * @param string $email
+     * @param string $username
+     * @param string $password
+     * @param string $phone
+     * @param string $area_code
+     * @param int $no_orders
+     * @param string $role
+     * @param int $role_id
+     * @param int $role_level
+     * @param string $registered_date
+     * @param string $first_name
+     * @param string $last_name
+     * @param \app\classes\Address $invoice_address
+     * @param \app\classes\Address $shipping_address
+     * @param int|null $id
+     * @return bool
+     * @throws UserException
+     */
     public function setValues(string $email, string $username, string $password, string $phone, string $area_code, int $no_orders, string $role, int $role_id, int $role_level, string $registered_date, string $first_name, string $last_name, Address $invoice_address, Address $shipping_address, int $id = null)
     {
         $this->id = $id;

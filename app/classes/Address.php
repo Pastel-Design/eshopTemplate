@@ -84,12 +84,12 @@ class Address
                 throw new AddressException("Invalid address2");
             }
         }
-        if (preg_match('/([A-ž]+(\ )*){2,}$/', $city) === 1) {
+        if (preg_match('/^([A-ž]+(\ )*){2,}$/', $city) === 1) {
             $this->city = $city;
         } else {
             throw new AddressException("Invalid city");
         }
-        if (preg_match('/([A-ž]+(\ )*){2,}$/', $country) === 1) {
+        if (preg_match('/^[A-Z]{3,3}$/', $country) === 1) {
             $this->country = $country;
         } else {
             throw new AddressException("Invalid country");
