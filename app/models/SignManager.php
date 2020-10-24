@@ -13,7 +13,7 @@ class SignManager
         (session_status() === 1 ? session_start() : null);
         if (!self::userExists($login, $login)) {
             if (self::userActivated($login)) {
-                $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR ")
+                $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?");
             } else {
                 throw new SignException("Account not activated");
             }
