@@ -146,10 +146,10 @@ class User
     {
         return $this->role_id;
     }
-    public function geRegistered_date(): string
+    public function getRegistered_date(): string
     {
         $date = new \DateTime($this->registered_date);
-        return $date->format("d-m-Y H:i:s");
+        return $date->format("d-m-Y");
     }
     public function getLast_active(): string
     {

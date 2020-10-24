@@ -2,6 +2,10 @@
 namespace app\forms;
 
 require("vendor/autoload.php");
+
+use app\classes\Address;
+use app\classes\User;
+use app\models\SignManager;
 use Nette\Forms\Form;
 
 /**
@@ -13,7 +17,26 @@ final class  FullSignUp{
     /**
      * @var Form $form
      */
-    private $form;
+    private Form $form;
+
+    /**
+     * @var User $user
+     */
+    private User $user;
+
+    /**
+     * @var Address $address
+     */
+    private Address $address;
+
+    /**
+     * @var SignManager $manager
+     */
+    private SignManager $manager;
+
+    /**
+     * FullSignUp constructor.
+     */
     public function __construct()
     {
         $this->form = new Form;
@@ -34,11 +57,11 @@ final class  FullSignUp{
             ->setHtmlAttribute('placeholder', 'Telefon *')
             ->addCondition('/^\d{3,3}(\ )?\d{3,3}(\ )?\d{3,3}$/', " Zadejte platné telefonní číslo")
             ->setRequired(true);
-        $this->form->addText('name', 'Jméno:')
+        $this->form->addText('firstName', 'Jméno:')
             ->setHtmlAttribute("placeholder", "Jméno *")
             ->addCondition('/^[A-ž-]{3,}$/', "Zadejte platné jméno")
             ->setRequired(true);
-        $this->form->addText('surname', 'Příjmení:')
+        $this->form->addText('lastName', 'Příjmení:')
             ->setHtmlAttribute("placeholder", "Příjmení *")
             ->addCondition('/^[A-ž-]{3,}$/', "Zadejte platné příjmení")
             ->setRequired(true);
@@ -66,8 +89,7 @@ final class  FullSignUp{
         $this->form->addCheckbox("dphCheckbox", "Nakupuji na firmu");
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
-            ->addCondition('/^(([A-ž]+)([\d\_\-\.\&]*)){3,}$/', "Neplatné jméno firmy")
-            ->setRequired(true);
+            ->addCondition('/^(([A-ž]+)([\d\_\-\.\&]*)){3,}$/', "Neplatné jméno firmy");
 
 
         $this->form->addSelect("country", "Předvolba: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
@@ -92,8 +114,39 @@ final class  FullSignUp{
 
         $this->form->onSuccess[] = function (Form $form, array $values) use ($onSuccess) : void
         {
-            
-        }
+            $this->address = new Address();
+            $this->address->setValues(
+                $values["firstName"],
+                $values["lastName"],
+                $values["firmName"],
+                $values["phone"],
+                $values["areaCode"],
+                $values["address1"],
+                $values["address2"],
+                $values["city"],
+                $values["country"],
+                $values["zipCode"],
+                $values["dic"],
+                $values["ic"]
+            );
+
+            $this->user = new User();
+            $this->user->setValues(
+                $values["email"],
+                $values["username"],
+                $values["password"],
+                $values["phone"],
+                $values["areaCode"],
+                0,
+                "user",
+                6,
+                5,
+                $this->user->getRegistered_date(),
+                $values["firstName"]
+            );
+
+            $onSuccess();
+        };
         return $this->form;
     }
 }
