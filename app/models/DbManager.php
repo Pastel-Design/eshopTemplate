@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 
@@ -11,7 +12,7 @@ class DbManager
     /**
      * @var $connection
      */
-    private static $connection;
+    public static $connection;
 
     /**
      * @var array $settings
@@ -43,7 +44,7 @@ class DbManager
     /**
      * @param $sql
      * @param array $params
-     * @return mixed
+     * @return array
      */
     public static function requestSingle($sql, $params = array())
     {
@@ -55,7 +56,7 @@ class DbManager
     /**
      * @param $sql
      * @param array $params
-     * @return mixed
+     * @return array
      */
     public static function requestMultiple($sql, $params = array())
     {
@@ -74,11 +75,20 @@ class DbManager
         $result = self::requestSingle($sql, $params);
         return $result[0];
     }
-
+        /**
+     * @param $sql
+     * @param array $params
+     * @return boolean
+     */
+    public static function requestInsert($sql, $params = array())
+    {
+        $result = self::$connection->prepare($sql);
+        return $result->execute($params);
+    }
     /**
      * @param $sql
      * @param array $params
-     * @return mixed
+     * @return int
      */
     public static function requestAffect($sql, $params = array())
     {
