@@ -30,12 +30,10 @@ class HomeController extends Controller
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         $this->setView('home');
         $invoice = new Address;
-        $shipping = new Address;
         $invoice->setValues("Jakub","Kováč","","724162439","+420","Železničního pluku 2182","","Pardubice","Česká republika","53002","CZ12345678","12345678");
-        $shipping->setValues("Jakub","Kováč","","724162439","+420","Železničního pluku 2182","","Pardubice","Česká republika","53002","","");
         $user = new User;
 
-        $user->setValues("kukivac@gmail.com","kukivac","xHeslo123","724162439","+420",0,"user",1,0,"","Jakub","Kováč",$invoice,$shipping);
+        $user->setValues("kukivac@gmail.com","kukivac","xHeslo123","724162439","+420",0,"user",1,0,"","Jakub","Kováč",$invoice,new Address());
         $user = SignManager::SignUp($user);
         //var_dump($_SESSION);
         $this->data = ["products" => $this->productsManager->selectAllProducts()];

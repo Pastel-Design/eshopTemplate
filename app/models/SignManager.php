@@ -48,12 +48,8 @@ class SignManager
             VALUES(?,?,?,?,?,?,?,?,?,?,?)
             ', [$invoiceAddress->first_name, $invoiceAddress->last_name, $invoiceAddress->firm_name, $invoiceAddress->address1, $invoiceAddress->address2, $invoiceAddress->city, $invoiceAddress->country, $invoiceAddress->zipcode, $invoiceAddress->dic, $invoiceAddress->ic, $invoiceAddress->user_id]);;
             $user->invoice_address->id = (int) DbManager::$connection->lastInsertId();
-            $shippingAddressInsert = DbManager::requestInsert('
-            INSERT INTO shipping_address (first_name,last_name,firm_name,address1,address2,city,country,zipcode,user_id)
-            VALUES(?,?,?,?,?,?,?,?,?)
-            ', [$shippingAddress->first_name, $shippingAddress->last_name, $shippingAddress->firm_name, $shippingAddress->address1, $shippingAddress->address2, $shippingAddress->city, $shippingAddress->country, $shippingAddress->zipcode, $shippingAddress->user_id]);;
-            $user->shipping_address->id = (int) DbManager::$connection->lastInsertId();
-            if (!$userInsert || !$invoiceAddressInsert || !$shippingAddressInsert) {
+
+            if (!$userInsert || !$invoiceAddressInsert) {
                 throw new SignException("Something went wrong in registration.");
             } else {
                 $_SESSION["user"] = $user->getSessionInfo();
