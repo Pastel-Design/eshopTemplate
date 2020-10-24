@@ -43,7 +43,6 @@ class SignManager
             $user->setId(DbManager::requestSingle("SELECT id FROM user WHERE username = ?", [$user->username])["id"]);
             $user->setUserIdToAddress();
             $invoiceAddress = $user->getInvoice_address();
-            $shippingAddress = $user->getShipping_address();
 
             $invoiceAddressInsert = DbManager::requestInsert('
             INSERT INTO invoice_address (first_name,last_name,firm_name,address1,address2,city,country,zipcode,DIC,IC,user_id)

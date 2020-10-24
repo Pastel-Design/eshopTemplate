@@ -67,7 +67,7 @@ final class Router
      * @param string $url
      * @return void
      */
-    public function reroute(string $url): void
+    static function reroute(string $url): void
     {
         header("Location: /$url");
         header("Connection: close");
