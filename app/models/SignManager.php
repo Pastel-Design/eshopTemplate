@@ -32,12 +32,12 @@ class SignManager
         DbManager::requestInsert("DELETE FROM shipping_address");   //! VYMAZAT V PRODUKCI
         DbManager::requestInsert("DELETE FROM user");               //! VYMAZAT V PRODUKCI
         (session_status() === 1 ? session_start() : null);
-        if (!self::userExists($user->email, $user->username)) :
+        if (!self::userExists($user->email)) :
             $user->password = password_hash($user->password, PASSWORD_DEFAULT);
 
             $userInsert = DbManager::requestInsert('
             INSERT INTO user (email,username,password,role_id,activated, registered,last_active,first_name,last_name)
-            VALUES(?,?,?,?,0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
+            VALUES(?,?,?,?,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
             ', [$user->email, $user->username, $user->password, $user->role_id, $user->first_name, $user->last_name]);
 
             $user->setId(DbManager::requestSingle("SELECT id FROM user WHERE username = ?", [$user->username])["id"]);

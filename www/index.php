@@ -1,9 +1,10 @@
 <?php
 session_start();
-$config = include('../app/config/config.php');
+
 
 use app\models\DbManager;
 use app\router\Router;
+use app\configs\DbConfig;
 
 mb_internal_encoding("UTF-8");
 
@@ -21,7 +22,7 @@ function autoloadFunction($class)
 spl_autoload_register("autoloadFunction");
 try {
 //připojení k db
-    DbManager::connect($config->Db->host, $config->Db->username, $config->Db->pass, $config->Db->database);
+    DbManager::connect(DbConfig::$host, DbConfig::$username, DbConfig::$pass, DbConfig::$database);
 } catch (\PDOException $exception) {
     Router::reroute("error/500");
 }

@@ -4,6 +4,8 @@ namespace app\classes;
 
 use app\classes\Address;
 use app\exceptions\UserException;
+use app\configs\RegexConfig;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 /**
  * Class User
@@ -37,42 +39,42 @@ class User
     public function setValues(string $email, string $username, string $password, string $phone, string $area_code, int $no_orders, string $role, int $role_level, int $role_id, int $activated, string $registered_date, string $first_name, string $last_name, Address $invoice_address, Address $shipping_address, int $id = null)
     {
         $this->id = $id;
-        if (preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', $email) === 1) {
+        if (preg_match(RegexConfig::$email, $email) === 1) {
             $this->email = $email;
         } else {
             throw new UserException("Invalid email");
         }
-        if (preg_match('/^([A-ž]+[\d\_\-\.]*){3,}$/', $username) === 1) {
+        if (preg_match(RegexConfig::$username, $username) === 1) {
             $this->username = $username;
         } else {
             throw new UserException("Invalid username format");
         }
-        if (preg_match('/^(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}$/', $password) === 1) {
+        if (preg_match(RegexConfig::$password, $password) === 1) {
             $this->password = $password;
         } else {
             throw new UserException("Weak password");
         }
-        if (preg_match('/^\+4(8|9|3|20|21)$/', $area_code) === 1) {
+        if (preg_match(RegexConfig::$areaCode, $area_code) === 1) {
             $this->area_code = $area_code;
             switch ($area_code) {
                 case "+420":
                 case "+421":
                 case "+48":
-                    if (preg_match('/^\d{3,3}(\ )?\d{3,3}(\ )?\d{3,3}$/', $phone) === 1) {
+                    if (preg_match(RegexConfig::$phoneCZSKPL, $phone) === 1) {
                         $this->phone = $phone;
                     } else {
                         throw new UserException("Invalid phone number format");
                     }
                     break;
                 case "+49":
-                    if (preg_match('/^0\d{3,5}(\ )?\d{6,8}$/', $phone) === 1) {
+                    if (preg_match(RegexConfig::$phoneDE, $phone) === 1) {
                         $this->phone = $phone;
                     } else {
                         throw new UserException("Invalid phone number format");
                     }
                     break;
                 case "+43":
-                    if (preg_match('/^\d{1,4}(\ )?\d{3,12}$/', $phone) === 1) {
+                    if (preg_match(RegexConfig::$phoneAU, $phone) === 1) {
                         $this->phone = $phone;
                     } else {
                         throw new UserException("Invalid phone number format");
@@ -93,12 +95,12 @@ class User
         $this->registered_date = $registered_date;
         $date = new \DateTime();
         $this->last_active = $date->format("d-m-Y H:i:s");
-        if (preg_match('/^[A-ž-]{3,}$/', $first_name) === 1) {
+        if (preg_match(RegexConfig::$name, $first_name) === 1) {
             $this->first_name = $first_name;
         } else {
             throw new UserException("Invalid first name format");
         }
-        if (preg_match('/^[A-ž-]{3,}$/', $last_name) === 1) {
+        if (preg_match(RegexConfig::$name, $last_name) === 1) {
             $this->last_name = $last_name;
         } else {
             throw new UserException("Invalid last name format");

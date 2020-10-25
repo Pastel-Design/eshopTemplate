@@ -87,7 +87,7 @@ final class  FullSignUp{
         $this->form->addCheckbox("dphCheckbox", "Nakupuji na firmu");
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
-            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'^(([A-ž]+)([\d\_\-\.\&]*)){3,}$');
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'^(([A-ž]+)([\d\_\-\.\ \&]*)){3,}$');
 
 
         $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])

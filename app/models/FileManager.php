@@ -1,8 +1,8 @@
 <?php
-
 namespace app\models;
-use RuntimeException;
 
+use RuntimeException;
+use app\configs\FileUploadConfig;
 /**
  * Class FileManager
  * @package app\models
@@ -44,7 +44,7 @@ class FileManager
      */
     static function uploadFileSingle($upfileName)
     {
-        $config = include('app/configs/config.php');
+
         try {
             // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.
@@ -72,10 +72,10 @@ class FileManager
             }
             // DO NOT TRUST $_FILES[$upfileName]['mime'] VALUE !!
             // Check MIME Type by yourself.
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
                 $finfo->file($_FILES[$upfileName]['tmp_name']),
-                $config->FileUpload,
+                FileUploadConfig::$FileUpload,
                 true
             )) {
                 throw new RuntimeException('Invalid file format.', 1);
@@ -122,7 +122,6 @@ class FileManager
     static function uploadFileMultiple($upfileName, $key)
     {
 
-        $config = include('app/configs/config.php');
         try {
             // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.
@@ -150,10 +149,10 @@ class FileManager
             }
             // DO NOT TRUST $_FILES[$upfileName]['mime'] VALUE !!
             // Check MIME Type by yourself.
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
                 $finfo->file($_FILES[$upfileName]['tmp_name'][$key]),
-                $config->FileUpload,
+                FileUploadConfig::$FileUpload,
                 true
             )) {
                 throw new RuntimeException('Invalid file format.', 1);

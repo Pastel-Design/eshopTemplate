@@ -3,6 +3,7 @@
 namespace app\classes;
 
 use app\exceptions\AddressException;
+use app\configs\RegexConfig;
 
 /**
  * Class Address
@@ -35,7 +36,7 @@ class Address
         if ($first_name == "") {
             $this->first_name = $first_name;
         } else {
-            if (preg_match('/^[A-ž-]{3,}$/', $first_name) === 1) {
+            if (preg_match(RegexConfig::$name, $first_name) === 1) {
                 $this->first_name = $first_name;
             } else {
                 throw new AddressException("Invalid first name");
@@ -44,7 +45,7 @@ class Address
         if ($last_name == "") {
             $this->last_name = $last_name;
         } else {
-            if (preg_match('/^[A-ž-]{3,}$/', $last_name) === 1) {
+            if (preg_match(RegexConfig::$name, $last_name) === 1) {
                 $this->last_name = $last_name;
             } else {
                 throw new AddressException("Invalid last name");
@@ -53,33 +54,33 @@ class Address
         if ($firm_name == "") {
             $this->firm_name = $firm_name;
         } else {
-            if (preg_match('/^(([A-ž]+)([\d\_\-\.\&]*)){3,}$/', $firm_name) === 1) {
+            if (preg_match(RegexConfig::$firmName, $firm_name) === 1) {
                 $this->firm_name = $firm_name;
             } else {
                 throw new AddressException("Invalid firm name");
             }
         }
-        if (preg_match('/^\+4(8|9|3|20|21)$/', $area_code) === 1) {
+        if (preg_match(RegexConfig::$areaCode, $area_code) === 1) {
             $this->area_code= $area_code;
             switch ($area_code) {
                 case "+420":
                 case "+421":
                 case "+48":
-                    if (preg_match('/^\d{3,3}(\ )?\d{3,3}(\ )?\d{3,3}$/', $phone) === 1) {
+                    if (preg_match(RegexConfig::$phoneCZSKPL, $phone) === 1) {
                         $this->phone = $phone;
                     } else {
                         throw new AddressException("Invalid phone number format");
                     }
                     break;
                 case "+49":
-                    if (preg_match('/^0\d{3,5}(\ )?\d{6,8}$/', $phone) === 1) {
+                    if (preg_match(RegexConfig::$phoneDE, $phone) === 1) {
                         $this->phone = $phone;
                     } else {
                         throw new AddressException("Invalid phone number format");
                     }
                     break;
                 case "+43":
-                    if (preg_match('/^\d{1,4}(\ )?\d{3,12}$/', $phone) === 1) {
+                    if (preg_match(RegexConfig::$phoneAU, $phone) === 1) {
                         $this->phone = $phone;
                     } else {
                         throw new AddressException("Invalid phone number format");
@@ -92,7 +93,7 @@ class Address
         } else {
             throw new AddressException("Invalid area code format");
         }
-        if (preg_match('/^[A-ž\ \,\.\-\/\d]{2,}$/', $address1) === 1) {
+        if (preg_match(RegexConfig::$addresLine, $address1) === 1) {
             $this->address1 = $address1;
         } else {
             throw new AddressException("Invalid address1");
@@ -100,23 +101,23 @@ class Address
         if ($address2 == "") {
             $address2 = "";
         } else {
-            if (preg_match('/^[A-ž\ \,\.\-\/\d]{2,}$/', $address2) === 1) {
+            if (preg_match(RegexConfig::$addresLine, $address2) === 1) {
                 $this->address2 = $address2;
             } else {
                 throw new AddressException("Invalid address2");
             }
         }
-        if (preg_match('/^([A-ž]+(\ )*){2,}$/', $city) === 1) {
+        if (preg_match(RegexConfig::$city, $city) === 1) {
             $this->city = $city;
         } else {
             throw new AddressException("Invalid city");
         }
-        if (preg_match('/^[A-Z]{3,3}$/', $country) === 1) {
+        if (preg_match(RegexConfig::$country, $country) === 1) {
             $this->country = $country;
         } else {
             throw new AddressException("Invalid country");
         }
-        if (preg_match('/^\d{3,3}(\ )?\d{2,2}$/', $zipcode) === 1) {
+        if (preg_match(RegexConfig::$zipCode, $zipcode) === 1) {
             $this->zipcode = $zipcode;
         } else {
             throw new AddressException("Invalid zipcode");
@@ -124,7 +125,7 @@ class Address
         if ($dic == "") {
             $this->dic = $dic;
         } else {
-            if (preg_match('/^(CZ\d{8,10})|(SK\d{10,10})$/', $dic) === 1) {
+            if (preg_match(RegexConfig::$dic, $dic) === 1) {
                 $this->dic = $dic;
             } else {
                 throw new AddressException("Invalid dic");
@@ -133,7 +134,7 @@ class Address
         if ($ic == "") {
             $this->ic = $ic;
         } else {
-            if (preg_match('/^\d{8,8}$/', $ic) === 1) {
+            if (preg_match(RegexConfig::$ic, $ic) === 1) {
                 $this->ic = $ic;
             } else {
                 throw new AddressException("Invalid ic");
