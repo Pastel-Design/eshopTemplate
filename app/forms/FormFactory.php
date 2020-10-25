@@ -23,6 +23,7 @@ class FormFactory
         $this->form = new Form();
         $renderer = $this->form->getRenderer();
         $renderer->wrappers["controls"]["container"] = null;
+        $renderer->wrappers["error"]["container"] = "span";
 
         return $this->form;
     }
