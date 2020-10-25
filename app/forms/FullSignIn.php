@@ -24,8 +24,6 @@ final class  FullSignIn
      * @var SignManager $manager
      */
     private SignManager $manager;
-    private string $login;
-    private string $password;
     /**
      * FullSignUp constructor.
      */
@@ -39,8 +37,8 @@ final class  FullSignIn
      */
     public function create(callable $onSuccess): Form
     {
-        $this->form->addText('username', 'Uživatelské jméno:')
-            ->setHtmlAttribute("placeholder", "Uživatelské jméno *")
+        $this->form->addText('login', 'Uživatelské jméno nebo email:')
+            ->setHtmlAttribute("placeholder", "Uživatelské jméno nebo email *")
             ->setRequired(true);
         $this->form->addPassword('password', 'Heslo:')
             ->setHtmlAttribute("placeholder", "Heslo *")
@@ -49,8 +47,9 @@ final class  FullSignIn
         $this->form->addSubmit("submit", "Přihlásit");
 
         $this->form->onSuccess[] = function (Form $form, array $values) use ($onSuccess): void {
+            $_SESSION["karel"]="karel";
             try {
-                $this->manager::SignIn($this->login,$this->password);
+                var_dump($this->manager::SignIn($values["login"],$values["password"]));
             } catch (SignException $exception) {
                 $this->form->addError($exception->getMessage());
                 return;
