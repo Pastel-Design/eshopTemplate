@@ -12,7 +12,7 @@ use app\exceptions\UserException;
 class User
 {
 
-    public $id, $email, $username, $password, $phone, $area_code, $no_orders, $role, $role_id, $role_level, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address;
+    public $id, $email, $username, $password, $phone, $area_code, $no_orders, $role, $role_level, $role_id, $activated, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address;
 
     /**
      * @param string $email
@@ -22,8 +22,9 @@ class User
      * @param string $area_code
      * @param int $no_orders
      * @param string $role
-     * @param int $role_id
      * @param int $role_level
+     * @param int $role_id
+     * @param int $activated
      * @param string $registered_date
      * @param string $first_name
      * @param string $last_name
@@ -33,7 +34,7 @@ class User
      * @return bool
      * @throws UserException
      */
-    public function setValues(string $email, string $username, string $password, string $phone, string $area_code, int $no_orders, string $role, int $role_id, int $role_level, string $registered_date, string $first_name, string $last_name, Address $invoice_address, Address $shipping_address, int $id = null)
+    public function setValues(string $email, string $username, string $password, string $phone, string $area_code, int $no_orders, string $role, int $role_level, int $role_id, int $activated, string $registered_date, string $first_name, string $last_name, Address $invoice_address, Address $shipping_address, int $id = null)
     {
         $this->id = $id;
         if (preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/', $email) === 1) {
@@ -86,8 +87,9 @@ class User
         }
         $this->no_orders = $no_orders;
         $this->role = $role;
-        $this->role_id = $role_id;
         $this->role_level = $role_level;
+        $this->role_id = $role_id;
+        $this->activated = $activated;
         $this->registered_date = $registered_date;
         $date = new \DateTime();
         $this->last_active = $date->format("d-m-Y H:i:s");
@@ -142,9 +144,13 @@ class User
     {
         return $this->role_level;
     }
-    public function getrole_id(): int
+    public function getRole_id(): int
     {
         return $this->role_id;
+    }
+    public function getActivated(): int
+    {
+        return $this->activated;
     }
     public function getRegistered_date(): string
     {
@@ -192,8 +198,6 @@ class User
             "role_level" => $this->role_level,
             "first_name" => $this->first_name,
             "last_name" => $this->last_name,
-            "invoice_address" => $this->invoice_address,
-            "shipping_address" => $this->shipping_address,
         );
     }
 }
