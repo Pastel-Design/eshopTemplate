@@ -11,19 +11,19 @@ class SignManager
     static function SignIn($login, $password)
     {
         (session_status() === 1 ? session_start() : null);
-        if (!self::userExists($login, $login)) {
+        if (self::userExists($login, $login)) {
             if (self::userActivated($login)) {
                 $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?");
                 if (password_verify($password, $DBPass)) {
 
                 }else{
-                    throw new SignException("Wrong password or login");
+                    throw new SignException("Wrong password");
                 }
             } else {
                 throw new SignException("Account not activated");
             }
         } else {
-            throw new SignException("Wrong password or login");
+            throw new SignException("Wrong login");
         }
     }
     static function SignUp(User $user)
@@ -74,10 +74,14 @@ class SignManager
     }
     static function checkUsername($username)
     {
-        return (DbManager::requestAffect("SELECT username FROM user WHERE username = ?", [$username]) === 1);
+       $var =  (DbManager::requestAffect("SELECT username FROM user WHERE username = ?", [$username]) === 1);
+       var_dump($var);
+       return $var;
     }
     static function checkEmail($email)
     {
-        return (DbManager::requestAffect("SELECT email FROM user WHERE email = ?", [$email]) === 1);
+        $var =  (DbManager::requestAffect("SELECT email FROM user WHERE email = ?", [$email]) === 1);
+        var_dump($var);
+        return $var;
     }
 }

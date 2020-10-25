@@ -21,10 +21,6 @@ final class  FullSignIn
     private Form $form;
 
     /**
-     * @var SignManager $manager
-     */
-    private SignManager $manager;
-    /**
      * FullSignUp constructor.
      */
     public function __construct()
@@ -46,17 +42,18 @@ final class  FullSignIn
 
         $this->form->addSubmit("submit", "Přihlásit");
 
-        $this->form->onSuccess[] = function (Form $form, array $values) use ($onSuccess): void {
+        if($this->form->isSuccess()){
+            $values = $this->form->getValues("array");
             $_SESSION["karel"]="karel";
             try {
-                var_dump($this->manager::SignIn($values["login"],$values["password"]));
+                SignManager::SignIn($values["login"],$values["password"]);
             } catch (SignException $exception) {
                 $this->form->addError($exception->getMessage());
-                return;
             }
 
             $onSuccess();
-        };
+        }
+
         return $this->form;
     }
 }
