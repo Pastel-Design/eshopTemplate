@@ -44,7 +44,6 @@ final class  FullSignIn
 
         if($this->form->isSuccess()){
             $values = $this->form->getValues("array");
-            $_SESSION["karel"]="karel";
             try {
                 SignManager::SignIn($values["login"],$values["password"]);
             } catch (SignException $exception) {

@@ -13,7 +13,7 @@ class SignManager
         (session_status() === 1 ? session_start() : null);
         if (self::userExists($login, $login)) {
             if (self::userActivated($login)) {
-                $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?");
+                $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?",[$login,$login]);
                 if (password_verify($password, $DBPass)) {
 
                 }else{
@@ -36,8 +36,8 @@ class SignManager
             $user->password = password_hash($user->password, PASSWORD_DEFAULT);
 
             $userInsert = DbManager::requestInsert('
-            INSERT INTO user (email,username,password,role_id,registered,last_active,first_name,last_name)
-            VALUES(?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
+            INSERT INTO user (email,username,password,role_id,activated, registered,last_active,first_name,last_name)
+            VALUES(?,?,?,?,0,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
             ', [$user->email, $user->username, $user->password, $user->role_id, $user->first_name, $user->last_name]);
 
             $user->setId(DbManager::requestSingle("SELECT id FROM user WHERE username = ?", [$user->username])["id"]);
@@ -64,24 +64,20 @@ class SignManager
     {
         (session_status() === 2 ? session_destroy() : null);
     }
-    static function userExists($email, $username)
+    static function userExists($login)
     {
-        return (self::checkUsername($username) || self::checkEmail($email));
+        return (self::checkUsername($login) || self::checkEmail($login));
     }
-    static function userActivated($email)
+    static function userActivated($login)
     {
-        return (DbManager::requestUnit("SELECT activated FROM user WHERE email = ?", [$email]) === 1);
+        return (DbManager::requestUnit("SELECT activated FROM user WHERE email = ? OR username = ?", [$login, $login]) === 1);
     }
     static function checkUsername($username)
     {
-       $var =  (DbManager::requestAffect("SELECT username FROM user WHERE username = ?", [$username]) === 1);
-       var_dump($var);
-       return $var;
+       return  (DbManager::requestAffect("SELECT username FROM user WHERE username = ?", [$username]) === 1);
     }
     static function checkEmail($email)
     {
-        $var =  (DbManager::requestAffect("SELECT email FROM user WHERE email = ?", [$email]) === 1);
-        var_dump($var);
-        return $var;
+        return (DbManager::requestAffect("SELECT email FROM user WHERE email = ?", [$email]) === 1);
     }
 }

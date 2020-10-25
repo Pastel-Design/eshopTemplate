@@ -79,9 +79,9 @@ class DbManager
     public static function requestUnit($sql, $params = array())
     {
         $result = self::requestSingleWOAssoc($sql, $params);
-        return $result[0];
+        return $result ? $result[0] : false;
     }
-        /**
+    /**
      * @param $sql
      * @param array $params
      * @return boolean
