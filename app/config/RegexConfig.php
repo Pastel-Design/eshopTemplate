@@ -16,6 +16,6 @@ class RegexConfig{
     public static $dic = '/^(CZ\d{8,10})|(SK\d{10,10})$/';
     public static $ic = '/^\d{8,8}$/';
     public static $email = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
-    public static $username = '/^([A-ž]+[\d\_\-\.]*){3,}$/';
+    public static $username = '/^([A-ž\d]+[_\-\.\d]?){5,}$/';
     public static $password = '/^(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}$/';
 }
