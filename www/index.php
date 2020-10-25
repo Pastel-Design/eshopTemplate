@@ -14,15 +14,17 @@ require("../vendor/autoload.php");
  */
 function autoloadFunction($class)
 {
-    require ("../". preg_replace("/[\\ ]+/", "/", $class). ".php");
+    require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
 }
 
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
-
+try {
 //připojení k db
-DbManager::connect($config->Db->host, $config->Db->username, $config->Db->pass, $config->Db->database);
-
+    DbManager::connect($config->Db->host, $config->Db->username, $config->Db->pass, $config->Db->database);
+} catch (\PDOException $exception) {
+    Router::reroute("error/500");
+}
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu
 $router = new Router();
 $router->process(array($_SERVER['REQUEST_URI']));

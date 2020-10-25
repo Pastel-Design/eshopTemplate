@@ -107,9 +107,9 @@ class FileManager
                     return " File: " . $_FILES[$upfileName]["name"] . " failed to upload. " . "Unknown mime type.";
                     break;
             }
-        } catch (RuntimeException $e) {
-            if ($e->getCode() === 1) {
-                return " File: " . $_FILES[$upfileName]["name"] . " failed to upload. " . $e->getMessage();
+        } catch (RuntimeException $exception) {
+            if ($exception->getCode() === 1) {
+                return " File: " . $_FILES[$upfileName]["name"] . " failed to upload. " . $exception->getMessage();
             }
         }
     }
@@ -184,9 +184,9 @@ class FileManager
                     return " File: " . $_FILES[$upfileName]["name"][$key] . " failed to upload. " . "Unknown mime type.";
                     break;
             }
-        } catch (RuntimeException $e) {
-            if ($e->getCode() === 1) {
-                return " File: " . $_FILES[$upfileName]["name"][$key] . " failed to upload. " . $e->getMessage();
+        } catch (RuntimeException $exception) {
+            if ($exception->getCode() === 1) {
+                return " File: " . $_FILES[$upfileName]["name"][$key] . " failed to upload. " . $exception->getMessage();
             }
         }
     }
@@ -215,8 +215,8 @@ class FileManager
                 ImageManager::defaultImage($fileNameWDir);
                 ImageManager::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         } else {
             $fileNameWDir = sprintf(
@@ -234,8 +234,8 @@ class FileManager
                 ImageManager::defaultImage($fileNameWDir);
                 ImageManager::makeThumbnail($fileNameWDir);
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         }
     }
@@ -263,8 +263,8 @@ class FileManager
                 }
                 //!OPTIMALIZACE VIDEA
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         } else {
             $fileNameWDir = sprintf(
@@ -281,8 +281,8 @@ class FileManager
                 }
                 //!OPTIMALIZACE VIDEA
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         }
     }
@@ -309,8 +309,8 @@ class FileManager
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         } else {
             $fileNameWDir = sprintf(
@@ -326,8 +326,8 @@ class FileManager
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         }
     }
@@ -354,8 +354,8 @@ class FileManager
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         } else {
             $fileNameWDir = sprintf(
@@ -371,8 +371,8 @@ class FileManager
                     throw new RuntimeException('Failed to move uploaded file.', 1);
                 }
                 return [0, 'File is uploaded successfully.'];
-            } catch (RuntimeException $e) {
-                return [$e->getCode(), $e->getMessage()];
+            } catch (RuntimeException $exception) {
+                return [$exception->getCode(), $exception->getMessage()];
             }
         }
     }
