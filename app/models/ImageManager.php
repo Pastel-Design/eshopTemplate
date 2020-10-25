@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 
-use app\configs\ImageOptimizerConfig;
+use app\config\ImageOptimizerConfig;
 require("vendor/autoload.php");
 use Intervention\Image\ImageManagerStatic as Image;
 

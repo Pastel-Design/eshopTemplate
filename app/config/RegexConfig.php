@@ -1,6 +1,6 @@
 <?php
 
-namespace app\configs;
+namespace app\config;
 
 class RegexConfig{
     public static $name = '/^[A-ž-]{3,}$/';

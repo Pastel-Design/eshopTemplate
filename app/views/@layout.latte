@@ -7,7 +7,7 @@
     <title>{ifset $page_title}{$page_title}{else}Základní page_title{/ifset}</title>
     <meta name="page_description" content="{ifset $page_description}{$page_description}{/ifset}" />
     <meta name="keywords" content="{ifset $page_keywords}{$page_keywords}{/ifset}" />
-    <link rel="stylesheet" href="www/styles/minified/{$css."?v=".time()}" type="text/css" />
+    <link rel="stylesheet" href="www/styles/{$css."?v=".time()}" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
     {block head}{/block}
@@ -27,7 +27,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
-<script src="www/scripts/minified/{$js."?v=".time()}"></script>
+<script src="www/scripts/{$js."?v=".time()}"></script>
 {block scripts}{/block}
 </body>
 

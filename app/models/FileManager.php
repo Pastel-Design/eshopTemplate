@@ -2,7 +2,7 @@
 namespace app\models;
 
 use RuntimeException;
-use app\configs\FileUploadConfig;
+use app\config\FileUploadConfig;
 /**
  * Class FileManager
  * @package app\models

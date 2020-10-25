@@ -4,7 +4,7 @@ namespace app\classes;
 
 use app\classes\Address;
 use app\exceptions\UserException;
-use app\configs\RegexConfig;
+use app\config\RegexConfig;
 use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 /**

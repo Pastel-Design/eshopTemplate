@@ -3,7 +3,7 @@
 namespace app\classes;
 
 use app\exceptions\AddressException;
-use app\configs\RegexConfig;
+use app\config\RegexConfig;
 
 /**
  * Class Address

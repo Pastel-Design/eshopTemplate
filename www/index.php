@@ -4,7 +4,7 @@ session_start();
 
 use app\models\DbManager;
 use app\router\Router;
-use app\configs\DbConfig;
+use app\config\DbConfig;
 
 mb_internal_encoding("UTF-8");
 

@@ -1,5 +1,5 @@
 <?php
-namespace app\configs;
+namespace app\config;
 class DbConfig
 {
     public static $host = '127.0.0.1';
