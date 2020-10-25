@@ -55,6 +55,9 @@ class SignController extends Controller
         $this->data["form"] = $this->signUpFactory->create(function () {
             $this->head["flashMessage"] = "Registrace proběhla úspěšně";
         });
+        if($this->data["form"]->isSuccess()){
+            $this->data["form"]->onSuccess();
+        }
         $this->setView("Up");
     }
     public function signIn()

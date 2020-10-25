@@ -33,11 +33,6 @@ final class  FullSignUp{
     private Address $address;
 
     /**
-     * @var SignManager $manager
-     */
-    private SignManager $manager;
-
-    /**
      * FullSignUp constructor.
      */
     public function __construct()
@@ -115,8 +110,8 @@ final class  FullSignUp{
 
         $this->form->addSubmit("submit", "Registrovat");
 
-        $this->form->onSuccess[] = function (Form $form, array $values) use ($onSuccess) : void
-        {
+        if($this->form->isSuccess()){
+            $values = $this->form->getValues("array");
             try{
                 $this->address = new Address();
                 $this->address->setValues(
@@ -135,7 +130,6 @@ final class  FullSignUp{
                 );
             }catch (AddressException $exception){
                 $this->form->addError($exception->getMessage());
-                return;
             }
 
             try{
@@ -158,18 +152,15 @@ final class  FullSignUp{
                 );
             }catch (UserException $exception){
                 $this->form->addError($exception->getMessage());
-                return;
             }
 
             try {
-                $this->manager::SignUp($this->user);
+                SignManager::SignUp($this->user);
             }catch (SignException $exception){
                 $this->form->addError($exception->getMessage());
-                return;
             }
-
             $onSuccess();
-        };
+        }
         return $this->form;
     }
 }
