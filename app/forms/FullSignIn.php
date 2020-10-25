@@ -12,7 +12,7 @@ use Nette\Forms\Form;
  * Class FullSignUp
  * @package app\forms
  */
-final class  FullSignIn
+final class  FullSignIn extends FormFactory
 {
 
     /**
@@ -25,7 +25,7 @@ final class  FullSignIn
      */
     public function __construct()
     {
-        $this->form = new Form;
+        $this->form = parent::getForm();
     }
 
     /**
