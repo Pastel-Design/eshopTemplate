@@ -93,7 +93,7 @@ class Address
         } else {
             throw new AddressException("Invalid area code format");
         }
-        if (preg_match(RegexConfig::$addresLine, $address1) === 1) {
+        if (preg_match(RegexConfig::$addressLine, $address1) === 1) {
             $this->address1 = $address1;
         } else {
             throw new AddressException("Invalid address1");
@@ -101,7 +101,7 @@ class Address
         if ($address2 == "") {
             $address2 = "";
         } else {
-            if (preg_match(RegexConfig::$addresLine, $address2) === 1) {
+            if (preg_match(RegexConfig::$addressLine, $address2) === 1) {
                 $this->address2 = $address2;
             } else {
                 throw new AddressException("Invalid address2");
