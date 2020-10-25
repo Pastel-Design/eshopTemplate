@@ -6,8 +6,8 @@ namespace app\controllers;
 
 use app\forms\FullSignUp;
 use app\forms\FullSignIn;
+use app\models\SignManager;
 use app\router\Router;
-use Nette\Forms\Form;
 
 /**
  * Class SignUpController
@@ -20,11 +20,6 @@ class SignController extends Controller
      */
     private FullSignUp $signUpFactory;
     private FullSignIn $signInFactory;
-
-    /**
-     * @var Form $form
-     */
-    private Form $form;
 
     public function __construct()
     {
@@ -42,6 +37,9 @@ class SignController extends Controller
             case "in":
                 $this->signIn();
                 break;
+            case "out":
+                $this->signOut();
+                break;
             default:
                 Router::reroute("error/404");
                 break;
@@ -55,9 +53,6 @@ class SignController extends Controller
         $this->data["form"] = $this->signUpFactory->create(function () {
             $this->head["flashMessage"] = "Registrace proběhla úspěšně";
         });
-        if($this->data["form"]->isSuccess()){
-            $this->data["form"]->onSuccess();
-        }
         $this->setView("Up");
     }
     public function signIn()
@@ -70,5 +65,10 @@ class SignController extends Controller
             $this->head["flashMessage"] = "Registrace proběhla úspěšně";
         });
         $this->setView("In");
+    }
+    public function signOut()
+    {
+        SignManager::SignOut();
+        Router::reroute("home");
     }
 }

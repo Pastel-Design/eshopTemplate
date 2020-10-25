@@ -52,6 +52,7 @@ class DbManager
         $result->execute($params);
         return $result->fetch(\PDO::FETCH_ASSOC);
     }
+
     public static function requestSingleWOAssoc($sql, $params = array())
     {
         $result = self::$connection->prepare($sql);
@@ -81,7 +82,8 @@ class DbManager
         $result = self::requestSingleWOAssoc($sql, $params);
         return $result[0];
     }
-        /**
+
+    /**
      * @param $sql
      * @param array $params
      * @return boolean
@@ -91,6 +93,7 @@ class DbManager
         $result = self::$connection->prepare($sql);
         return $result->execute($params);
     }
+
     /**
      * @param $sql
      * @param array $params
