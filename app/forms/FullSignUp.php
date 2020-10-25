@@ -15,7 +15,8 @@ use Nette\Forms\Form;
  * Class FullSignUp
  * @package app\forms
  */
-final class  FullSignUp{
+final class  FullSignUp extends FormFactory
+{
 
     /**
      * @var Form $form
@@ -37,7 +38,7 @@ final class  FullSignUp{
      */
     public function __construct()
     {
-        $this->form = new Form;
+        $this->form = parent::getForm();
     }
 
     /**
@@ -45,6 +46,7 @@ final class  FullSignUp{
      */
     public function create(callable $onSuccess): Form
     {
+        $this->form->addGroup("Kontaktní údaje");
         $this->form->addEmail('email', 'E-mail:')
             ->setHtmlAttribute('placeholder', 'E-mail *')
             ->addRule($this->form::PATTERN,"Zadejte platný email", "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")
@@ -64,7 +66,7 @@ final class  FullSignUp{
             ->addRule($this->form::PATTERN, "Zadejte platné příjmení",'^[A-ž-]{3,}$')
             ->setRequired(true);
 
-
+        $this->form->addGroup("Přihlašovací údaje");
         $this->form->addText('username', 'Uživatelské jméno:')
             ->setHtmlAttribute("placeholder", "Uživatelské jméno *")
             ->addRule($this->form::PATTERN, "Uživatelské jméno nesplňuje podmínky",'^([A-ž]+[\d\_\-\.]*){3,}$')
@@ -74,7 +76,7 @@ final class  FullSignUp{
             ->addRule($this->form::PATTERN, "Heslo je příliš slabé",'^(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}$')
             ->setRequired(true);
 
-
+        $this->form->addGroup("Firemní údaje");
         $this->form->addCheckbox("firmCheckbox", "Nakupuji na firmu");
         $this->form->addText('ic', 'IČ:')
             ->setHtmlAttribute('placeholder', 'IČ *')
@@ -89,7 +91,7 @@ final class  FullSignUp{
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'^(([A-ž]+)([\d\_\-\.\ \&]*)){3,}$');
 
-
+        $this->form->addGroup("Fakturační adresa");
         $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
             ->setRequired();
         $this->form->addText("address1", "Ulice a č. p.")
