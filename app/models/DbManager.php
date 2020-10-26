@@ -48,16 +48,40 @@ class DbManager
      */
     public static function requestSingle($sql, $params = array())
     {
-        $result = self::$connection->prepare($sql);
-        $result->execute($params);
-        return $result->fetch(\PDO::FETCH_ASSOC);
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            return $result->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
     }
-
+    /**
+     * @param $sql
+     * @param $class
+     * @param array $params
+     * @return array
+     */
+    public static function requestSingleClass($sql, $class, $params = array())
+    {
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            $result->setFetchMode(\PDO::FETCH_CLASS,$class);
+            return $result->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
+    }
     public static function requestSingleWOAssoc($sql, $params = array())
     {
-        $result = self::$connection->prepare($sql);
-        $result->execute($params);
-        return $result->fetch();
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            return $result->fetch();
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
     }
 
     /**
@@ -67,9 +91,31 @@ class DbManager
      */
     public static function requestMultiple($sql, $params = array())
     {
-        $result = self::$connection->prepare($sql);
-        $result->execute($params);
-        return $result->fetchAll(\PDO::FETCH_ASSOC);
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            return $result->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
+    }
+
+    /**
+     * @param $sql
+     * @param $class
+     * @param array $params
+     * @return array
+     */
+    public static function requestMultipleClass($sql, $class, $params = array())
+    {
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            $result->setFetchMode(\PDO::FETCH_CLASS,$class);
+            return $result->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
     }
 
     /**
@@ -79,19 +125,30 @@ class DbManager
      */
     public static function requestUnit($sql, $params = array())
     {
-        $result = self::requestSingleWOAssoc($sql, $params);
-        return $result[0];
+        try {
+            $result = self::requestSingleWOAssoc($sql, $params);
+            return ($result == null ? null : $result[0]);
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
     }
-        /**
+
+    /**
      * @param $sql
      * @param array $params
      * @return boolean
      */
     public static function requestInsert($sql, $params = array())
     {
-        $result = self::$connection->prepare($sql);
-        return $result->execute($params);
+        try {
+            $result = self::$connection->prepare($sql);
+            return $result->execute($params);
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
+
     }
+
     /**
      * @param $sql
      * @param array $params
@@ -99,8 +156,12 @@ class DbManager
      */
     public static function requestAffect($sql, $params = array())
     {
-        $result = self::$connection->prepare($sql);
-        $result->execute($params);
-        return $result->rowCount();
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            return $result->rowCount();
+        } catch (\PDOException $excepiton) {
+            return $excepiton;
+        }
     }
 }

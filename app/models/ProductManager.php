@@ -5,10 +5,10 @@ namespace app\models;
 
 
 /**
- * Class ProductsManager
+ * Class ProductManager
  * @package app\models
  */
-class ProductsManager
+class ProductManager
 {
     /**
      * @return array
@@ -17,4 +17,5 @@ class ProductsManager
     {
         return DbManager::requestMultiple("SELECT * FROM product;");
     }
+    public function SelectProducts(){return;}
 }

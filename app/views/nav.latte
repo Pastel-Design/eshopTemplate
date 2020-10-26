@@ -1,5 +1,7 @@
 
 <nav>
+    Přihlášený uživatel: {$_SESSION["user"]->username}<br>
+        Oprávnění: {$_SESSION["user"]->role_name}
     <ul>
         <li>
             <a href="sign/in">Přihlásit</a>

@@ -5,6 +5,7 @@ session_start();
 use app\models\DbManager;
 use app\router\Router;
 use app\config\DbConfig;
+use app\classes\Product;
 
 mb_internal_encoding("UTF-8");
 
@@ -29,3 +30,4 @@ try {
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu
 $router = new Router();
 $router->process(array($_SERVER['REQUEST_URI']));
+var_dump(new Product);
