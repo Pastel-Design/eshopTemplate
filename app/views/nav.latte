@@ -1,7 +1,9 @@
-
 <nav>
+    {ifset $_SESSION["user"]}
+        {var_dump($_SESSION)}
     Přihlášený uživatel: {$_SESSION["user"]->username}<br>
-        Oprávnění: {$_SESSION["user"]->role_name}
+    Oprávnění: {$_SESSION["user"]->role_name}
+    {/ifset}
     <ul>
         <li>
             <a href="sign/in">Přihlásit</a>

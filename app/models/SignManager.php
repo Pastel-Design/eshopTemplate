@@ -7,6 +7,12 @@ use app\classes\User;
 
 class SignManager
 {
+    /**
+     * @param $login
+     * @param $password
+     * @return void
+     * @throws SignException
+     */
     static function SignIn($login, $password)
     {
         (session_status() === 1 ? session_start() : null);
@@ -14,7 +20,7 @@ class SignManager
             if (self::userActivated($login)) {
                 $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?", [$login, $login]);
                 if (password_verify($password, $DBPass)) {
-
+                    $_SESSION["user"] = UserManager::getUserFromDatabase($login);
                 } else {
                     throw new SignException("Wrong password");
                 }
@@ -34,9 +40,9 @@ class SignManager
             $user->password = password_hash($user->password, PASSWORD_DEFAULT);
 
             $userInsert = DbManager::requestInsert('
-            INSERT INTO user (email,username,password,role_id,activated, registered,last_active,first_name,last_name)
-            VALUES(?,?,?,6,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
-            ', [$user->email, $user->username, $user->password, $user->first_name, $user->last_name]);
+            INSERT INTO user (email,username,password,area_code,phone,role_id,activated, registered,last_active,first_name,last_name)
+            VALUES(?,?,?,?,?,6,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
+            ', [$user->email, $user->username, $user->password, $user->area_code, $user->phone, $user->first_name, $user->last_name]);
             $userId = DbManager::requestUnit("SELECT id FROM user WHERE username = ?", [$user->username]);
             $user->setId($userId);
             $user->setUserIdToAddress();

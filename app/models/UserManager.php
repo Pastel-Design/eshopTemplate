@@ -7,19 +7,16 @@ use app\models\DbManager;
 
 class UserManager
 {
-    public function getUserFromDatabase(string $login)
+    public static function getUserFromDatabase(string $login)
     {
-        $user = (object) DbManager::requestSingle("SELECT * FROM user where username = ? or email = ?",[$login,$login]);
-        return (object) array(
-            "id" => $user->id,
-            "email" => $user->email,
-            "username" => $user->username,
-            "phone" => $user->area_code.$user->phone,
-            "role_name" => $user->role,
-            "role_level" => $user->role_level,
-            "first_name" => $user->first_name,
-            "last_name" => $user->last_name
-        );
+        $user = (object)DbManager::requestSingle('
+            SELECT user.id, user.email, user.username, CONCAT(user.area_code, user.phone) AS phone, role.name AS role_name, role.level AS role_level, user.first_name, user.last_name 
+            FROM user,role 
+            WHERE username = ? 
+            OR email = ? 
+            AND user.role_id = role.id',
+            [$login, $login]);
+        return $user;
     }
 
 }
