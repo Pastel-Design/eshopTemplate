@@ -1,7 +1,7 @@
 <?php
 namespace app\forms;
 
-require("../vendor/autoload.php");
+require("../../vendor/autoload.php");
 
 use app\classes\Address;
 use app\classes\User;
@@ -9,6 +9,7 @@ use app\exceptions\AddressException;
 use app\exceptions\SignException;
 use app\exceptions\UserException;
 use app\models\SignManager;
+use Exception;
 use Nette\Forms\Form;
 
 /**
@@ -44,6 +45,7 @@ final class  FullSignUp extends FormFactory
     /**
      * @param callable $onSuccess
      * @return Form
+     * @throws Exception
      */
     public function create(callable $onSuccess): Form
     {

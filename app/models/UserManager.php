@@ -3,7 +3,7 @@
 
 namespace app\models;
 
-use app\models\DbManager;
+use app\models\DbManager as DbManager;
 
 class UserManager
 {

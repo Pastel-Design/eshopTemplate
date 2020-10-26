@@ -56,7 +56,7 @@ class SignManager
             $invoiceAddressInsert = DbManager::requestInsert('
             INSERT INTO invoice_address (first_name,last_name,firm_name,address1,address2,city,country,zipcode,DIC,IC,user_id)
             VALUES(?,?,?,?,?,?,?,?,?,?,?)
-            ', [$invoiceAddress->first_name, $invoiceAddress->last_name, $invoiceAddress->firm_name, $invoiceAddress->address1, $invoiceAddress->address2, $invoiceAddress->city, $invoiceAddress->country, $invoiceAddress->zipcode, $invoiceAddress->dic, $invoiceAddress->ic, $invoiceAddress->user_id]);;
+            ', [$invoiceAddress->first_name, $invoiceAddress->last_name, $invoiceAddress->firm_name, $invoiceAddress->address1, $invoiceAddress->address2, $invoiceAddress->city, $invoiceAddress->country, $invoiceAddress->zipcode, $invoiceAddress->dic, $invoiceAddress->ic, $invoiceAddress->user_id]);
             $user->invoice_address->id = (int)DbManager::$connection->lastInsertId();
 
 

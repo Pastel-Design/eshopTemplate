@@ -5,7 +5,6 @@ session_start();
 use app\models\DbManager;
 use app\router\Router;
 use app\config\DbConfig;
-use app\classes\Product;
 
 mb_internal_encoding("UTF-8");
 
@@ -16,7 +15,7 @@ require("../vendor/autoload.php");
  */
 function autoloadFunction($class)
 {
-    require("../" . preg_replace("/[\ ]+/", "/", $class) . ".php");
+    require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
 }
 
 //registrace funkce pro její použití jako php autoload funkce
@@ -24,7 +23,7 @@ spl_autoload_register("autoloadFunction");
 try {
 //připojení k db
     DbManager::connect(DbConfig::$host, DbConfig::$username, DbConfig::$pass, DbConfig::$database);
-} catch (\PDOException $exception) {
+} catch (PDOException $exception) {
     Router::reroute("error/500");
 }
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu

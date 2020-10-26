@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use finfo;
 use RuntimeException;
 use app\config\FileUploadConfig;
 
@@ -46,7 +47,6 @@ class FileManager
      */
     static function uploadFileSingle($upfileName)
     {
-
         try {
             // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.
@@ -74,7 +74,7 @@ class FileManager
             }
             // DO NOT TRUST $_FILES[$upfileName]['mime'] VALUE !!
             // Check MIME Type by yourself.
-            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
                     $finfo->file($_FILES[$upfileName]['tmp_name']),
                     FileUploadConfig::$FileUpload,
@@ -107,7 +107,6 @@ class FileManager
                     break;
                 default:
                     return " File: " . $_FILES[$upfileName]["name"] . " failed to upload. " . "Unknown mime type.";
-                    break;
             }
         } catch (RuntimeException $exception) {
             if ($exception->getCode() === 1) {
@@ -150,7 +149,7 @@ class FileManager
             }
             // DO NOT TRUST $_FILES[$upfileName]['mime'] VALUE !!
             // Check MIME Type by yourself.
-            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
                     $finfo->file($_FILES[$upfileName]['tmp_name'][$key]),
                     FileUploadConfig::$FileUpload,
@@ -182,7 +181,6 @@ class FileManager
                     break;
                 default:
                     return " File: " . $_FILES[$upfileName]["name"][$key] . " failed to upload. " . "Unknown mime type.";
-                    break;
             }
         } catch (RuntimeException $exception) {
             if ($exception->getCode() === 1) {

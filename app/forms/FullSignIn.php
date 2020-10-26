@@ -2,7 +2,7 @@
 
 namespace app\forms;
 
-require("../vendor/autoload.php");
+require("../../vendor/autoload.php");
 
 use app\exceptions\SignException;
 use app\models\SignManager;

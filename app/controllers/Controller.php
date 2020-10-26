@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Latte\Engine;
+use Transliterator;
 
 
 /**
@@ -100,7 +101,7 @@ abstract class Controller
      */
     public function basicToDash(string $argument): string
     {
-        $transliterator = \Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', \Transliterator::FORWARD);
+        $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
         return preg_replace("[\W+]", "-", $transliterator->transliterate($argument));
     }
 }

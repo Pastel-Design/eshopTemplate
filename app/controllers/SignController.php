@@ -8,6 +8,7 @@ use app\forms\FullSignUp;
 use app\forms\FullSignIn;
 use app\models\SignManager;
 use app\router\Router;
+use Exception;
 
 /**
  * Class SignUpController
