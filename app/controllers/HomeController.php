@@ -2,15 +2,19 @@
 
 namespace app\controllers;
 
+use app\models\ProductManager;
+
 /**
  * Class HomeController
  * @package app\controllers
  */
 class HomeController extends Controller
 {
+    private ProductManager $productManager;
     public function __construct()
     {
         parent::__construct();
+        $this->productManager = new ProductManager();
     }
 
     //výchozí domácí stránka
@@ -20,6 +24,6 @@ class HomeController extends Controller
         $this->head['page_keywords'] = "eshop";
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         $this->setView('home');
-        $this->data = [];
+        $this->data = ["produkty"=>$this->productManager->selectAllProducts(1,0,24)];
     }
 }

@@ -30,4 +30,3 @@ try {
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu
 $router = new Router();
 $router->process(array($_SERVER['REQUEST_URI']));
-var_dump(new Product);
