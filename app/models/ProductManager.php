@@ -56,13 +56,15 @@ class ProductManager
     }
 
     /**
-     * @param $category_id
-     * @param $offset
-     * @param $limit
+     * @param $category_dashname
+     * @param int $offset
+     * @param int $limit
      * @return array
      */
-    public function selectProducts($category_id, int $offset, int $limit)
+    public function selectProducts($category_dashname, int $offset, int $limit)
     {
+        $category_id = DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?",[$category_dashname]);
+        $offset=$offset*$limit;
         return DbManager::requestMultiple(
             'SELECT product.id,product.name,product.dash_name,product.shortdesc,price,price-((dph/100)*price) as price_wo_dph,dph,amount,on_sale,dostupnost_id,serial_number,main_product FROM product 
         JOIN category_has_product 

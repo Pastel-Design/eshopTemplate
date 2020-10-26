@@ -1,0 +1,16 @@
+{extends "../@layout.latte"}
+{block content}
+    <header>
+        <h1>Kategorie</h1>
+    </header>
+    <ul n:if="$categories">
+        <li n:foreach="$categories as $category">
+            <a href="category/{$category["dash_name"]}">{$category["name"]}</a>
+            <ul n:if="$category['subcategories']">
+        <li n:foreach="$category['subcategories'] as $subcategory">
+            <a href="category/{$subcategory["dash_name"]}">{$subcategory["name"]}</a>
+        </li>
+    </ul>
+    </li>
+    </ul>
+{/block}

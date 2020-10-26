@@ -51,7 +51,15 @@ final class Router
         $parsedURL["path"] = ltrim($parsedURL["path"], "/");
         $parsedURL["path"] = trim($parsedURL["path"]);
         $parsedURL = explode("/", $parsedURL["path"]);
-        return $parsedURL;
+        $newParsedURL = array();
+        foreach ($parsedURL as $parse){
+            if($parse!== ''){
+                $newParsedURL[] = $parse;
+            }else{
+                break;
+            }
+        }
+        return $newParsedURL;
     }
 
     /**
