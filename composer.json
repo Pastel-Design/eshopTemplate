@@ -4,6 +4,6 @@
         "swiftmailer/swiftmailer": "6.2.*",
         "egulias/email-validator": "2.1.*",
         "latte/latte": "2.*",
-        "nette/forms": "3.*"
+        "nette/forms": "3.*",
     }
 }

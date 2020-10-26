@@ -3,7 +3,10 @@
 
 namespace app\classes;
 
-
+/**
+ * Class Product
+ * @package app\classes
+ */
 class Product
 {
     public $id, $dph, $visible, $amount, $on_sale, $min_order, $max_order, $EAN, $serial_number, $main_product, $minimal_storage, $variant_groupid,$name, $title_name, $dash_name, $longdesc, $shortdesc, $age, $meta_description, $meta_keywords, $dostupnost,$nakupni_cena, $price;

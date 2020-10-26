@@ -32,6 +32,11 @@ class SignManager
         }
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     * @throws SignException
+     */
     static function SignUp(User $user)
     {
         (session_status() === 1 ? session_start() : null);
@@ -68,26 +73,44 @@ class SignManager
         endif;
     }
 
+    /**
+     * @return void
+     */
     static function SignOut(): void
     {
         (session_status() === 2 ? session_destroy() : null);
     }
 
+    /**
+     * @param $login
+     * @return bool
+     */
     static function userExists($login)
     {
         return (self::checkUsername($login) || self::checkEmail($login));
     }
-
+    /**
+     * @param $login
+     * @return bool
+     */
     static function userActivated($login)
     {
         return (DbManager::requestUnit("SELECT activated FROM user WHERE email = ? OR username = ?", [$login, $login]) === 1);
     }
 
+    /**
+     * @param $username
+     * @return bool
+     */
     static function checkUsername($username)
     {
         return (DbManager::requestAffect("SELECT username FROM user WHERE username = ?", [$username]) === 1);
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     static function checkEmail($email)
     {
         return (DbManager::requestAffect("SELECT email FROM user WHERE email = ?", [$email]) === 1);

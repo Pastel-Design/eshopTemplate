@@ -4,6 +4,7 @@
 namespace app\models;
 
 use app\classes\Product as Product;
+use Exception;
 
 
 /**
@@ -14,29 +15,23 @@ class ProductManager
 {
     /**
      * @param $category_id
-     * @param $offset
-     * @param $limit
+     * @param int $offset
+     * @param int $limit
      * @return array
+     * @throws Exception
      */
     public function selectAllProducts($category_id, int $offset, int $limit)
     {
         $start = time();
-        $products = $this->SelectProducts($category_id,$offset,$limit);
+        $products = $this->selectProducts($category_id, $offset, $limit);
+
         $newProducts = array();
-        foreach ($products as $product){
-            $newProducts[$product["id"]]=$product;
+        foreach ($products as $product) {
+            $newProducts[$product["id"]] = $product;
         }
-        $products=$newProducts;
-
-        foreach ($products as $id => $product){
-            $discount = DbManager::requestSingle("SELECT * FROM discount WHERE product_id = ?",[$id]);
-            if($discount){
-                switch ()
-                $product["price"] =
-            }
-
-        }
-        echo( $start-time());
+        $products = $this->discountProducts($newProducts);
+        var_dump($products);
+        echo($start - time());
         return $products;
 
     }
@@ -47,10 +42,10 @@ class ProductManager
      * @param $limit
      * @return array
      */
-    public function SelectProducts($category_id, int $offset, int $limit)
+    public function selectProducts($category_id, int $offset, int $limit)
     {
         return DbManager::requestMultiple(
-        'SELECT product.id,product.name,product.dash_name,product.shortdesc,price,price-((dph/100)*price) as price_wo_dph,amount,on_sale,dostupnost_id,serial_number,main_product FROM product 
+            'SELECT product.id,product.name,product.dash_name,product.shortdesc,price,price-((dph/100)*price) as price_wo_dph,dph,amount,on_sale,dostupnost_id,serial_number,main_product FROM product 
         JOIN category_has_product 
         ON product.id = category_has_product.product_id 
         JOIN category 
@@ -60,7 +55,45 @@ class ProductManager
         LIMIT ?
         OFFSET ?
         ;',
-            [$category_id,$limit,$offset]
+            [$category_id, $limit, $offset]
         );
+    }
+
+    /**
+     * @param array $products
+     * @return array
+     * @throws Exception
+     */
+    public function discountProducts(array $products){
+        foreach ($products as $id => $product) {
+            $discount = DbManager::requestSingle("SELECT * FROM discount WHERE product_id = ?", [$id]);
+            if ($discount) {
+                $from = new \DateTime($discount["from"]);
+                $to = new \DateTime($discount["to"]);
+                $today = new \DateTime();
+                if ($from < $today && $to > $today) {
+                    switch ($discount["type"]) {
+                        case "%":
+                            $product["price"] = $product["price"] * (1 - ($discount["amount"] / 100));
+                            $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
+                            break;
+                        case "0":
+                            $product["price"] = $product["price"] - $discount["amount"];
+                            $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
+                            break;
+                    }
+                    $products[$id] = $product;
+                } else {
+                    $product["price"] = (float)$product["price"];
+                    $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
+                    $products[$id] = $product;
+                }
+            } else {
+                $product["price"] = (float)$product["price"];
+                $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
+                $products[$id] = $product;
+            }
+        }
+        return $products;
     }
 }

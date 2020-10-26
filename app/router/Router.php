@@ -13,7 +13,7 @@ use App\controllers\Controller;
 final class Router
 {
 
-    protected $controller;
+    protected Controller $controller;
 
     public function process($params)
     {

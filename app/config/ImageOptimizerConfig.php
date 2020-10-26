@@ -4,8 +4,8 @@ namespace app\config;
 
 class ImageOptimizerConfig
 {
-    public static $defaultImageHeight = 1080;
-    public static $defaultImageWidth = 1920;
-    public static $thumbnailHeight = 480;
-    public static $thumbnailWidth = 720;
+    public static int $defaultImageHeight = 1080;
+    public static int $defaultImageWidth = 1920;
+    public static int $thumbnailHeight = 480;
+    public static int $thumbnailWidth = 720;
 }

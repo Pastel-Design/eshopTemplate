@@ -17,23 +17,23 @@ abstract class Controller
     /**
      * @var array $data
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * @var string $view
      */
-    protected $view = "";
+    protected string $view = "";
 
     /**
      * @var array $head
      */
-    protected $head = ['page_title' => '', 'page_keywords' => '', 'page_page_description' => '', 'css' => '', 'js' => ''];
+    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_page_description' => '', 'css' => '', 'js' => ''];
 
     /**
      * @var Engine $latte
      * Proměnná pro objekt třídy Latte\Engine
      */
-    protected $latte;
+    protected Engine $latte;
 
 
     /**
@@ -54,10 +54,11 @@ abstract class Controller
      * funkce pro výpis pohledu
      *  funkce extract položky v data zpřístupní jako klasické proměnné, to znamená že $pole["polozka"] je nyní přístupná jako $polozka
      *  díky tomu můžou kontrolery vkládat data do pole data a v pohledu k nim přistupujeme jako ke klasickým proměnným.
-     *  Druhá funkce extract extractuje data bez ošetřující funkce, jsou odlišený od těch ošetřených 
+     *  Druhá funkce extract extractuje data bez ošetřující funkce, jsou odlišený od těch ošetřených
      *  prefixem, který pokud není specifikováno, jakože dole není, je defaultně dolní podtržízko
-     * 
+     *
      *  na konec se requieruje pohled ze složky views
+     * @param $controllerName
      * @return void
      */
     public function writeView($controllerName): void

@@ -29,6 +29,7 @@ final class  FullSignIn extends FormFactory
     }
 
     /**
+     * @param callable $onSuccess
      * @return Form
      */
     public function create(callable $onSuccess): Form

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ProductManager;
+use Exception;
 
 /**
  * Class HomeController
@@ -17,7 +18,12 @@ class HomeController extends Controller
         $this->productManager = new ProductManager();
     }
 
-    //výchozí domácí stránka
+    /**
+     * výchozí domácí stránka
+     * @param $params
+     * @return void
+     * @throws Exception
+     */
     public function process($params)
     {
         $this->head['page_title'] = "Domovská stránka";

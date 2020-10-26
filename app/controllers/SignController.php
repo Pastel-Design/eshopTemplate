@@ -27,7 +27,12 @@ class SignController extends Controller
         $this->signUpFactory =  new FullSignUp();
         $this->signInFactory =  new FullSignIn();
     }
-
+    /**
+     * výchozí domácí stránka
+     * @param $params
+     * @return void
+     * @throws Exception
+     */
     public function process($params)
     {
         switch ($params[0]) {

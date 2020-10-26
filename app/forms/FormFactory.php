@@ -12,20 +12,15 @@ use Nette\Forms\Form;
  */
 class FormFactory
 {
-    /**
-     * @var Form $form
-     */
-
-    private Form $form;
 
     public function getForm() : Form
     {
-        $this->form = new Form();
-        $renderer = $this->form->getRenderer();
+        $form = new Form();
+        $renderer = $form->getRenderer();
         $renderer->wrappers["controls"]["container"] = null;
         $renderer->wrappers["error"]["container"] = "span";
 
-        return $this->form;
+        return $form;
     }
 
 }

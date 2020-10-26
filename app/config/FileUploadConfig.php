@@ -4,7 +4,7 @@ namespace app\config;
 
 class FileUploadConfig
 {
-    public static $FileUpload = [
+    public static array $FileUpload = [
         "jpg" => 'image/jpeg',
         "png" => 'image/png',
         "gif" => 'image/gif',

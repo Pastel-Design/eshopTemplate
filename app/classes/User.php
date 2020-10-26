@@ -2,10 +2,11 @@
 
 namespace app\classes;
 
-use app\classes\Address;
+use app\classes\Address as Address;
 use app\exceptions\UserException;
 use app\config\RegexConfig;
-use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
+use DateTime;
+use Exception;
 
 /**
  * Class User
@@ -14,7 +15,7 @@ use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 class User
 {
 
-    public $id, $email, $username, $password, $phone, $area_code, $no_orders, $role, $role_level, $role_id, $activated, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address;
+    public $role, $role_level, $role_id, $activated, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address, $no_orders, $area_code, $phone, $password, $username, $email, $id;
 
     /**
      * @param string $email
@@ -30,8 +31,8 @@ class User
      * @param string $registered_date
      * @param string $first_name
      * @param string $last_name
-     * @param \app\classes\Address $invoice_address
-     * @param \app\classes\Address $shipping_address
+     * @param Address $invoice_address
+     * @param Address $shipping_address
      * @param int|null $id
      * @return bool
      * @throws UserException
@@ -82,7 +83,6 @@ class User
                     break;
                 default:
                     throw new UserException("Invalid area code format");
-                    break;
             }
         } else {
             throw new UserException("Invalid area code format");
@@ -93,7 +93,7 @@ class User
         $this->role_id = $role_id;
         $this->activated = $activated;
         $this->registered_date = $registered_date;
-        $date = new \DateTime();
+        $date = new DateTime();
         $this->last_active = $date->format("d-m-Y H:i:s");
         if (preg_match(RegexConfig::$name, $first_name) === 1) {
             $this->first_name = $first_name;
@@ -110,92 +110,174 @@ class User
         return true;
     }
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
     public function getEmail(): string
     {
         return $this->email;
     }
+
+    /**
+     * @return string
+     */
     public function getUsername(): string
     {
         return $this->username;
     }
+
+    /**
+     * @return string
+     */
     public function getPassword(): string
     {
         return $this->password;
     }
+
+    /**
+     * @return string
+     */
     public function getPhone(): string
     {
         return $this->phone;
     }
+
+    /**
+     * @return string
+     */
     public function getArea_code(): string
     {
         return $this->area_code;
     }
+
+    /**
+     * @return int
+     */
     public function getNo_orders(): int
     {
         return $this->no_orders;
     }
+
+    /**
+     * @return string
+     */
     public function getRole(): string
     {
         return $this->role;
     }
+
+    /**
+     * @return int
+     */
     public function getRole_level(): int
     {
         return $this->role_level;
     }
+
+    /**
+     * @return int
+     */
     public function getRole_id(): int
     {
         return $this->role_id;
     }
+
+    /**
+     * @return int
+     */
     public function getActivated(): int
     {
         return $this->activated;
     }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
     public function getRegistered_date(): string
     {
-        $date = new \DateTime($this->registered_date);
+        $date = new DateTime($this->registered_date);
         return $date->format("d-m-Y");
     }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
     public function getLast_active(): string
     {
-        $date = new \DateTime($this->last_active);
+        $date = new DateTime($this->last_active);
         return $date->format("d-m-Y H:i:s");
     }
+
+    /**
+     * @return string
+     */
     public function getFirst_name(): string
     {
         return $this->first_name;
     }
+
+    /**
+     * @return string
+     */
     public function getLast_name(): string
     {
         return $this->last_name;
     }
+
+    /**
+     * @return \app\classes\Address
+     */
     public function getInvoice_address(): Address
     {
         return $this->invoice_address;
     }
+
+    /**
+     * @return \app\classes\Address
+     */
     public function getShipping_address(): Address
     {
         return $this->shipping_address;
     }
+
+    /**
+     * @return void
+     */
     public function setUserIdToAddress(): void
     {
         $this->shipping_address->user_id = $this->id;
         $this->invoice_address->user_id = $this->id;
     }
+
+    /**
+     * @param int $id
+     * @return void
+     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
+
+    /**
+     * @return object
+     */
     public function getSessionInfo(): object
     {
-        return (object) array(
+        return (object)array(
             "id" => $this->id,
             "email" => $this->email,
             "username" => $this->username,
-            "phone" => $this->area_code.$this->phone,
+            "phone" => $this->area_code . $this->phone,
             "role_name" => $this->role,
             "role_level" => $this->role_level,
             "first_name" => $this->first_name,

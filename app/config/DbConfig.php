@@ -2,8 +2,8 @@
 namespace app\config;
 class DbConfig
 {
-    public static $host = '127.0.0.1';
-    public static $username = 'root';
-    public static $pass = '';
-    public static $database = 'mydb';
+    public static string $host = '127.0.0.1';
+    public static string $username = 'root';
+    public static string $pass = '';
+    public static string $database = 'mydb';
 }

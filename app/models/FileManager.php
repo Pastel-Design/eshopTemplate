@@ -1,8 +1,10 @@
 <?php
+
 namespace app\models;
 
 use RuntimeException;
 use app\config\FileUploadConfig;
+
 /**
  * Class FileManager
  * @package app\models
@@ -74,10 +76,10 @@ class FileManager
             // Check MIME Type by yourself.
             $finfo = new \finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
-                $finfo->file($_FILES[$upfileName]['tmp_name']),
-                FileUploadConfig::$FileUpload,
-                true
-            )) {
+                    $finfo->file($_FILES[$upfileName]['tmp_name']),
+                    FileUploadConfig::$FileUpload,
+                    true
+                )) {
                 throw new RuntimeException('Invalid file format.', 1);
             }
             $type = explode("/", $finfo->file($_FILES[$upfileName]['tmp_name']))[0];
@@ -121,7 +123,6 @@ class FileManager
      */
     static function uploadFileMultiple($upfileName, $key)
     {
-
         try {
             // Undefined | Multiple Files | $_FILES Corruption Attack
             // If this request falls under any of them, treat it invalid.
@@ -151,10 +152,10 @@ class FileManager
             // Check MIME Type by yourself.
             $finfo = new \finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
-                $finfo->file($_FILES[$upfileName]['tmp_name'][$key]),
-                FileUploadConfig::$FileUpload,
-                true
-            )) {
+                    $finfo->file($_FILES[$upfileName]['tmp_name'][$key]),
+                    FileUploadConfig::$FileUpload,
+                    true
+                )) {
                 throw new RuntimeException('Invalid file format.', 1);
             }
             $type = explode("/", $finfo->file($_FILES[$upfileName]['tmp_name'][$key]))[0];

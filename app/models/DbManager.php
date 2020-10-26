@@ -10,14 +10,14 @@ namespace app\models;
 class DbManager
 {
     /**
-     * @var $connection
+     * @var \PDO $connection
      */
-    public static $connection;
+    public static \PDO $connection;
 
     /**
      * @var array $settings
      */
-    private static $settings = [
+    private static array $settings = [
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
         \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         \PDO::ATTR_EMULATE_PREPARES => false,
@@ -56,23 +56,12 @@ class DbManager
             return $excepiton;
         }
     }
+
     /**
      * @param $sql
-     * @param $class
      * @param array $params
      * @return array
      */
-    public static function requestSingleClass($sql, $class, $params = array())
-    {
-        try {
-            $result = self::$connection->prepare($sql);
-            $result->execute($params);
-            $result->setFetchMode(\PDO::FETCH_CLASS,$class);
-            return $result->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $excepiton) {
-            return $excepiton;
-        }
-    }
     public static function requestSingleWOAssoc($sql, $params = array())
     {
         try {
@@ -94,24 +83,6 @@ class DbManager
         try {
             $result = self::$connection->prepare($sql);
             $result->execute($params);
-            return $result->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $excepiton) {
-            return $excepiton;
-        }
-    }
-
-    /**
-     * @param $sql
-     * @param $class
-     * @param array $params
-     * @return array
-     */
-    public static function requestMultipleClass($sql, $class, $params = array())
-    {
-        try {
-            $result = self::$connection->prepare($sql);
-            $result->execute($params);
-            $result->setFetchMode(\PDO::FETCH_CLASS,$class);
             return $result->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $excepiton) {
             return $excepiton;

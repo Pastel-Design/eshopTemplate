@@ -61,7 +61,7 @@ class Address
             }
         }
         if (preg_match(RegexConfig::$areaCode, $area_code) === 1) {
-            $this->area_code= $area_code;
+            $this->area_code = $area_code;
             switch ($area_code) {
                 case "+420":
                 case "+421":
@@ -88,7 +88,6 @@ class Address
                     break;
                 default:
                     throw new AddressException("Invalid area code format");
-                    break;
             }
         } else {
             throw new AddressException("Invalid area code format");
@@ -99,7 +98,7 @@ class Address
             throw new AddressException("Invalid address1");
         }
         if ($address2 == "") {
-            $address2 = "";
+            $this->$address2 = "";
         } else {
             if (preg_match(RegexConfig::$addressLine, $address2) === 1) {
                 $this->address2 = $address2;
@@ -143,58 +142,113 @@ class Address
         $this->user_id = $user_id;
     }
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
     public function getFirst_name(): string
     {
         return $this->first_name;
     }
+
+    /**
+     * @return string
+     */
     public function getLast_name(): string
     {
         return $this->last_name;
     }
+
+    /**
+     * @return string
+     */
     public function getFirm_name(): string
     {
         return $this->firm_name;
     }
+
+    /**
+     * @return string
+     */
     public function getPhone(): string
     {
         return $this->phone;
     }
+
+    /**
+     * @return string
+     */
     public function getArea_code(): string
     {
         return $this->area_code;
     }
+
+    /**
+     * @return string
+     */
     public function getAddress1(): string
     {
         return $this->address1;
     }
+
+    /**
+     * @return string
+     */
     public function getAddress2(): string
     {
         return $this->address2;
     }
+
+    /**
+     * @return string
+     */
     public function getCity(): string
     {
         return $this->city;
     }
+
+    /**
+     * @return string
+     */
     public function getCountry(): string
     {
         return $this->country;
     }
+
+    /**
+     * @return string
+     */
     public function getZipcode(): string
     {
         return $this->zipcode;
     }
+
+    /**
+     * @return string
+     */
     public function getDic(): string
     {
         return $this->dic;
     }
+
+    /**
+     * @return string
+     */
     public function getIc(): string
     {
         return $this->ic;
     }
+
+    /**
+     * @return int
+     */
     public function getUser_id(): int
     {
         return $this->user_id;
