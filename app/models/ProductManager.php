@@ -3,7 +3,7 @@
 
 namespace app\models;
 
-use app\classes\Product as Product;
+use DateTime;
 use Exception;
 
 
@@ -27,10 +27,29 @@ class ProductManager
 
         $newProducts = array();
         foreach ($products as $product) {
+            $mainImage = DbManager::requestUnit(
+                'SELECT CONCAT(image.name,".",image.data_type) AS main_image 
+                FROM image JOIN image_has_product 
+                ON image.id = image_has_product.image_id 
+                JOIN product ON product.id=image_has_product.product_id 
+                WHERE product.id=?
+                AND image_has_product.main_image = 1',
+                [$product["id"]]);
+            $product["main_image"] = $mainImage;
+
+            $dostupnost = DbManager::requestUnit(
+                'SELECT dostupnost.name 
+                FROM dostupnost JOIN product
+                ON dostupnost.id = product.dostupnost_id 
+                WHERE product.id=?',
+                [$product["id"]]);
+            $product["dostupnost"] = $dostupnost;
+            unset($product["dostupnost_id"]);
+
             $newProducts[$product["id"]] = $product;
         }
         $products = $this->discountProducts($newProducts);
-        var_dump($products);
+
         echo($start - time());
         return $products;
 
@@ -64,31 +83,42 @@ class ProductManager
      * @return array
      * @throws Exception
      */
-    public function discountProducts(array $products){
+    public function discountProducts(array $products)
+    {
         foreach ($products as $id => $product) {
             $discount = DbManager::requestSingle("SELECT * FROM discount WHERE product_id = ?", [$id]);
             if ($discount) {
-                $from = new \DateTime($discount["from"]);
-                $to = new \DateTime($discount["to"]);
-                $today = new \DateTime();
+                $from = new DateTime($discount["from"]);
+                $to = new DateTime($discount["to"]);
+                $today = new DateTime();
                 if ($from < $today && $to > $today) {
                     switch ($discount["type"]) {
                         case "%":
+                            $lastPrice = $product["price"];
                             $product["price"] = $product["price"] * (1 - ($discount["amount"] / 100));
-                            $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
+                            $product["discount"] = (float)$product["price"] - $lastPrice;
                             break;
                         case "0":
+                            $lastPrice = $product["price"];
                             $product["price"] = $product["price"] - $discount["amount"];
-                            $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
+                            $product["discount"] = (float)$product["price"] - $lastPrice;
+                            break;
+                        case "price":
+                            $lastPrice = $product["price"];
+                            $product["price"] = (float)$discount["amount"];
+                            $product["discount"] = (float)$product["price"] - $lastPrice;
                             break;
                     }
+                    $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
                     $products[$id] = $product;
                 } else {
+                    $product["discount"] = (float)0;
                     $product["price"] = (float)$product["price"];
                     $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
                     $products[$id] = $product;
                 }
             } else {
+                $product["discount"] = (float)0;
                 $product["price"] = (float)$product["price"];
                 $product["price_wo_dph"] = $product["price"] * (1 - ($product["dph"] / 100));
                 $products[$id] = $product;

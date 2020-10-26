@@ -3,6 +3,9 @@
 namespace app\models;
 
 
+use PDO;
+use PDOException;
+
 /**
  * Class DbManager
  * @package app\models
@@ -10,17 +13,17 @@ namespace app\models;
 class DbManager
 {
     /**
-     * @var \PDO $connection
+     * @var PDO $connection
      */
-    public static \PDO $connection;
+    public static PDO $connection;
 
     /**
      * @var array $settings
      */
     private static array $settings = [
-        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-        \PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_EMULATE_PREPARES => false,
     ];
 
     /**
@@ -32,7 +35,7 @@ class DbManager
     public static function connect($host, $user, $password, $database)
     {
         if (!isset(self::$connection)) {
-            self::$connection = @new \PDO(
+            self::$connection = @new PDO(
                 "mysql:host=$host;dbname=$database",
                 $user,
                 $password,
@@ -42,96 +45,96 @@ class DbManager
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $params
-     * @return array
+     * @return array|PDOException
      */
-    public static function requestSingle($sql, $params = array())
+    public static function requestSingle(string $sql, $params = array())
     {
         try {
             $result = self::$connection->prepare($sql);
             $result->execute($params);
-            return $result->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $excepiton) {
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $excepiton) {
             return $excepiton;
         }
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $params
-     * @return array
+     * @return array|PDOException
      */
-    public static function requestSingleWOAssoc($sql, $params = array())
+    public static function requestSingleWOAssoc(string $sql, $params = array())
     {
         try {
             $result = self::$connection->prepare($sql);
             $result->execute($params);
             return $result->fetch();
-        } catch (\PDOException $excepiton) {
+        } catch (PDOException $excepiton) {
             return $excepiton;
         }
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $params
-     * @return array
+     * @return array|PDOException
      */
-    public static function requestMultiple($sql, $params = array())
+    public static function requestMultiple(string $sql, $params = array())
     {
         try {
             $result = self::$connection->prepare($sql);
             $result->execute($params);
-            return $result->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $excepiton) {
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $excepiton) {
             return $excepiton;
         }
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $params
-     * @return mixed
+     * @return mixed|PDOException
      */
-    public static function requestUnit($sql, $params = array())
+    public static function requestUnit(string $sql, $params = array())
     {
         try {
             $result = self::requestSingleWOAssoc($sql, $params);
             return ($result == null ? null : $result[0]);
-        } catch (\PDOException $excepiton) {
+        } catch (PDOException $excepiton) {
             return $excepiton;
         }
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $params
-     * @return boolean
+     * @return boolean|PDOException
      */
-    public static function requestInsert($sql, $params = array())
+    public static function requestInsert(string $sql, $params = array())
     {
         try {
             $result = self::$connection->prepare($sql);
             return $result->execute($params);
-        } catch (\PDOException $excepiton) {
+        } catch (PDOException $excepiton) {
             return $excepiton;
         }
 
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      * @param array $params
-     * @return int
+     * @return int|PDOException
      */
-    public static function requestAffect($sql, $params = array())
+    public static function requestAffect(string $sql, $params = array())
     {
         try {
             $result = self::$connection->prepare($sql);
             $result->execute($params);
             return $result->rowCount();
-        } catch (\PDOException $excepiton) {
+        } catch (PDOException $excepiton) {
             return $excepiton;
         }
     }
