@@ -8,10 +8,10 @@ use app\router\Router;
 use Exception;
 
 /**
- * Class CategoryController
+ * Class ProductController
  * @package app\controllers
  */
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     private ProductManager $productManager;
     private CategoryManager $categoryManager;
@@ -35,14 +35,13 @@ class CategoryController extends Controller
         $this->head['page_keywords'] = "eshop";
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         if (!$params) {
-            $this->setView('default');
-            $this->data = ["categories" => $this->categoryManager->selectAllCategories()];
+            Router::reroute("404");
         }else{
-            ($this->categoryManager->categoryExists($params[0])?$this->renderCategory($params[0]):Router::reroute("404"));
+            $this->renderProduct($params[0]);
         }
     }
-    public function renderCategory($dashName){
-        $this->setView('renderCategory');
-        $this->data = ["products" => $this->productManager->selectAllProducts($dashName,0,15),"category_name"=>$this->categoryManager->getCategoryName($dashName)];
+    public function renderProduct($dashName){
+        $this->setView('renderProduct');
+        $this->data = ["product_name" => $dashName];
     }
 }

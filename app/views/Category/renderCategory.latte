@@ -5,7 +5,7 @@
     </header>
     <ul n:if="$products">
         <li n:foreach="$products as $product">
-            <a href="category/{$product["dash_name"]}">{$product["name"]}</a>
+            <a href="product/{$product["dash_name"]}">{$product["name"]}</a>
         </li>
     </ul>
 {/block}

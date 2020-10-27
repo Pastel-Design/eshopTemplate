@@ -24,7 +24,7 @@ class CategoryManager
     }
     public function selectMainCategories(){
         $categories = DbManager::requestMultiple(
-            'SELECT id, name, dash_name, short_desc, image_id
+            'SELECT id, name, dash_name, shortdesc, image_id
             FROM category WHERE main_category = 1 AND visible = 1',);
         return $this->getCategoriesImages($categories);
     }
@@ -32,7 +32,7 @@ class CategoryManager
         $newMainCategories = array();
         foreach ($mainCategories as $mainCategory){
             $subcategories = DbManager::requestMultiple(
-                'SELECT id, name, dash_name, short_desc, image_id
+                'SELECT id, name, dash_name, shortdesc, image_id
             FROM category WHERE visible = 1 AND category_id = ?',
                 [$mainCategory["id"]]
             );
