@@ -91,6 +91,7 @@ class ProductManager
      */
     public function getProductInfo(string $dashName)
     {
+        $t = time();
         $product = DbManager::requestSingle(
             'SELECT product.id,product.name,product.title_name,product.dash_name,product.longdesc,price,price-((dph/100)*price) as price_wo_dph,
         dph,amount,on_sale,dostupnost_id,serial_number,meta_description,meta_keywords FROM product 
@@ -128,6 +129,20 @@ class ProductManager
         $product = $this->discountProduct($product);
         $product["price"] = number_format($product["price"], 2, ',', " ");
         $product["price_wo_dph"] = number_format($product["price_wo_dph"], 2, ',', " ");
+        $product = $this->getProductParameters($product);
+        echo(time() - $t);
+        return $product;
+    }
+
+    public function getProductParameters($product)
+    {
+        $product["parameters"] = DbManager::requestMultiple(
+            'SELECT parameter.name, parameter_has_product.value 
+            FROM parameter 
+            JOIN parameter_has_product ON parameter_has_product.parameter_id = parameter.id 
+            JOIN product ON parameter_has_product.product_id = product.id
+            WHERE product.id=?',
+            [$product["id"]]);
         return $product;
     }
 
@@ -147,19 +162,19 @@ class ProductManager
                 switch ($discount["type"]) {
                     case "%":
                         $lastPrice = $product["price"];
-                        $product["oldprice"]=number_format($product["price"], 2, ',', " ");;
+                        $product["oldprice"] = number_format($product["price"], 2, ',', " ");;
                         $product["price"] = $product["price"] * (1 - ($discount["amount"] / 100));
                         $product["discount"] = (float)$product["price"] - $lastPrice;
                         break;
                     case "0":
                         $lastPrice = $product["price"];
-                        $product["oldprice"]=number_format($product["price"], 2, ',', " ");;
+                        $product["oldprice"] = number_format($product["price"], 2, ',', " ");;
                         $product["price"] = $product["price"] - $discount["amount"];
                         $product["discount"] = (float)$product["price"] - $lastPrice;
                         break;
                     case "price":
                         $lastPrice = $product["price"];
-                        $product["oldprice"]=number_format($product["price"], 2, ',', " ");;
+                        $product["oldprice"] = number_format($product["price"], 2, ',', " ");;
                         $product["price"] = (float)$discount["amount"];
                         $product["discount"] = (float)$product["price"] - $lastPrice;
                         break;

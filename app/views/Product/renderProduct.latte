@@ -3,19 +3,26 @@
     <header>
         <h1>Produkt {$product["name"]}</h1>
         <p>Sériové číslo: {$product["serial_number"]}</p>
-        {if !$product["discount"]}
-            <p>Cena: {$product["price"]} Kč</p>
-        {else}
-            <p>Původní cena: <s>{$product["oldprice"]} Kč</s></p>
-            <p>Cena po slevě: {$product["price"]} Kč</p>
-        {/if}
-        {if $product["on_sale"]}
-            VE VÝPRODEJI!!!
-        {/if}
-        <p>Cena bez dph: {$product["price_wo_dph"]} Kč</p>
-        <p>Dostupnost: {$product["dostupnost"]}</p>
-        <p>Počet kusů na skladě: {$product["amount"]}</p>
-
-        <p>{$product["longdesc"]}</p>
     </header>
+    {if !$product["discount"]}
+        <p>Cena: {$product["price"]} Kč</p>
+    {else}
+        <p>Původní cena: <s>{$product["oldprice"]} Kč</s></p>
+        <p>Cena po slevě: {$product["price"]} Kč</p>
+    {/if}
+    {if $product["on_sale"]}
+        VE VÝPRODEJI!!!
+    {/if}
+    <p>Cena bez dph: {$product["price_wo_dph"]} Kč</p>
+    <p>Dostupnost: {$product["dostupnost"]}</p>
+    <p>Počet kusů na skladě: {$product["amount"]}</p>
+    <p>{$product["longdesc"]}</p>
+
+    <h4>Parametry</h4>
+    <ul n:if="$product['parameters']">
+        <li n:foreach="$product['parameters'] as $parameter">
+            {$parameter["name"]}:{$parameter["value"]}
+        </li>
+    </ul>
+
 {/block}
