@@ -3,6 +3,7 @@
     <header>
         <h1>Kategorie {$category_name}</h1>
     </header>
+{var_dump($products)}
     <ul n:if="$products">
         <li n:foreach="$products as $product">
             <a href="product/{$product["dash_name"]}">{$product["name"]}</a>
