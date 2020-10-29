@@ -40,17 +40,18 @@ class CategoryController extends Controller
             $this->data = ["categories" => $this->categoryManager->selectAllCategories()];
         } else {
             if ($this->categoryManager->categoryExists($params[0])) {
-                $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($params[0]), 15);
-                if (isset($gets["p"])) {
-                    if ($gets["p"] > 0 && $gets["p"] <= $no_pages) {
-                        $page = $gets["p"];
-                    }else{
+                $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($params[0]), 5);
+
+                if (isset($params[1])) {
+                    if ($params[1] > 0 && $params[1] <= $no_pages) {
+                        $page = $params[1];
+                    } else {
                         $page = 1;
                     }
                 } else {
                     $page = 1;
                 }
-                $this->renderCategory($params[0],$page);
+                $this->renderCategory($params[0], $page);
             } else {
                 Router::reroute("404");
             }
@@ -64,12 +65,14 @@ class CategoryController extends Controller
      * @return void
      * @throws Exception
      */
-    public function renderCategory($dashName,$page)
+    public
+    function renderCategory($dashName, $page)
     {
         $this->setView('renderCategory');
-        $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 15);
-        $products = $this->productManager->selectAllProducts($dashName, $page-1, 15);
+        $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 5);
+        var_dump($page, $no_pages);
+        $products = $this->productManager->selectAllProducts($dashName, $page - 1, 5);
         $category_name = $this->categoryManager->getCategoryName($dashName);
-        $this->data = ["products" => $products, "category_name" => $category_name, "no_pages" => $no_pages];
+        $this->data = ["products" => $products, "category_dash_name" => $dashName, "category_name" => $category_name, "no_pages" => $no_pages, "page" => $page];
     }
 }

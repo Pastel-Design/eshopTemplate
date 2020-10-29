@@ -17,7 +17,6 @@ final class Router
 
     public function process($params)
     {
-        var_dump($params);
 
         $parsedParams = $this->parseURL($params[0]);
         /**
@@ -25,7 +24,6 @@ final class Router
          * @var TYPE_NAME $parsedURL
          */
         extract($parsedParams);
-
         if (empty($parsedURL[0])) {
             $this->reroute('home');
         }
