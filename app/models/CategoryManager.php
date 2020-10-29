@@ -61,5 +61,8 @@ class CategoryManager
     public function getCategoryName($dashName){
         return DbManager::requestUnit("SELECT name FROM category WHERE dash_name = ?",[$dashName]);
     }
+    public function getCategoryId($dashName){
+        return DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?",[$dashName]);
+    }
 
 }

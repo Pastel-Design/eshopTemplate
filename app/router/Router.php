@@ -17,27 +17,31 @@ final class Router
 
     public function process($params)
     {
-        //Pro parsování url na parametry zavoláme funkci parseURL()
-        $parsedURL = $this->parseURL($params[0]);
+        var_dump($params);
 
-        //Pokud v URL nejsou žádné parametry přesměrujeme na domovskou stránku
+        $parsedParams = $this->parseURL($params[0]);
+        /**
+         * @var TYPE_NAME $parsedGET
+         * @var TYPE_NAME $parsedURL
+         */
+        extract($parsedParams);
+
         if (empty($parsedURL[0])) {
             $this->reroute('home');
         }
-        //Jako aktuálně obsluhovaný kontroler se nastaví první parametr z URL v Camel notaci aby seděl název s případným názvem souboru
-        $controllerName =$this->dashToCamel(array_shift($parsedURL));
+
+        $controllerName = $this->dashToCamel(array_shift($parsedURL));
         $controllerClass = $controllerName . 'Controller';
 
-        //Pokud soubor s názvem kontroleru existuje, nastaví se název třídy kontroleru jako obsluhovaný kontroler do vlastnosti objektu směrovače
         if (file_exists('../app/controllers/' . $controllerClass . '.php')) {
             $controllerClass = "\app\controllers\\" . $controllerClass;
             $this->controller = new $controllerClass;
-            //v opačném případě přesměrujeme na chybovou stránku s errorem 404
-        }else {
+
+        } else {
             $this->reroute('error/404');
         }
-        //Vybraný kontroler si zpracuje parametry z URL
-        $this->controller->process($parsedURL);
+
+        $this->controller->process($parsedURL, $parsedGET);
         $this->controller->writeView($controllerName);
     }
 
@@ -47,29 +51,39 @@ final class Router
      */
     private function parseURL(string $url)
     {
-        $parsedURL = parse_url($url);
-        $parsedURL["path"] = ltrim($parsedURL["path"], "/");
-        $parsedURL["path"] = trim($parsedURL["path"]);
-        $parsedURL = explode("/", $parsedURL["path"]);
-        $newParsedURL = array();
-        foreach ($parsedURL as $parse){
-            if($parse!== ''){
-                $newParsedURL[] = $parse;
-            }else{
+        $url = parse_url($url);
+        $parsedURL = ltrim($url["path"], "/");
+        $parsedURL = trim($parsedURL);
+        $parsedURL = explode("/", $parsedURL);
+        $return["parsedURL"] = array();
+        foreach ($parsedURL as $parse) {
+            if ($parse !== '') {
+                $return["parsedURL"][] = $parse;
+            } else {
                 break;
             }
         }
-        return $newParsedURL;
+        $return["parsedGET"] = array();
+        if (isset($url["query"])) {
+            $parsedGET = explode(";", $url["query"]);
+
+            foreach ($parsedGET as $get) {
+                $get = explode("=", $get);
+                $return["parsedGET"][$get[0]] = $get[1];
+            }
+        }
+        return $return;
     }
 
     /**
      * @param string $text
      * @return string|string[]
      */
-    private function dashToCamel(string  $text)
+    private function dashToCamel(string $text)
     {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $text)));
     }
+
     /**
      * Funkce pro přesměrování z jakýhokoliv důvodu, nejčastěji použita pokud hledaná stránka není nalezena
      * @param string $url

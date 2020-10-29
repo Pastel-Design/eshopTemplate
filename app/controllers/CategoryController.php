@@ -26,10 +26,11 @@ class CategoryController extends Controller
     /**
      * výchozí domácí stránka
      * @param $params
+     * @param null $gets
      * @return void
      * @throws Exception
      */
-    public function process($params)
+    public function process($params, $gets = null)
     {
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";
@@ -37,12 +38,38 @@ class CategoryController extends Controller
         if (!$params) {
             $this->setView('default');
             $this->data = ["categories" => $this->categoryManager->selectAllCategories()];
-        }else{
-            ($this->categoryManager->categoryExists($params[0])?$this->renderCategory($params[0]):Router::reroute("404"));
+        } else {
+            if ($this->categoryManager->categoryExists($params[0])) {
+                $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($params[0]), 15);
+                if (isset($gets["p"])) {
+                    if ($gets["p"] > 0 && $gets["p"] <= $no_pages) {
+                        $page = $gets["p"];
+                    }else{
+                        $page = 1;
+                    }
+                } else {
+                    $page = 1;
+                }
+                $this->renderCategory($params[0],$page);
+            } else {
+                Router::reroute("404");
+            }
         }
     }
-    public function renderCategory($dashName){
+
+    /**
+     * výchozí domácí stránka
+     * @param $dashName
+     * @param $page
+     * @return void
+     * @throws Exception
+     */
+    public function renderCategory($dashName,$page)
+    {
         $this->setView('renderCategory');
-        $this->data = ["products" => $this->productManager->selectAllProducts($dashName,0,15),"category_name"=>$this->categoryManager->getCategoryName($dashName)];
+        $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 15);
+        $products = $this->productManager->selectAllProducts($dashName, $page-1, 15);
+        $category_name = $this->categoryManager->getCategoryName($dashName);
+        $this->data = ["products" => $products, "category_name" => $category_name, "no_pages" => $no_pages];
     }
 }

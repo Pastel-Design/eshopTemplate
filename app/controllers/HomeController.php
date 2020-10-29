@@ -19,10 +19,10 @@ class HomeController extends Controller
     /**
      * výchozí domácí stránka
      * @param $params
+     * @param null $gets
      * @return void
-     * @throws Exception
      */
-    public function process($params)
+    public function process($params,$gets=null)
     {
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";

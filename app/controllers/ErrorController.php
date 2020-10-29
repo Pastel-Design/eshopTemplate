@@ -12,9 +12,10 @@ class ErrorController extends Controller
     /**
      * //nastavování chybových hlášení podle příslušného chybového kódu
      * @param $params
+     * @param null $gets
      * @return void
      */
-    public function process($params)
+    public function process($params,$gets=null)
     {
         $errCode = $params[0];
 		$file = "../app/views/Error/".$errCode.".latte";

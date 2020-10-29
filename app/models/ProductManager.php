@@ -24,7 +24,6 @@ class ProductManager
     {
         $start = time();
         $products = $this->selectProducts($category_id, $offset, $limit);
-
         $newProducts = array();
         foreach ($products as $product) {
             $mainImage = DbManager::requestUnit(
@@ -45,14 +44,15 @@ class ProductManager
                 [$product["id"]]);
             $product["dostupnost"] = $dostupnost;
             unset($product["dostupnost_id"]);
-            $product["price"] = number_format(round($product["price"], 2), 2, ',', " ");
-            $product["price_wo_dph"] = number_format(round($product["price_wo_dph"], 2), 2, ',', " ");
+
             $newProducts[$product["id"]] = $product;
         }
         $products = array();
         foreach ($newProducts as $product) {
             $products[$product["id"]] = $this->discountProduct($product);
         }
+        $product["price"] = number_format(round($product["price"], 2), 2, ',', " ");
+        $product["price_wo_dph"] = number_format(round($product["price_wo_dph"], 2), 2, ',', " ");
         echo($start - time());
         return $products;
 
@@ -82,6 +82,18 @@ class ProductManager
         ;',
             [$category_id, $limit, $offset]
         );
+    }
+    public function numberOfPages($category_id, $limit){
+        $no_products = $this->countProducts($category_id);
+        return ceil($no_products/$limit);
+    }
+    public function countProducts($category_id)
+    {
+        return DbManager::requestUnit(
+            'SELECT COUNT(product.id) FROM product 
+            JOIN category_has_product chp on product.id = chp.product_id 
+            WHERE category_id=?',
+            [$category_id]);
     }
 
     /**
@@ -162,19 +174,19 @@ class ProductManager
                 switch ($discount["type"]) {
                     case "%":
                         $lastPrice = $product["price"];
-                        $product["oldprice"] = number_format($product["price"], 2, ',', " ");;
+                        $product["oldprice"] = number_format($lastPrice, 2, ',', " ");
                         $product["price"] = $product["price"] * (1 - ($discount["amount"] / 100));
                         $product["discount"] = (float)$product["price"] - $lastPrice;
                         break;
                     case "0":
                         $lastPrice = $product["price"];
-                        $product["oldprice"] = number_format($product["price"], 2, ',', " ");;
+                        $product["oldprice"] = number_format($lastPrice, 2, ',', " ");
                         $product["price"] = $product["price"] - $discount["amount"];
                         $product["discount"] = (float)$product["price"] - $lastPrice;
                         break;
                     case "price":
                         $lastPrice = $product["price"];
-                        $product["oldprice"] = number_format($product["price"], 2, ',', " ");;
+                        $product["oldprice"] = number_format($lastPrice, 2, ',', " ");
                         $product["price"] = (float)$discount["amount"];
                         $product["discount"] = (float)$product["price"] - $lastPrice;
                         break;

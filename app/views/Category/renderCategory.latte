@@ -3,10 +3,24 @@
     <header>
         <h1>Kategorie {$category_name}</h1>
     </header>
-{var_dump($products)}
     <ul n:if="$products">
         <li n:foreach="$products as $product">
             <a href="product/{$product["dash_name"]}">{$product["name"]}</a>
         </li>
     </ul>
+    <section>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#div">1</a></li>
+                <li class="page-item"><a class="page-link" href="#div">2</a></li>
+                <li class="page-item"><a class="page-link" href="#div">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
 {/block}

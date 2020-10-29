@@ -48,8 +48,9 @@ abstract class Controller
     /**
      * Definice abstraktní třídy pro ostatní kontrolery které ji dědí
      * @param $params
+     * @param null $gets
      */
-    abstract function process($params);
+    abstract function process($params,$gets=null);
 
     /**
      * funkce pro výpis pohledu
