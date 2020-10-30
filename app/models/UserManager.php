@@ -13,10 +13,11 @@ use app\models\DbManager as DbManager;
 class UserManager
 {
     /**
+     * Výpis uživatele z databáze pomocí username|email
      * @param string $login
      * @return object
      */
-    public static function getuserfromdatabase(string $login) : object
+    public static function getuserfromdatabase(string $login): object
     {
         return (object)dbmanager::requestsingle('
             select user.id, user.email, user.username, concat(user.area_code, user.phone) as phone, role.name as role_name, role.level as role_level, user.first_name, user.last_name 
@@ -29,37 +30,38 @@ class UserManager
 
 
     /**
+     * Změna hesla uživatele.
      * @param int $id
      * @param string $oldPassword
      * @param string $newPassword
      * @throws UserException
      */
-    public static function changePassword(int $id, string $oldPassword, string $newPassword) : void
+    public static function changePassword(int $id, string $oldPassword, string $newPassword): void
     {
         $passInDb = DbManager::requestUnit("SELECT password FROM user WHERE id = ?", [$id]);
-        if(password_verify($oldPassword, $passInDb)){
+        if (password_verify($oldPassword, $passInDb)) {
             $hash = password_hash($newPassword, PASSWORD_BCRYPT);
             $passwordUpdate = dbmanager::requestinsert('update user set password = ? where id = ?;', [$hash, $id]);
-                if($passwordUpdate){
-                    return;
-                }else{
-                    throw new UserException("Něco se nepovedlo, zkuste to prosím později.");
-                }
-        }else{
+            if ($passwordUpdate) {
+                return;
+            } else {
+                throw new UserException("Něco se nepovedlo, zkuste to prosím později.");
+            }
+        } else {
             throw new UserException("Zadali jste nesprávné heslo.");
         }
     }
 
     /**
-     * Funkce pro přidání adresy.
+     * Přidání adresy uživateli.
      * Parametr $type musí mít hodnotu "shipping"||"invoice" jinak funkce hází Exception()
      * @param array $values Poslední prvek pole je vždy user_id
      * @param string $type default: "shipping"
      * @throws UserException
      */
-    public static function addAddress(array $values, string $type = "shipping") : void
+    public static function addAddress(array $values, string $type = "shipping"): void
     {
-        switch ($type){
+        switch ($type) {
             case "shipping":
                 $sql = "INSERT INTO shipping_address(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -71,15 +73,36 @@ class UserManager
             default:
                 throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
         }
-            $addressInsert = DbManager::requestInsert($sql,$values);
-            if($addressInsert){
-                return;
-            }else{
-                throw new UserException("Přidání adresy se nepovedlo");
-            }
+        $addressInsert = DbManager::requestInsert($sql, $values);
+        if ($addressInsert) {
+            return;
+        } else {
+            throw new UserException("Přidání adresy se nepovedlo");
+        }
     }
 
-
+    /**
+     * Vypsání adres uživatele.
+     * Parametr $type musí mít hodnotu "shipping"||"invoice" jinak funkce hází Exception()
+     * @param int $id
+     * @param string $type
+     * @return array|null
+     * @throws \Exception
+     */
+    public static function getUserAddress(int $id, string $type = "shipping")//: ?array
+    {
+        if ($type == "shipping" || $type == "invoice") {
+            $type .= "_address";
+            $sql = "SELECT * FROM {$type} WHERE user_id = ?";
+            if (DbManager::requestAffect($sql, [$id]) > 0) {
+                return DbManager::requestMultiple($sql, [$id]);
+            } else {
+                return null;
+            }
+        } else {
+            throw new \Exception("Parametr \$type funkce getUserAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+        }
+    }
 
 
 }

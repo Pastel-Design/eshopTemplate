@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\forms\ChangePassword;
 use app\forms\InvoiceAddress;
+use app\models\DbManager;
 use app\models\UserManager;
 use app\router\Router;
 
@@ -34,20 +35,25 @@ class AccountController extends Controller
 
     public function process($params, $gets = null)
     {
-        if(!empty($_SESSION || isset($_SESSION["user"]))){
-            $this->data = ["user"=>UserManager::getUserFromDatabase($_SESSION["user"]->username)];
-            $this->data["changePasswordForm"] = $this->changePasswordForm->create(function (){
-                $this->addFlashMessage("Heslo úspěšně změněno.");
-            });
-            $this->data["addInvoiceAddressForm"] = $this->invoiceAddressForm->create(function (){
-                $this->addFlashMessage("Adresa úspěšně přidána.");
-            });
+        if (!empty($_SESSION || isset($_SESSION["user"]))) {
+            try {
+                $this->data["changePasswordForm"] = $this->changePasswordForm->create(function () {
+                    $this->addFlashMessage("Heslo úspěšně změněno.");
+                });
+
+                $this->data["addInvoiceAddressForm"] = $this->invoiceAddressForm->create(function () {
+                    $this->addFlashMessage("Adresa úspěšně přidána.");
+                });
+
+                $this->data["invoiceAddresses"] = UserManager::getUserAddress($_SESSION["user"]->id, "invoice");
+            } catch (\Exception $exception) {
+                echo "<div class='error'>{$exception->getMessage()}</div>";
+            }
             $this->setView('default');
-        }else{
+        } else {
             Router::reroute("home");
         }
     }
-
 
 
 }

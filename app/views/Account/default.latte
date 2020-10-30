@@ -8,6 +8,46 @@
     <div>
         <h1>Fakturační adresy:</h1>
         {$addInvoiceAddressForm->render()}
+
+        <h2>Moje fakturační adresy:</h2>
+        {var_dump($invoiceAddresses)}
+        {if !is_null($invoiceAddresses)}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Jméno</th>
+                        <th scope="col">Příjmení</th>
+                        <th scope="col">Adresní řádek 1</th>
+                        <th scope="col">Adresní řádek 2</th>
+                        <th scope="col">Město</th>
+                        <th scope="col">Stát</th>
+                        <th scope="col">PSČ</th>
+                        <th scope="col">Telefon</th>
+                        <th scope="col">Název firmy</th>
+                        <th scope="col">IČ</th>
+                        <th scope="col">DIČ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr n:foreach="$invoiceAddresses as $address">
+                        <td>{$address["first_name"]}</td>
+                        <td>{$address["last_name"]}</td>
+                        <td>{$address["address1"]}</td>
+                        <td>{$address["address2"]}</td>
+                        <td>{$address["city"]}</td>
+                        <td>{$address["country"]|convertCountry}</td>
+                        <td>{$address["zipcode"]}</td>
+                        <td>{$address["area_code"]}{$address["phone"]}</td>
+                        <td>{$address['firm_name']}</td>
+                        <td>{$address['IC']}</td>
+                        <td>{$address['DIC']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        {else}
+            <h3>Nemáte žádné fakturační adresy</h3>
+        {/if}
     </div>
-{var_dump($user)}
 {/block}

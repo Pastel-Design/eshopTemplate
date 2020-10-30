@@ -43,6 +43,22 @@ abstract class Controller
     public function __construct()
     {
         $this->latte = new Engine();
+        $this->latte->addFilter("convertCountry",function ($countryCode){
+            switch ($countryCode){
+                case "CZE":
+                    return "Česká republika";
+                case "SVK":
+                    return "Slovensko";
+                case "AUT":
+                    return "Rakousko";
+                case "DEU":
+                    return "Německo";
+                case "POL":
+                    return "Polsko";
+                default:
+                    return $countryCode;
+            }
+        });
     }
 
     /**
