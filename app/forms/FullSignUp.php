@@ -1,7 +1,7 @@
 <?php
 namespace app\forms;
 
-require("../../vendor/autoload.php");
+require("../vendor/autoload.php");
 
 use app\classes\Address;
 use app\classes\User;
@@ -165,7 +165,7 @@ final class  FullSignUp extends FormFactory
                     0,
                     "user",
                     5,
-                    6,
+                    5,
                     1,
                     $this->user->getRegistered_date(),
                     $values["firstName"],
@@ -179,10 +179,10 @@ final class  FullSignUp extends FormFactory
 
             try {
                 SignManager::SignUp($this->user);
+                $onSuccess();
             }catch (SignException $exception){
                 $this->form->addError($exception->getMessage());
             }
-            $onSuccess();
         }
         return $this->form;
     }

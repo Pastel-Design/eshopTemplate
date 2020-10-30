@@ -2,7 +2,7 @@
 
 namespace app\forms;
 
-require("../../vendor/autoload.php");
+require("../vendor/autoload.php");
 
 use app\exceptions\SignException;
 use app\models\SignManager;
@@ -47,11 +47,10 @@ final class  FullSignIn extends FormFactory
             $values = $this->form->getValues("array");
             try {
                 SignManager::SignIn($values["login"],$values["password"]);
+                $onSuccess();
             } catch (SignException $exception) {
                 $this->form->addError($exception->getMessage());
             }
-
-            $onSuccess();
         }
 
         return $this->form;

@@ -45,9 +45,9 @@ class SignManager
             $user->password = password_hash($user->password, PASSWORD_DEFAULT);
 
             $userInsert = DbManager::requestInsert('
-            INSERT INTO user (email,username,password,area_code,phone,role_id,activated, registered,last_active,first_name,last_name)
-            VALUES(?,?,?,?,?,6,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
-            ', [$user->email, $user->username, $user->password, $user->area_code, $user->phone, $user->first_name, $user->last_name]);
+            INSERT INTO user (email,username,password,phone,area_code,role_id,activated, registered,last_active,first_name,last_name)
+            VALUES(?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
+            ', [$user->email, $user->username, $user->password,$user->phone, $user->area_code, $user->role_id, $user->activated,  $user->first_name, $user->last_name]);
             $userId = DbManager::requestUnit("SELECT id FROM user WHERE username = ?", [$user->username]);
             $user->setId($userId);
             $user->setUserIdToAddress();

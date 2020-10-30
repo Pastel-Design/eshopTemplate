@@ -10,17 +10,22 @@ use Nette\Forms\Form;
  * Class FormFactory
  * @package app\forms
  */
-class FormFactory
+abstract class FormFactory
 {
 
-    public function getForm() : Form
+    protected function getForm() : Form
     {
         $form = new Form();
         $renderer = $form->getRenderer();
         $renderer->wrappers["controls"]["container"] = null;
-        $renderer->wrappers["error"]["container"] = "span";
-
         return $form;
     }
+
+    /**
+     * Creates and returns Form
+     * @param callable $onSuccess
+     * @return Form
+     */
+    abstract function create(callable $onSuccess) : Form;
 
 }

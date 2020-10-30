@@ -17,9 +17,13 @@ use Exception;
 class SignController extends Controller
 {
     /**
-     * @var FullSignUp $factory
+     * @var FullSignUp $signUpFactory
      */
     private FullSignUp $signUpFactory;
+
+    /**
+     * @var FullSignIn $signInFactory
+     */
     private FullSignIn $signInFactory;
 
     public function __construct()
@@ -58,7 +62,7 @@ class SignController extends Controller
         $this->head['page_keywords'] = "Registrace;registrace;eshop;";
         $this->head['page_description'] = "Registrace na eshop Zlatá loď";
         $this->data["form"] = $this->signUpFactory->create(function () {
-            $this->head["flashMessage"] = "Registrace proběhla úspěšně";
+            $this->addFlashMessage("Registrace proběhla úspěšně");
         });
         $this->setView("Up");
     }
@@ -69,7 +73,7 @@ class SignController extends Controller
         $this->head['page_description'] = "Přihlášení na eshop Zlatá loď";
         $this->setView('home');
         $this->data["form"] = $this->signInFactory->create(function () {
-            $this->head["flashMessage"] = "Registrace proběhla úspěšně";
+            $this->addFlashMessage("Přihlášení proběhlo úspěšně");
         });
         $this->setView("In");
     }

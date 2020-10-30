@@ -28,7 +28,7 @@ abstract class Controller
     /**
      * @var array $head
      */
-    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_page_description' => '', 'css' => '', 'js' => ''];
+    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_page_description' => '', 'css' => '', 'js' => '','flashes'=>[]];
 
     /**
      * @var Engine $latte
@@ -104,5 +104,17 @@ abstract class Controller
     {
         $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: Lower(); :: NFC;', Transliterator::FORWARD);
         return preg_replace("[\W+]", "-", $transliterator->transliterate($argument));
+    }
+
+    /**
+     * Přidání flashMessage.
+     * První parametr je samotná zpráva.
+     * Druhý parametr je typ zprávy. (např. success, error, info) Pro případné rozdílné formátování zpráv v CSS.
+     * @param string $message
+     * @param string $type default = "info"
+     */
+    protected function addFlashMessage(string $message, string $type = "info") : void
+    {
+        $this->head["flashes"][] = ["message"=>$message, "type"=>$type];
     }
 }
