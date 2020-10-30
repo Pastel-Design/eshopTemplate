@@ -60,8 +60,6 @@ final class ChangePassword extends FormFactory
             }catch (UserException $exception){
                 $this->form->addError($exception->getMessage());
             }
-        }else{
-            $this->form->addError("Něco se nepovedlo.");
         }
 
         return $this->form;

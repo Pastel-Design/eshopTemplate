@@ -16,21 +16,21 @@ class Address
     /**
      * @param string $first_name
      * @param string $last_name
-     * @param string $firm_name
+     * @param string|null $firm_name
      * @param string $phone
      * @param string $area_code
      * @param string $address1
-     * @param string $address2
+     * @param string|null $address2
      * @param string $city
      * @param string $country
      * @param string $zipcode
-     * @param string $dic
-     * @param string $ic
+     * @param string|null $dic
+     * @param string|null $ic
      * @param int|null $id
      * @param int|null $user_id
      * @throws AddressException
      */
-    public function setValues(string $first_name, string $last_name, string $firm_name, string $phone, string $area_code, string $address1, string $address2, string $city, string $country, string $zipcode, string $dic, string $ic, int $id = null, int $user_id = null)
+    public function setValues(string $first_name, string $last_name, ?string $firm_name, string $phone, string $area_code, string $address1, ?string $address2, string $city, string $country, string $zipcode, ?string $dic, ?string $ic, int $id = null, int $user_id = null)
     {
         $this->id = $id;
         if ($first_name == "") {

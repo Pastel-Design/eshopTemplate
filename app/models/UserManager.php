@@ -6,7 +6,11 @@ namespace app\models;
 use app\exceptions\UserException;
 use app\models\DbManager as DbManager;
 
-class usermanager
+/**
+ * Class UserManager
+ * @package app\models
+ */
+class UserManager
 {
     /**
      * @param string $login
@@ -45,6 +49,36 @@ class usermanager
             throw new UserException("Zadali jste nesprávné heslo.");
         }
     }
+
+    /**
+     * Funkce pro přidání adresy.
+     * Parametr $type musí mít hodnotu "shipping"||"invoice" jinak funkce hází Exception()
+     * @param array $values Poslední prvek pole je vždy user_id
+     * @param string $type default: "shipping"
+     * @throws UserException
+     */
+    public static function addAddress(array $values, string $type = "shipping") : void
+    {
+        switch ($type){
+            case "shipping":
+                $sql = "INSERT INTO shipping_address(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                break;
+            case "invoice":
+                $sql = "INSERT INTO `invoice_address`( `first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `DIC`, `IC`, `user_id`)
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                break;
+            default:
+                throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+        }
+            $addressInsert = DbManager::requestInsert($sql,$values);
+            if($addressInsert){
+                return;
+            }else{
+                throw new UserException("Přidání adresy se nepovedlo");
+            }
+    }
+
 
 
 
