@@ -24,8 +24,13 @@ class usermanager
     }
 
 
-
-    public static function changepassword(int $id, string $oldPassword, string $newPassword) : void
+    /**
+     * @param int $id
+     * @param string $oldPassword
+     * @param string $newPassword
+     * @throws UserException
+     */
+    public static function changePassword(int $id, string $oldPassword, string $newPassword) : void
     {
         $passInDb = DbManager::requestUnit("SELECT password FROM user WHERE id = ?", [$id]);
         if(password_verify($oldPassword, $passInDb)){

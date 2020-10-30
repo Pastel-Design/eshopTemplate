@@ -31,7 +31,10 @@ final class ChangePassword extends FormFactory
         $this->sessionInfo = $_SESSION["user"];
     }
 
-
+    /**
+     * @param callable $onSuccess
+     * @return Form
+     */
     public function create(callable $onSuccess): Form
     {
         $this->form->addPassword("oldPassword", "Staré heslo")
@@ -52,7 +55,7 @@ final class ChangePassword extends FormFactory
         if($this->form->isSuccess()){
             $values = $this->form->getValues("array");
             try{
-                UserManager::changepassword($this->sessionInfo->id, $values["oldPassword"], $values["newPassword"]);
+                UserManager::changePassword($this->sessionInfo->id, $values["oldPassword"], $values["newPassword"]);
                 $onSuccess();
             }catch (UserException $exception){
                 $this->form->addError($exception->getMessage());
