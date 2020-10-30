@@ -57,9 +57,8 @@ class InvoiceAddress extends FormFactory
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([\d_\-\.&]*)){3,}');
-        $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
-            ->setRequired();
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
+
 
         $this->form->addGroup("Adresa");
         $this->form->addText('firstName', 'Jméno:')
@@ -92,6 +91,8 @@ class InvoiceAddress extends FormFactory
             ->setHtmlAttribute("title", "Zadejte platné PSČ")
             ->addRule($this->form::PATTERN, "Neplatné PSČ",'\d{3,3}( )?\d{2,2}')
             ->setRequired(true);
+        $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
+            ->setRequired();
         $this->form->addSelect("areaCode", "Předvolba: ", ["+420"=>"+420", "+421"=>"+421", "+48"=>"+48"])
             ->setRequired();
         $this->form->addText('phone', 'Telefon:')
@@ -128,7 +129,7 @@ class InvoiceAddress extends FormFactory
                 UserManager::addAddress([
                     $this->address->first_name,
                     $this->address->last_name,
-                    $this->address->first_name,
+                    $this->address->firm_name,
                     $this->address->phone,
                     $this->address->area_code,
                     $this->address->address1,

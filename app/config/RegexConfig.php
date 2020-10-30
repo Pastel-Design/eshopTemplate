@@ -4,7 +4,7 @@ namespace app\config;
 
 class RegexConfig{
     public static string $name = '/^[A-ž-]{3,}$/';
-    public static string $firmName = '/^(([A-ž]+)([\d\_\-\.\ \&]*)){3,}$/';
+    public static string $firmName = '/^(([A-ž]+)([ \d\_\-\.\ \&]*)){3,}$/';
     public static string $areaCode = '/^\+4(8|9|3|20|21)$/';
     public static string $phoneCZSKPL = '/^\d{3,3}(\ )?\d{3,3}(\ )?\d{3,3}$/';
     public static string $phoneDE = '/^0\d{3,5}(\ )?\d{6,8}$/';

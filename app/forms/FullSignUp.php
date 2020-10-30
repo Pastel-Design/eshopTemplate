@@ -104,7 +104,7 @@ final class  FullSignUp extends FormFactory
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([\d_\-\.&]*)){3,}');
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
 
         $this->form->addGroup("Fakturační adresa");
         $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
