@@ -44,7 +44,8 @@ class usermanager
         }else{
             throw new UserException("Zadali jste nesprávné heslo.");
         }
-
     }
+
+
 
 }

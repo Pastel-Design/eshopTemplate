@@ -1,14 +1,19 @@
 <nav>
     {ifset $_SESSION["user"]}
-    Přihlášený uživatel: {$_SESSION["user"]->username}<br>
-    Oprávnění: {$_SESSION["user"]->role_name}
+        Přihlášený uživatel: {$_SESSION["user"]->username}<br>
+        Oprávnění: {$_SESSION["user"]->role_name}
     {/ifset}
     <ul>
         <li>
-            <a href="sign/in">Přihlásit</a>
-            <a href="sign/up">Registrovat</a>
-            <a href="sign/out">Odhlásit</a>
-            <a href="account">Účet</a>
+
+            {ifset $_SESSION["user"]}
+                <a href="sign/out">Odhlásit</a>
+                <a href="account">Účet</a>
+            {else}
+                <a href="sign/in">Přihlásit</a>
+                <a href="sign/up">Registrovat</a>
+            {/ifset}
+
         </li>
     </ul>
 </nav>
