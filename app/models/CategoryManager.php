@@ -16,10 +16,8 @@ class CategoryManager
      */
     public function selectAllCategories()
     {
-        $start = time();
         $categories = $this->selectMainCategories();
         $categories = $this->selectSubCategories($categories);
-        echo($start - time());
         return $categories;
     }
     public function selectMainCategories(){

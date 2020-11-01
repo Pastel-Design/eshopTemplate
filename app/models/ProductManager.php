@@ -22,7 +22,6 @@ class ProductManager
      */
     public function selectAllProducts($category_id, int $offset, int $limit)
     {
-        $start = time();
         $products = $this->selectProducts($category_id, $offset, $limit);
         $newProducts = array();
         foreach ($products as $product) {
@@ -53,7 +52,6 @@ class ProductManager
         }
         $product["price"] = number_format(round($product["price"], 2), 2, ',', " ");
         $product["price_wo_dph"] = number_format(round($product["price_wo_dph"], 2), 2, ',', " ");
-        echo($start - time());
         return $products;
 
     }
@@ -103,7 +101,6 @@ class ProductManager
      */
     public function getProductInfo(string $dashName)
     {
-        $t = time();
         $product = DbManager::requestSingle(
             'SELECT product.id,product.name,product.title_name,product.dash_name,product.longdesc,price,price-((dph/100)*price) as price_wo_dph,
         dph,amount,on_sale,dostupnost_id,serial_number,meta_description,meta_keywords FROM product 
@@ -142,7 +139,6 @@ class ProductManager
         $product["price"] = number_format($product["price"], 2, ',', " ");
         $product["price_wo_dph"] = number_format($product["price_wo_dph"], 2, ',', " ");
         $product = $this->getProductParameters($product);
-        echo(time() - $t);
         return $product;
     }
 

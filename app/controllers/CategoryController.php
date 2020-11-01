@@ -70,7 +70,6 @@ class CategoryController extends Controller
     {
         $this->setView('renderCategory');
         $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 5);
-        var_dump($page, $no_pages);
         $products = $this->productManager->selectAllProducts($dashName, $page - 1, 5);
         $category_name = $this->categoryManager->getCategoryName($dashName);
         $this->data = ["products" => $products, "category_dash_name" => $dashName, "category_name" => $category_name, "no_pages" => $no_pages, "page" => $page];

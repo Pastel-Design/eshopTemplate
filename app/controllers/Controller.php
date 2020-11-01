@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\CategoryManager;
 use Latte\Engine;
 use Transliterator;
 
@@ -28,7 +29,7 @@ abstract class Controller
     /**
      * @var array $head
      */
-    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_page_description' => '', 'css' => '', 'js' => '','flashes'=>[]];
+    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_description' => '', 'css' => '', 'js' => '','flashes'=>[]];
 
     /**
      * @var Engine $latte
@@ -36,6 +37,7 @@ abstract class Controller
      */
     protected Engine $latte;
 
+    protected CategoryManager $categoryManagerNav;
 
     /**
      * Controller constructor.
@@ -59,6 +61,7 @@ abstract class Controller
                     return $countryCode;
             }
         });
+        $this->categoryManagerNav = new CategoryManager();
     }
 
     /**
@@ -84,6 +87,7 @@ abstract class Controller
         if ($this->view) {
             $this->view = __DIR__ . "/../../app/views/" . $controllerName . "/" . $this->view . ".latte";
             $params = array_merge($this->head,$this->data);
+            $params["categories"] = $this->categoryManagerNav->selectAllCategories();
             $this->latte->render($this->view, $params);
         }
     }

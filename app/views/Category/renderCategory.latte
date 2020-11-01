@@ -1,7 +1,7 @@
 {extends "../@layout.latte"}
 {block content}
     <header>
-        <h1>Kategorie {$category_name}</h1>
+        <h1>{$category_name}</h1>
     </header>
     <ul n:if="$products">
         <li n:foreach="$products as $product">
