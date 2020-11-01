@@ -13,17 +13,17 @@ use Nette\Forms\Form;
 abstract class FormFactory
 {
 
-    protected function getForm() : Form
+    protected function getForm(string $name) : Form
     {
-        $form = new Form();
+        $form = new Form($name);
         $renderer = $form->getRenderer();
         $renderer->wrappers["controls"]["container"] = null;
         return $form;
     }
 
-    function getBootstrapForm(): Form
+    function getBootstrapForm(string $name): Form
     {
-        $form = new Form();
+        $form = new Form($name);
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = null;
         $renderer->wrappers['pair']['container'] = 'div class="form-group row"';

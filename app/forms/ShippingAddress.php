@@ -30,7 +30,7 @@ class ShippingAddress extends FormFactory
 
     public function __construct()
     {
-        $this->form = parent::getBootstrapForm();
+        $this->form = parent::getBootstrapForm("shippingAddress");
     }
 
     /**
