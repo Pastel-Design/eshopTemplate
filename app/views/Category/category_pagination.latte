@@ -1,0 +1,110 @@
+{if $no_pages > 1}
+    <section>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {if $page == 1}
+                    <li class="page-item active">
+                        <a class="page-link" href="category/{$category_dash_name}/1">1</a>
+                    </li>
+                    {if $no_pages > 6}
+                        {for $i = 2;$i != 7;$i++}
+                            <li class="page-item">
+                                <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                            </li>
+                        {/for}
+                        <li class="page-item" style="display: flex;align-items: flex-end">
+                            &nbsp...&nbsp
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="category/{$category_dash_name}/{$no_pages}">{$no_pages}</a>
+                        </li>
+                    {else}
+                        {for $i = 2;$i != $no_pages;$i++}
+                            <li class="page-item">
+                                <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                            </li>
+                        {/for}
+                    {/if}
+                {else}
+                    <li class="page-item">
+                        <a class="page-link" href="category/{$category_dash_name}/{$page-1}">Previous</a>
+                    </li>
+                    {if $page <= 4}
+                        {for $i = 1;$i != $page;$i++}
+                            <li class="page-item">
+                                <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                            </li>
+                        {/for}
+                        <li class="page-item active">
+                            <a class="page-link" href="category/{$category_dash_name}/{$page}">{$page}</a>
+                        </li>
+                        {if $page <= 4}
+                            {for $i = $page+1;$i != $page+3;$i++}
+                                <li class="page-item">
+                                    <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                                </li>
+                            {/for}
+                            <li class="page-item" style="display: flex;align-items: flex-end">
+                                &nbsp...&nbsp
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="category/{$category_dash_name}/{$no_pages}">{$no_pages}</a>
+                            </li>
+                        {else}
+                            {if $page != $no_pages}
+                                {for $i = $page+1;$i != $no_pages;$i++}
+                                    <li class="page-item">
+                                        <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                                    </li>
+                                {/for}
+                            {/if}
+                        {/if}
+                    {else}
+                        <li class="page-item">
+                            <a class="page-link" href="category/{$category_dash_name}/1">1</a>
+                        </li>
+                        <li class="page-item" style="display: flex;align-items: flex-end">
+                            &nbsp...&nbsp
+                        </li>
+                        {for $i = $page-3;$i != $page;$i++}
+                            <li class="page-item">
+                                <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                            </li>
+                        {/for}
+                        <li class="page-item active">
+                            <a class="page-link" href="category/{$category_dash_name}/{$page}">{$page}</a>
+                        </li>
+                        {if $no_pages > $page+3}
+                            {for $i = $page+1;$i != $page+4;$i++}
+                                <li class="page-item">
+                                    <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                                </li>
+                            {/for}
+                            <li class="page-item" style="display: flex;align-items: flex-end">
+                                &nbsp...&nbsp
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="category/{$category_dash_name}/{$no_pages}">{$no_pages}</a>
+                            </li>
+                        {else}
+                            {if $page != $no_pages}
+                                {for $i = $page+1;$i != $no_pages+1;$i++}
+                                    <li class="page-item">
+                                        <a class="page-link" href="category/{$category_dash_name}/{$i}">{$i}</a>
+                                    </li>
+                                {/for}
+                            {/if}
+                        {/if}
+                    {/if}
+                {/if}
+                    {if $page != $no_pages}
+                    <li class="page-item">
+                        <a class="page-link" href="category/{$category_dash_name}/{$page+1}">Next</a>
+                    </li>
+                {/if}
+            </ul>
+        </nav>
+    </section>
+{/if}

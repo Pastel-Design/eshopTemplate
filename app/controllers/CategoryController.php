@@ -65,8 +65,8 @@ class CategoryController extends Controller
     function renderCategory($dashName, $page)
     {
         $this->setView('default');
-        $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 5);
-        $products = $this->productManager->selectAllProducts($dashName, $page - 1, 5);
+        $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 17);
+        $products = $this->productManager->selectAllProducts($dashName, $page - 1, 17);
         $category_name = $this->categoryManager->getCategoryName($dashName);
         $this->data = ["products" => $products, "category_dash_name" => $dashName, "category_name" => $category_name, "no_pages" => $no_pages, "page" => $page];
     }
