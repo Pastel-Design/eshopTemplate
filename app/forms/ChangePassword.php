@@ -27,7 +27,7 @@ final class ChangePassword extends FormFactory
 
     public function __construct()
     {
-        $this->form = parent::getForm();
+        $this->form = parent::getBootstrapForm();
         $this->sessionInfo = $_SESSION["user"];
     }
 

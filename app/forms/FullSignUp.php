@@ -39,7 +39,7 @@ final class  FullSignUp extends FormFactory
      */
     public function __construct()
     {
-        $this->form = parent::getForm();
+        $this->form = parent::getBootstrapForm();
     }
 
     /**
@@ -50,34 +50,19 @@ final class  FullSignUp extends FormFactory
     public function create(callable $onSuccess): Form
     {
         $this->form->addGroup("Kontaktní údaje");
-        $this->form->addEmail('email', 'E-mail:')
-            ->setHtmlAttribute('placeholder', 'E-mail *')
-            ->setHtmlAttribute("title", "Zadejte platný email")
-            ->addRule($this->form::PATTERN,"Zadejte platný email", "[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([\.a-zA-Z0-9-]+)")
-            ->setRequired(true);
-        $this->form->addSelect("areaCode", "Předvolba: ", ["+420"=>"+420", "+421"=>"+421", "+48"=>"+48"])
-            ->setRequired();
-        $this->form->addText('phone', 'Telefon:')
-            ->setHtmlAttribute('placeholder', 'Telefon *')
-            ->setHtmlAttribute("title", "Zadejte platné telefonní číslo")
-            ->addRule($this->form::PATTERN, " Zadejte platné telefonní číslo",'\d{3,3}( )?\d{3,3}( )?\d{3,3}')
-            ->setRequired(true);
-        $this->form->addText('firstName', 'Jméno:')
-            ->setHtmlAttribute("placeholder", "Jméno *")
-            ->setHtmlAttribute("title", "Zadejte platné jméno")
-            ->addRule($this->form::PATTERN, "Zadejte platné jméno",'[A-ž-]{3,}')
-            ->setRequired(true);
-        $this->form->addText('lastName', 'Příjmení:')
-            ->setHtmlAttribute("placeholder", "Příjmení *")
-            ->setHtmlAttribute("title", "Zadejte platné příjmení")
-            ->addRule($this->form::PATTERN, "Zadejte platné příjmení",'[A-ž-]{3,}')
-            ->setRequired(true);
+
+
 
         $this->form->addGroup("Přihlašovací údaje");
         $this->form->addText('username', 'Uživatelské jméno:')
             ->setHtmlAttribute("placeholder", "Uživatelské jméno *")
             ->setHtmlAttribute("title",  "Uživatelské jméno smí obsahovat pouze písmena, číslice a znaky _-.\nMusí být dlouhé minimálně 5 znaků")
             ->addRule($this->form::PATTERN, "Uživatelské jméno nesplňuje podmínky",'([A-ž\d]+[_\-\.\d]?){5,}')
+            ->setRequired(true);
+        $this->form->addEmail('email', 'E-mail:')
+            ->setHtmlAttribute('placeholder', 'E-mail *')
+            ->setHtmlAttribute("title", "Zadejte platný email")
+            ->addRule($this->form::PATTERN,"Zadejte platný email", "[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([\.a-zA-Z0-9-]+)")
             ->setRequired(true);
         $this->form->addPassword('password', 'Heslo:')
             ->setHtmlAttribute("placeholder", "Heslo *")
@@ -99,36 +84,14 @@ final class  FullSignUp extends FormFactory
             ->addCondition($this->form::FILLED)
             ->addRule($this->form::PATTERN, 'Neplatný formát DIČ','(CZ\d{8,10})|(SK\d{10,10})')
             ->setRequired(true);
-        $this->form->addCheckbox("dphCheckbox", "Nakupuji na firmu");
+        $this->form->addCheckbox("dphCheckbox", "Plátce DPH");
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
             ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
 
-        $this->form->addGroup("Fakturační adresa");
-        $this->form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
-            ->setRequired();
-        $this->form->addText("address1", "Ulice a č. p.")
-            ->setHtmlAttribute("placeholder", "Ulice a č. p. *")
-            ->setHtmlAttribute("title", "Zadejte platný adresní řádek")
-            ->addRule($this->form::PATTERN, "Neplatný adresní řádek",'[A-ž ,\.\-\/\d]{2,}')
-            ->setRequired(true);
-        $this->form->addText("address2", "2. adresní řádek")
-            ->setHtmlAttribute("placeholder", "2. adresní řádek")
-            ->setHtmlAttribute("title", "Zadejte platný adresní řádek")
-            ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, "Neplatný adresní řádek", '[A-ž ,\.\-\/\d]{2,}');
-        $this->form->addText("city", "Obec:")
-            ->setHtmlAttribute("placeholder", "Obec *")
-            ->setHtmlAttribute("title", "Zadejte platný název města")
-            ->addRule($this->form::PATTERN, "Neplatný název města",'([A-ž]+( )*){2,}')
-            ->setRequired(true);
-        $this->form->addText("zipCode", "PSČ:")
-            ->setHtmlAttribute("placeholder", "PSČ *")
-            ->setHtmlAttribute("title", "Zadejte platné PSČ")
-            ->addRule($this->form::PATTERN, "Neplatné PSČ",'\d{3,3}( )?\d{2,2}')
-            ->setRequired(true);
+        ShippingAddress::getShippingAddressInputs($this->form);
 
         $this->form->addSubmit("submit", "Registrovat");
 

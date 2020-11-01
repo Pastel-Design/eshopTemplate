@@ -49,4 +49,45 @@
             <h3>Nemáte žádné fakturační adresy</h3>
         {/if}
     </div>
+    <div>
+        <h1>Doručovací adresy:</h1>
+        {$addShippingAddressForm->render()}
+
+        <h2>Moje Doručovací adresy:</h2>
+        {if !is_null($shippingAddresses)}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Jméno</th>
+                        <th scope="col">Příjmení</th>
+                        <th scope="col">Adresní řádek 1</th>
+                        <th scope="col">Adresní řádek 2</th>
+                        <th scope="col">Město</th>
+                        <th scope="col">Stát</th>
+                        <th scope="col">PSČ</th>
+                        <th scope="col">Telefon</th>
+                        <th scope="col">Název firmy</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr n:foreach="$shippingAddresses as $address">
+                        <td>{$address["first_name"]}</td>
+                        <td>{$address["last_name"]}</td>
+                        <td>{$address["address1"]}</td>
+                        <td>{$address["address2"]}</td>
+                        <td>{$address["city"]}</td>
+                        <td>{$address["country"]|convertCountry}</td>
+                        <td>{$address["zipcode"]}</td>
+                        <td>{$address["area_code"]}{$address["phone"]}</td>
+                        <td>{$address['firm_name']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        {else}
+            <h3>Nemáte žádné doručovací adresy</h3>
+        {/if}
+    </div>
 {/block}

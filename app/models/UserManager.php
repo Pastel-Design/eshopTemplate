@@ -61,18 +61,17 @@ class UserManager
      */
     public static function addAddress(array $values, string $type = "shipping"): void
     {
-        switch ($type) {
-            case "shipping":
-                $sql = "INSERT INTO shipping_address(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
+        if($type == "shipping"){
+            $sql = "INSERT INTO `shipping_address`(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-                break;
-            case "invoice":
-                $sql = "INSERT INTO `invoice_address`( `first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `DIC`, `IC`, `user_id`)
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-                break;
-            default:
-                throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
         }
+        elseif ($type == "invoice"){
+            $sql = "INSERT INTO `invoice_address`( `first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `DIC`, `IC`, `user_id`)
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        }else{
+            throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+        }
+
         $addressInsert = DbManager::requestInsert($sql, $values);
         if ($addressInsert) {
             return;
