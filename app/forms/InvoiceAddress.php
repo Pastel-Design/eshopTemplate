@@ -28,7 +28,7 @@ class InvoiceAddress extends FormFactory
     private UserManager $userManager;
     public function __construct()
     {
-        $this->form = parent::getBootstrapForm();
+        $this->form = parent::getBootstrapForm("invoiceAddress");
     }
 
     /**
