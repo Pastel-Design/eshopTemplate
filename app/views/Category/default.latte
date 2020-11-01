@@ -3,7 +3,7 @@
     <h2>{$category_name}</h2>
     <div n:if="$products" class="card-columns">
         <div n:foreach="$products as $product" class="card">
-            <img class="card-img-top" src="images/{$product["main_image"]}" alt="{$product["main_image"]}">
+            <img class="card-img-top" src="images/{if $product["main_image"]}{$product["main_image"]}{else}default.jpg{/if}" alt="{$product["main_image"]}">
             <div class="card-body">
                 <h5 class="card-title"><a href="product/{$product["dash_name"]}">{$product["name"]}</a></h5>
                 {if $product["discount"]}<strike>{$product["price"]+$product["discount"]} Kč</strike>{/if}
