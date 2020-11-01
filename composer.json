@@ -1,4 +1,8 @@
 {
+    "name": "pastelDesign/eshop",
+    "description": "Eshop template pro Pastel Design",
+    "version": "1.0",
+    "license": "proprietary",
     "require": {
         "intervention/image": "2.*",
         "swiftmailer/swiftmailer": "6.2.*",
