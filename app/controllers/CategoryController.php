@@ -35,28 +35,24 @@ class CategoryController extends Controller
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
-        if (!$params) {
-            $this->setView('default');
-            $this->data = ["categories" => $this->categoryManager->selectAllCategories()];
-        } else {
-            if ($this->categoryManager->categoryExists($params[0])) {
-                $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($params[0]), 5);
+        if ($this->categoryManager->categoryExists($params[0])) {
+            $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($params[0]), 5);
 
-                if (isset($params[1])) {
-                    if ($params[1] > 0 && $params[1] <= $no_pages) {
-                        $page = $params[1];
-                    } else {
-                        $page = 1;
-                    }
+            if (isset($params[1])) {
+                if ($params[1] > 0 && $params[1] <= $no_pages) {
+                    $page = $params[1];
                 } else {
                     $page = 1;
                 }
-                $this->renderCategory($params[0], $page);
             } else {
-                Router::reroute("404");
+                $page = 1;
             }
+            $this->renderCategory($params[0], $page);
+        } else {
+            Router::reroute("error/404");
         }
     }
+
 
     /**
      * výchozí domácí stránka
@@ -68,7 +64,7 @@ class CategoryController extends Controller
     public
     function renderCategory($dashName, $page)
     {
-        $this->setView('renderCategory');
+        $this->setView('default');
         $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($dashName), 5);
         $products = $this->productManager->selectAllProducts($dashName, $page - 1, 5);
         $category_name = $this->categoryManager->getCategoryName($dashName);

@@ -36,7 +36,7 @@ class ProductController extends Controller
         $this->head['page_keywords'] = "eshop";
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         if (!$params) {
-            Router::reroute("404");
+            Router::reroute("error/404");
         }else{
             $this->renderProduct($params[0]);
         }
@@ -53,7 +53,7 @@ class ProductController extends Controller
         $this->head['page_title'] = $product["title_name"];
         $this->head['page_keywords'] = $product["meta_keywords"];
         $this->head['page_description'] = $product["meta_description"];
-        $this->setView('renderProduct');
+        $this->setView('default');
         $this->data = ["product" => $product];
     }
 }
