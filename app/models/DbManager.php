@@ -5,6 +5,7 @@ namespace app\models;
 use app\router\Router;
 use PDO;
 use PDOException;
+use app\classes;
 
 /**
  * Class DbManager
@@ -59,13 +60,21 @@ class DbManager
             Router::reroute("error/500");
         }
     }
+
+    /**
+     * @param string $sql
+     * @param string $class
+     * @param array $params
+     * @return mixed
+     */
     public static function requestSingleClass(string $sql, string $class, $params = array())
     {
+        $class = "\\app\\classes\\".$class."Class";
         try {
             $result = self::$connection->prepare($sql);
-            $result->setFetchMode(PDO::FETCH_CLASS, $class."Class");
             $result->execute($params);
-            return $result->fetch(PDO::FETCH_ASSOC);
+            $result->setFetchMode(PDO::FETCH_CLASS, $class);
+            return $result->fetch();
         } catch (PDOException $excepiton) {
             Router::reroute("error/500");
         }

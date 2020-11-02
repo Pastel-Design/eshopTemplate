@@ -15,9 +15,6 @@ require("../vendor/autoload.php");
  */
 function autoloadFunction($class)
 {
-    if (preg_match('/\W*(Class)\W*/', $class))
-        require("../app/classes/" . $class . ".php");
-    else
         require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
 }
 
