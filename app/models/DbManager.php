@@ -59,6 +59,17 @@ class DbManager
             return $excepiton;
         }
     }
+    public static function requestSingleClass(string $sql, string $class, $params = array())
+    {
+        try {
+            $result = self::$connection->prepare($sql);
+            $result->execute($params);
+            $result->setFetchMode(PDO::FETCH_CLASS, $class);
+            return $result->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $excepiton) {
+            return $excepiton;
+        }
+    }
 
     /**
      * @param string $sql

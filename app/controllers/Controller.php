@@ -35,9 +35,9 @@ abstract class Controller
      * @var Engine $latte
      * Proměnná pro objekt třídy Latte\Engine
      */
-    protected Engine $latte;
+    private Engine $latte;
 
-    protected CategoryManager $categoryManagerNav;
+    private CategoryManager $categoryManagerNav;
 
     /**
      * Controller constructor.

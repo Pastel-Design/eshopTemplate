@@ -2,10 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\ProductManager;
-use app\zasilkovna\uploadPacket;
-use Exception;
-
 /**
  * Class HomeController
  * @package app\controllers
