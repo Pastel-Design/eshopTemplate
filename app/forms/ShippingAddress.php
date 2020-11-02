@@ -85,12 +85,13 @@ class ShippingAddress extends FormFactory
 
     public function create(callable $onSuccess) : Form
     {
+        $this->getShippingAddressInputs($this->form);
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
             ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
-        $this->getShippingAddressInputs($this->form);
+
         $this->form->addSubmit("submit", "Přidat");
 
         if($this->form->isSuccess()){

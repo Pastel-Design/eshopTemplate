@@ -21,53 +21,68 @@ class CategoryManager
         $categories = $this->selectSubCategories($categories);
         return $categories;
     }
-    public function selectMainCategories(){
+
+    public function selectMainCategories()
+    {
         $categories = DbManager::requestMultiple(
             'SELECT id, name, dash_name, shortdesc, image_id
             FROM category WHERE main_category = 1 AND visible = 1',);
         return $this->getCategoriesImages($categories);
     }
-    public function selectSubCategories($mainCategories){
+
+    public function selectSubCategories($mainCategories)
+    {
         $newMainCategories = array();
-        foreach ($mainCategories as $mainCategory){
+        foreach ($mainCategories as $mainCategory) {
             $subcategories = DbManager::requestMultiple(
                 'SELECT id, name, dash_name, shortdesc, image_id
             FROM category WHERE visible = 1 AND category_id = ?',
                 [$mainCategory["id"]]
             );
             $mainCategory["subcategories"] = $this->getCategoriesImages($subcategories);
-            $newMainCategories[$mainCategory["id"]]=$mainCategory;
+            $newMainCategories[$mainCategory["id"]] = $mainCategory;
         }
         return $newMainCategories;
     }
+
     public function getCategoriesImages($categories)
     {
         $newCategories = array();
         foreach ($categories as $category) {
-            $category["image"]=DbManager::requestUnit(
+            $category["image"] = DbManager::requestUnit(
                 'SELECT CONCAT(image.name,".",image.data_type) AS image
                 FROM image JOIN category ON category.image_id=image.id 
                 WHERE category.id=?',
                 [$category["id"]]);
             unset($category["image_id"]);
-            $newCategories[$category["id"]]=$category;
+            $newCategories[$category["id"]] = $category;
         }
         return $newCategories;
     }
-    public function categoryExists($dashName){
-        return DbManager::requestUnit("SELECT dash_name FROM category WHERE dash_name = ?",[$dashName]);
+
+    public function categoryExists($dashName)
+    {
+        return DbManager::requestUnit("SELECT dash_name FROM category WHERE dash_name = ?", [$dashName]);
     }
-    public function getCategoryName($dashName){
-        return DbManager::requestUnit("SELECT name FROM category WHERE dash_name = ?",[$dashName]);
+
+    public function getCategoryName($dashName)
+    {
+        return DbManager::requestUnit("SELECT name FROM category WHERE dash_name = ?", [$dashName]);
     }
-    public function getCategoryId($dashName){
-        return DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?",[$dashName]);
+
+    public function getCategoryId($dashName)
+    {
+        return DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?", [$dashName]);
     }
-    public function getCategoryShortdesc($dashName){
-        return DbManager::requestUnit("SELECT shortdesc FROM category WHERE dash_name = ?",[$dashName]);
+
+    public function getCategoryShortdesc($dashName)
+    {
+        return DbManager::requestUnit("SELECT shortdesc FROM category WHERE dash_name = ?", [$dashName]);
     }
-    public function selectCategoryClass($dashname){
-        return DbManager::requestSingleClass("SELECT * FROM category WHERE dash_name=?","Category" ,[$dashname]);
+
+    public function selectCategoryClass($dashname)
+    {
+        return DbManager::requestSingleClass("SELECT * FROM category WHERE dash_name=?", "Category", [$dashname]);
     }
 
 }

@@ -69,7 +69,7 @@ class DbManager
      */
     public static function requestSingleClass(string $sql, string $class, $params = array())
     {
-        $class = "\\app\\classes\\".$class."Class";
+        $class = "\\app\\classes\\" . $class . "Class";
         try {
             $result = self::$connection->prepare($sql);
             $result->execute($params);

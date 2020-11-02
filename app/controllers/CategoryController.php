@@ -69,8 +69,8 @@ class CategoryController extends Controller
         $categoryName = $this->categoryManager->getCategoryName($dashName);
         $categoryShortdesc = $this->categoryManager->getCategoryShortdesc($dashName);
         $this->data = ["products" => $products, "category_dash_name" => $dashName, "category_name" => $categoryName, "no_pages" => $no_pages, "page" => $page];
-        $this->head['page_title'] = "Kategorie ".$categoryName;
-        $this->head['page_keywords'] = "eshop,category,".$dashName;
+        $this->head['page_title'] = "Kategorie " . $categoryName;
+        $this->head['page_keywords'] = "eshop,category," . $dashName;
         $this->head['page_description'] = $categoryShortdesc;
     }
 }
