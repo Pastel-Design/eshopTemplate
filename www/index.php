@@ -15,7 +15,10 @@ require("../vendor/autoload.php");
  */
 function autoloadFunction($class)
 {
-    require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
+    if (preg_match('/\W*(Class)\W*/', $class))
+        require("../app/classes/" . $class . ".php");
+    else
+        require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
 }
 
 //registrace funkce pro její použití jako php autoload funkce

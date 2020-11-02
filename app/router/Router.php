@@ -38,7 +38,7 @@ final class Router
         } else {
             $this->reroute('error/404');
         }
-
+        $this->controller->controllerName = $controllerName;
         $this->controller->process($parsedURL, $parsedGET);
         $this->controller->writeView($controllerName);
     }

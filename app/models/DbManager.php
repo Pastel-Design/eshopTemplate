@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-
+use app\router\Router;
 use PDO;
 use PDOException;
 
@@ -56,18 +56,18 @@ class DbManager
             $result->execute($params);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
     }
     public static function requestSingleClass(string $sql, string $class, $params = array())
     {
         try {
             $result = self::$connection->prepare($sql);
+            $result->setFetchMode(PDO::FETCH_CLASS, $class."Class");
             $result->execute($params);
-            $result->setFetchMode(PDO::FETCH_CLASS, $class);
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
     }
 
@@ -83,7 +83,7 @@ class DbManager
             $result->execute($params);
             return $result->fetch();
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
     }
 
@@ -99,7 +99,7 @@ class DbManager
             $result->execute($params);
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
     }
 
@@ -114,7 +114,7 @@ class DbManager
             $result = self::requestSingleWOAssoc($sql, $params);
             return ($result == null ? null : $result[0]);
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
     }
 
@@ -129,7 +129,7 @@ class DbManager
             $result = self::$connection->prepare($sql);
             return $result->execute($params);
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
 
     }
@@ -146,7 +146,7 @@ class DbManager
             $result->execute($params);
             return $result->rowCount();
         } catch (PDOException $excepiton) {
-            return $excepiton;
+            Router::reroute("error/500");
         }
     }
 }

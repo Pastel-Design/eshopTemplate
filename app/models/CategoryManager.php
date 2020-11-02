@@ -4,6 +4,7 @@
 namespace app\models;
 
 use app\models\DbManager as DbManager;
+use app\classes\Category as Category;
 
 /**
  * Class ProductManager
@@ -14,7 +15,7 @@ class CategoryManager
     /**
      * @return array
      */
-    public function selectAllCategories()
+    public function selectCategories()
     {
         $categories = $this->selectMainCategories();
         $categories = $this->selectSubCategories($categories);
@@ -61,6 +62,12 @@ class CategoryManager
     }
     public function getCategoryId($dashName){
         return DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?",[$dashName]);
+    }
+    public function getCategoryShortdesc($dashName){
+        return DbManager::requestUnit("SELECT shortdesc FROM category WHERE dash_name = ?",[$dashName]);
+    }
+    public function selectCategoryClass($dashname){
+        return DbManager::requestSingleClass("SELECT * FROM category WHERE dash_name=?","Category" ,[$dashname]);
     }
 
 }

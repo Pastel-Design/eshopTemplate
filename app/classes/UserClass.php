@@ -2,7 +2,7 @@
 
 namespace app\classes;
 
-use app\classes\Address as Address;
+use app\classes\AddressClass as Address;
 use app\exceptions\UserException;
 use app\config\RegexConfig;
 use DateTime;
@@ -12,7 +12,7 @@ use Exception;
  * Class User
  * @package app\classes
  */
-class User
+class UserClass
 {
 
     public $role, $role_level, $role_id, $activated, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address, $no_orders, $area_code, $phone, $password, $username, $email, $id;

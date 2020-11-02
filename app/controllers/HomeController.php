@@ -14,17 +14,16 @@ class HomeController extends Controller
     }
 
     /**
-     * výchozí domácí stránka
-     * @param $params
-     * @param null $gets
+     * Sets default homepage
+     * @param array $params
+     * @param array|null $gets
      * @return void
      */
-    public function process($params,$gets=null)
+    public function process(array $params,array $gets=null)
     {
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";
         $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         $this->setView('default');
-        $this->data = [];
     }
 }

@@ -14,8 +14,6 @@ use Transliterator;
 
 abstract class Controller
 {
-    //Třída kontroleru má vlastnosti data, pohled který se má vypsat v defaultní šabloně a hlavičku kvůli SEO
-
     /**
      * @var array $data
      */
@@ -32,6 +30,11 @@ abstract class Controller
     protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_description' => '', 'css' => '', 'js' => '','flashes'=>[]];
 
     /**
+     * @var string $controllerName
+     */
+    public string $controllerName;
+
+    /**
      * @var Engine $latte
      * Proměnná pro objekt třídy Latte\Engine
      */
@@ -39,9 +42,6 @@ abstract class Controller
 
     private CategoryManager $categoryManagerNav;
 
-    /**
-     * Controller constructor.
-     */
     public function __construct()
     {
         $this->latte = new Engine();
@@ -66,28 +66,23 @@ abstract class Controller
 
     /**
      * Definice abstraktní třídy pro ostatní kontrolery které ji dědí
-     * @param $params
-     * @param null $gets
+     * @param array $params
+     * Main url parameters
+     * @param array|null $gets
+     * Get parameters from url
      */
-    abstract function process($params,$gets=null);
+    abstract function process(array $params,array $gets=null);
 
     /**
-     * funkce pro výpis pohledu
-     *  funkce extract položky v data zpřístupní jako klasické proměnné, to znamená že $pole["polozka"] je nyní přístupná jako $polozka
-     *  díky tomu můžou kontrolery vkládat data do pole data a v pohledu k nim přistupujeme jako ke klasickým proměnným.
-     *  Druhá funkce extract extractuje data bez ošetřující funkce, jsou odlišený od těch ošetřených
-     *  prefixem, který pokud není specifikováno, jakože dole není, je defaultně dolní podtržízko
-     *
-     *  na konec se requieruje pohled ze složky views
-     * @param $controllerName
+     * Renders selected view
      * @return void
      */
-    public function writeView($controllerName): void
+    public function writeView(): void
     {
         if ($this->view) {
-            $this->view = __DIR__ . "/../../app/views/" . $controllerName . "/" . $this->view . ".latte";
+            $this->view = __DIR__ . "/../../app/views/" . $this->controllerName . "/" . $this->view . ".latte";
             $params = array_merge($this->head,$this->data);
-            $params["categories"] = $this->categoryManagerNav->selectAllCategories();
+            $params["categories"] = $this->categoryManagerNav->selectCategories();
             $this->latte->render($this->view, $params);
         }
     }
@@ -96,6 +91,7 @@ abstract class Controller
     /**
      * Sets value of $this->$view and sets css and js variables
      * @param string $view
+     * View name
      * @return void
      */
     public function setView(string $view): void
@@ -114,9 +110,7 @@ abstract class Controller
         return $this->view;
     }
     /**
-     * Funkce pro převedení klasického formátu názvu do pomlčkového formátu
-     * transliterator je PHP funkce pomocí který odstranuju velky/maly pismena a diakritiku
-     * následuje regex kterej všechny znaky kromě čísel a znaků převede na pomlčky
+     * Convert standard names to dash-based style
      * @param string $argument
      * @return string
      */
@@ -127,11 +121,11 @@ abstract class Controller
     }
 
     /**
-     * Přidání flashMessage.
-     * První parametr je samotná zpráva.
-     * Druhý parametr je typ zprávy. (např. success, error, info) Pro případné rozdílné formátování zpráv v CSS.
+     * Adds flash message to view trough head
      * @param string $message
+     * Message to render
      * @param string $type default = "info"
+     * Message type to differentiate in css
      */
     protected function addFlashMessage(string $message, string $type = "info") : void
     {

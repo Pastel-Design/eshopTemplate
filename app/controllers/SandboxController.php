@@ -41,6 +41,11 @@ class SandboxController extends Controller
      */
     public function process($params,$gets=null)
     {
+        $products = DbManager::requestMultiple("SELECT * FROM prduct");
+        //($products);
+        foreach ($products as $product){
+            echo($product["name"]);
+        }
         $this->head['page_title'] = "Testovací stránka";
         $this->head['page_keywords'] = "";
         $this->head['page_description'] = "";

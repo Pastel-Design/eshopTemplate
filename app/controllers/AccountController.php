@@ -37,7 +37,13 @@ class AccountController extends Controller
         $this->shippingAddressForm = new ShippingAddress();
     }
 
-    public function process($params, $gets = null)
+    /**
+     * Processes params from URL
+     * @param array $params
+     * @param array|null $gets
+     * @return void
+     */
+    public function process(array $params, array $gets = null)
     {
         if (!empty($_SESSION || isset($_SESSION["user"]))) {
             try {
