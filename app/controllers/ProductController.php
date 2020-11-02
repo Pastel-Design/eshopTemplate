@@ -25,12 +25,12 @@ class ProductController extends Controller
 
     /**
      * výchozí domácí stránka
-     * @param $params
-     * @param null $gets
+     * @param array $params
+     * @param array|null $gets
      * @return void
      * @throws Exception
      */
-    public function process($params,$gets=null)
+    public function process(array $params,array $gets=null)
     {
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";
@@ -43,16 +43,17 @@ class ProductController extends Controller
     }
 
     /**
-     * výchozí domácí stránka
+     * Renders product
      * @param $dashName
+     * Products dashName
      * @return void
      * @throws Exception
      */
     public function renderProduct($dashName){
         $product = $this->productManager->getProductInfo($dashName);
-        $this->head['page_title'] = $product["title_name"];
-        $this->head['page_keywords'] = $product["meta_keywords"];
-        $this->head['page_description'] = $product["meta_description"];
+        $this->head['page_title'] = $product->title_name;
+        $this->head['page_keywords'] = $product->meta_keywords;
+        $this->head['page_description'] = $product->meta_description;
         $this->setView('default');
         $this->data = ["product" => $product];
     }

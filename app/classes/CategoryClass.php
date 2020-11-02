@@ -6,22 +6,100 @@ namespace app\classes;
 
 class CategoryClass
 {
-    public $name, $dashname, $meta_description, $meta_keywords, $shortdesc, $longdesc;
+    public $name, $dash_name, $meta_description, $meta_keywords, $shortdesc, $longdesc;
     public $visible, $main_category, $category_id, $image_id;
     public $id;
 
-    /* public function __construct($id, $name, $dash_name, $meta_description, $meta_keywords, $shortdesc, $longdesc, $visible, $main_category, $category_id, $image_id)
-     {
-         $this->id = $id;
-         $this->name = $name;
-         $this->dash_name = $dash_name;
-         $this->meta_description = $meta_description;
-         $this->meta_keywords = $meta_keywords;
-         $this->shortdesc = $shortdesc;
-         $this->longdesc = $longdesc;
-         $this->visible = $visible;
-         $this->main_category = $main_category;
-         $this->category_id = $category_id;
-         $this->image_id = $image_id;
-     }*/
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMainCategory()
+    {
+        return $this->main_category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageId()
+    {
+        return $this->image_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShortdesc()
+    {
+        return $this->shortdesc;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetaKeywords()
+    {
+        return $this->meta_keywords;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLongdesc()
+    {
+        return $this->longdesc;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDashname()
+    {
+        return $this->dash_name;
+    }
 }

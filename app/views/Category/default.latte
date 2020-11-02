@@ -8,7 +8,7 @@
                  alt="{$product["main_image"]}">
             <div class="card-body">
                 <h5 class="card-title"><a href="product/{$product["dash_name"]}">{$product["name"]}</a></h5>
-                {if $product["discount"]}<strike>{$product["price"]-$product["discount"]} Kč</strike>{/if}
+                {if $product["discount"]}<strike>{$product["oldprice"]} Kč</strike>{/if}
                 <p class="card-text {if $product["discount"]}text-danger{/if}">{$product["price"]} Kč</p>
                 <p class="card-text text-muted">{$product["price_wo_dph"]} Kč bez dph</p>
                 <p class="card-text">{$product["shortdesc"]}</p>

@@ -34,22 +34,15 @@ class SandboxController extends Controller
     }
 
     /**
-     * výchozí domácí stránka
-     * @param $params
-     * @param null $gets
+     * @param array $params
+     * @param array|null $gets
      * @return void
      */
-    public function process($params,$gets=null)
+    public function process(array $params,array $gets=null)
     {
-        $products = DbManager::requestMultiple("SELECT * FROM prduct");
-        //($products);
-        foreach ($products as $product){
-            echo($product["name"]);
-        }
         $this->head['page_title'] = "Testovací stránka";
         $this->head['page_keywords'] = "";
         $this->head['page_description'] = "";
         $this->setView('default');
-        $this->data = [];
     }
 }

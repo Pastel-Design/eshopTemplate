@@ -23,7 +23,7 @@ class HomeController extends Controller
     {
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";
-        $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
+        $this->head['page_description'] = "Domovská stránka eshopu";
         $this->setView('default');
     }
 }
