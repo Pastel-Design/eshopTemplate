@@ -51,9 +51,9 @@ class ProductController extends Controller
      */
     public function renderProduct($dashName){
         $product = $this->productManager->getProductInfo($dashName);
-        $this->head['page_title'] = $product->title_name;
-        $this->head['page_keywords'] = $product->meta_keywords;
-        $this->head['page_description'] = $product->meta_description;
+        $this->head['page_title'] = $product["title_name"];
+        $this->head['page_keywords'] = $product["meta_keywords"];
+        $this->head['page_description'] = $product["meta_description"];
         $this->setView('default');
         $this->data = ["product" => $product];
     }

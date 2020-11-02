@@ -11,7 +11,7 @@ use app\router\Router;
 use Exception;
 
 /**
- * Class SignUpController
+ * Class SignController
  * @package app\controllers
  */
 class SignController extends Controller
@@ -29,17 +29,17 @@ class SignController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->signUpFactory =  new FullSignUp();
-        $this->signInFactory =  new FullSignIn();
+        $this->signUpFactory = new FullSignUp();
+        $this->signInFactory = new FullSignIn();
     }
 
     /**
-     * výchozí domácí stránka
-     * @param $params
-     * @param null $gets
+     * @param array $params
+     * @param array|null $gets
      * @return void
+     * @throws Exception
      */
-    public function process($params,$gets=null)
+    public function process(array $params, array $gets = null)
     {
         switch ($params[0]) {
             case "up":
@@ -56,27 +56,43 @@ class SignController extends Controller
                 break;
         }
     }
+
+    /**
+     * Renders signup view with signup form
+     * @return void
+     * @throws Exception
+     */
     public function signUp()
     {
         $this->head['page_title'] = "Registrace nového uživatele";
         $this->head['page_keywords'] = "Registrace;registrace;eshop;";
-        $this->head['page_description'] = "Registrace na eshop Zlatá loď";
+        $this->head['page_description'] = "Registrace na eshop";
         $this->data["form"] = $this->signUpFactory->create(function () {
             $this->addFlashMessage("Registrace proběhla úspěšně");
         });
         $this->setView("Up");
     }
+
+    /**
+     * Renders signin view with signin form
+     * @return void
+     */
     public function signIn()
     {
         $this->head['page_title'] = "Přihlášení nového uživatele";
         $this->head['page_keywords'] = "Přihlášení;přihlášení;eshop;";
-        $this->head['page_description'] = "Přihlášení na eshop Zlatá loď";
+        $this->head['page_description'] = "Přihlášení na eshop";
         $this->setView('home');
         $this->data["form"] = $this->signInFactory->create(function () {
             $this->addFlashMessage("Přihlášení proběhlo úspěšně");
         });
         $this->setView("In");
     }
+
+    /**
+     * Signs out a user
+     * @return void
+     */
     public function signOut()
     {
         SignManager::SignOut();

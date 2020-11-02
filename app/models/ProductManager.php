@@ -5,7 +5,6 @@ namespace app\models;
 
 use DateTime;
 use Exception;
-use app\classes\ProductClass;
 
 
 /**
@@ -82,13 +81,10 @@ class ProductManager
             [$category_id, $limit, $offset]
         );
     }
-
-    public function numberOfPages($category_id, $limit)
-    {
+    public function numberOfPages($category_id, $limit){
         $no_products = $this->countProducts($category_id);
-        return ceil($no_products / $limit);
+        return ceil($no_products/$limit);
     }
-
     public function countProducts($category_id)
     {
         return DbManager::requestUnit(
@@ -99,8 +95,8 @@ class ProductManager
     }
 
     /**
-     * @param string $dashName
-     * @return ProductClass
+     * @param $dashName
+     * @return array
      * @throws Exception
      */
     public function getProductInfo(string $dashName)
@@ -141,10 +137,6 @@ class ProductManager
         unset($product["dostupnost_id"]);
         $product = $this->discountProduct($product);
         $product = $this->getProductParameters($product);
-        extract($product);
-        $product = new ProductClass();
-        $product->setValuesProductInfo($id,$name, $title_name, $dash_name, $longdesc,$price, $price_wo_dph,$dph,$amount,$on_sale,$serial_number,$meta_description, $meta_keywords,$images,$dostupnost,$discount,$oldprice,$parameters);
-        var_dump($product);
         return $product;
     }
 
@@ -187,17 +179,17 @@ class ProductManager
                 }
                 $product["discount"] = $product["price"] - $lastPrice;
                 $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)), 0, ',', " ");
-                $product["price"] = number_format($product["price"], 0, ',', " ");
-                $product["oldprice"] = number_format($lastPrice, 0, ',', " ");
+                $product["price"] = number_format($product["price"],  0, ',', " ");
+                $product["oldprice"] = number_format($lastPrice,  0, ',', " ");
             } else {
                 $product["discount"] = 0;
-                $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)), 0, ',', " ");
-                $product["price"] = number_format($product["price"], 0, ',', " ");
+                $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)),  0, ',', " ");
+                $product["price"] = number_format($product["price"],  0, ',', " ");
             }
         } else {
             $product["discount"] = 0;
-            $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)), 0, ',', " ");
-            $product["price"] = number_format($product["price"], 0, ',', " ");
+            $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)),  0, ',', " ");
+            $product["price"] = number_format($product["price"],  0, ',', " ");
         }
         return $product;
     }
