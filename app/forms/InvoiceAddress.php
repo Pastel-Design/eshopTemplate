@@ -11,7 +11,7 @@ use app\models\UserManager;
 use Exception;
 use Nette\Forms\Form;
 
-class InvoiceAddress extends FormFactory
+final class InvoiceAddress extends FormFactory
 {
 
     /**

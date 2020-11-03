@@ -15,7 +15,7 @@ use Nette\Forms\Form;
  * Class ShippingAddress
  * @package app\forms
  */
-class ShippingAddress extends FormFactory
+final class ShippingAddress extends FormFactory
 {
     /**
      * @var Form $form
