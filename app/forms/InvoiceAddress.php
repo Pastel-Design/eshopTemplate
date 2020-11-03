@@ -86,20 +86,7 @@ final class InvoiceAddress extends FormFactory
             }
 
             try {
-                UserManager::addAddress([
-                    $this->address->first_name,
-                    $this->address->last_name,
-                    $this->address->firm_name,
-                    $this->address->phone,
-                    $this->address->area_code,
-                    $this->address->address1,
-                    $this->address->address2,
-                    $this->address->city,
-                    $this->address->country,
-                    $this->address->zipcode,
-                    $this->address->dic,
-                    $this->address->ic
-                ], $_SESSION["user"]->id, "invoice");
+                UserManager::addAddress($this->address, $_SESSION["user"]->id, "invoice");
             } catch (Exception|UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }
