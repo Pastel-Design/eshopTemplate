@@ -4,10 +4,11 @@
 namespace app\forms;
 
 
-use app\classes\Address;
+use app\classes\AddressClass as Address;
 use app\exceptions\AddressException;
 use app\exceptions\UserException;
 use app\models\UserManager;
+use Exception;
 use Nette\Forms\Form;
 
 class InvoiceAddress extends FormFactory
@@ -34,7 +35,7 @@ class InvoiceAddress extends FormFactory
     /**
      * @param callable $onSuccess
      * @return Form
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(callable $onSuccess): Form
     {
@@ -99,7 +100,7 @@ class InvoiceAddress extends FormFactory
                     $this->address->dic,
                     $this->address->ic
                 ], $_SESSION["user"]->id, "invoice");
-            } catch (\Exception|UserException $exception) {
+            } catch (Exception|UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 

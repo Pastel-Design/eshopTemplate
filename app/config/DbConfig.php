@@ -1,5 +1,10 @@
 <?php
+
 namespace app\config;
+/**
+ * Class DbConfig
+ * @package app\config
+ */
 class DbConfig
 {
     public static string $host = '127.0.0.1';

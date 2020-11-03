@@ -1,7 +1,10 @@
 <?php
 
 namespace app\config;
-
+/**
+ * Class RegexConfig
+ * @package app\config
+ */
 class RegexConfig{
     public static string $name = '/^[A-ž-]{3,}$/';
     public static string $firmName = '/^(([A-ž]+)([ \d\_\-\.\ \&]*)){3,}$/';

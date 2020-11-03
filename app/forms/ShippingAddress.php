@@ -4,10 +4,11 @@
 namespace app\forms;
 
 
-use app\classes\Address;
+use app\classes\AddressClass as Address;
 use app\exceptions\AddressException;
 use app\exceptions\UserException;
 use app\models\UserManager;
+use Exception;
 use Nette\Forms\Form;
 
 /**
@@ -34,6 +35,7 @@ class ShippingAddress extends FormFactory
 
     /**
      * Přidání inputů pro adresu (řeší zbytečnej opakující se kód)
+     * @param Form $form
      * @return Form
      */
     public static function getShippingAddressInputs(Form $form): Form
@@ -128,7 +130,7 @@ class ShippingAddress extends FormFactory
                     $this->address->country,
                     $this->address->zipcode
                 ], $_SESSION["user"]->id);
-            } catch (\Exception|UserException $exception) {
+            } catch (Exception|UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 

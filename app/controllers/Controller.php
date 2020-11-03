@@ -36,7 +36,7 @@ abstract class Controller
 
     /**
      * @var Engine $latte
-     * Proměnná pro objekt třídy Latte\Engine
+     * Variable for class Latte\Engine object
      */
     private Engine $latte;
 
@@ -65,7 +65,7 @@ abstract class Controller
     }
 
     /**
-     * Definice abstraktní třídy pro ostatní kontrolery které ji dědí
+     * Definition of process function for inheritance
      * @param array $params
      * Main url parameters
      * @param array|null $gets

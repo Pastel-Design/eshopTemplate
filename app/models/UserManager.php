@@ -80,7 +80,7 @@ class UserManager
                 throw new Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
                 break;
         }
-        $params = array_merge($values, ["user_id" => $user_id]);
+        $params = array_merge($values, [$user_id]);
         $addressInsert = DbManager::requestInsert($sql, $params);
         if (!$addressInsert) {
             throw new UserException("Přidání adresy se nepovedlo");

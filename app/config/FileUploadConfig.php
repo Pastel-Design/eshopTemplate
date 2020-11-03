@@ -1,7 +1,10 @@
 <?php
 
 namespace app\config;
-
+/**
+ * Class FileUploadConfig
+ * @package app\config
+ */
 class FileUploadConfig
 {
     public static array $FileUpload = [

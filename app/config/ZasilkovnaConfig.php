@@ -1,9 +1,10 @@
 <?php
 
-
 namespace app\config;
-
-
+/**
+ * Class ZasilkovnaConfig
+ * @package app\config
+ */
 class ZasilkovnaConfig
 {
     public static string $apiKey = '/^[A-ž-]{3,}$/';

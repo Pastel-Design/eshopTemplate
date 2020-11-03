@@ -12,7 +12,9 @@ use App\controllers\Controller;
  */
 final class Router
 {
-
+    /**
+     * @var Controller $data
+     */
     protected Controller $controller;
 
     public function process($params)
@@ -24,6 +26,7 @@ final class Router
          * @var TYPE_NAME $parsedURL
          */
         extract($parsedParams);
+
         if (empty($parsedURL[0])) {
             $this->reroute('home');
         }
@@ -83,7 +86,6 @@ final class Router
     }
 
     /**
-     * Funkce pro přesměrování z jakýhokoliv důvodu, nejčastěji použita pokud hledaná stránka není nalezena
      * @param string $url
      * @return void
      */

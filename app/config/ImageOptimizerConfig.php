@@ -1,7 +1,10 @@
 <?php
 
 namespace app\config;
-
+/**
+ * Class ImageOptimizerConfig
+ * @package app\config
+ */
 class ImageOptimizerConfig
 {
     public static int $defaultImageHeight = 1080;
