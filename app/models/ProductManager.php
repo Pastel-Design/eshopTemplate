@@ -14,13 +14,14 @@ use Exception;
 class ProductManager
 {
     /**
+     * Selects all products, discounted, with images
      * @param $category_id
      * @param int $offset
      * @param int $limit
      * @return array
      * @throws Exception
      */
-    public function selectAllProducts($category_id, int $offset, int $limit)
+    public function selectAllProducts($category_id, int $offset=1, int $limit=40)
     {
         $products = $this->selectProducts($category_id, $offset, $limit);
         $newProducts = array();
@@ -44,25 +45,22 @@ class ProductManager
             $product["dostupnost"] = $dostupnost;
             unset($product["dostupnost_id"]);
 
-            $newProducts[$product["id"]] = $product;
-        }
-        $products = array();
-        foreach ($newProducts as $product) {
             $product = $this->discountProduct($product);
             $products[$product["id"]] = $product;
+
+            $newProducts[$product["id"]] = $product;
         }
-
-        return $products;
-
+        return $newProducts;
     }
 
     /**
+     * Selects products based on category
      * @param $category_dashname
      * @param int $offset
      * @param int $limit
      * @return array
      */
-    public function selectProducts($category_dashname, int $offset, int $limit)
+    public function selectProducts($category_dashname, int $offset=1, int $limit=40)
     {
         $category_id = DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?", [$category_dashname]);
         $offset = $offset * $limit;
@@ -81,10 +79,24 @@ class ProductManager
             [$category_id, $limit, $offset]
         );
     }
-    public function numberOfPages($category_id, $limit){
+
+    /**
+     * Return number of pages of certain category, defined by products per page
+     * @param $category_id
+     * @param int $limit
+     * Products per page
+     * @return array
+     */
+    public function numberOfPages($category_id, $limit=40){
         $no_products = $this->countProducts($category_id);
         return ceil($no_products/$limit);
     }
+
+    /**
+     * Counts products in certain category
+     * @param $category_id
+     * @return int
+     */
     public function countProducts($category_id)
     {
         return DbManager::requestUnit(
@@ -95,6 +107,7 @@ class ProductManager
     }
 
     /**
+     * Returns info about one particular product
      * @param $dashName
      * @return array
      * @throws Exception
@@ -106,6 +119,7 @@ class ProductManager
         dph,amount,on_sale,dostupnost_id,serial_number,meta_description,meta_keywords FROM product 
         WHERE product.dash_name = ?
         AND product.visible = 1', [$dashName]);
+
         $mainImage = DbManager::requestUnit(
             'SELECT CONCAT(image.name,".",image.data_type) AS main_image 
                 FROM image JOIN image_has_product 
@@ -115,6 +129,7 @@ class ProductManager
                 AND image_has_product.main_image = 1',
             [$product["id"]]);
         $product["images"][0] = $mainImage;
+
         $images = DbManager::requestMultiple(
             'SELECT CONCAT(image.name,".",image.data_type) AS image
             FROM image JOIN image_has_product 
@@ -124,9 +139,11 @@ class ProductManager
             AND image_has_product.main_image = 0',
             [$product["id"]]
         );
+
         foreach ($images as $image) {
             $product["images"][] = $image["image"];
         }
+
         $dostupnost = DbManager::requestUnit(
             'SELECT dostupnost.name 
                 FROM dostupnost JOIN product
@@ -136,23 +153,23 @@ class ProductManager
         $product["dostupnost"] = $dostupnost;
         unset($product["dostupnost_id"]);
         $product = $this->discountProduct($product);
-        $product = $this->getProductParameters($product);
+        $product["parameters"] = $this->getProductParameters($product["id"]);
         return $product;
     }
 
-    public function getProductParameters($product)
+    public function getProductParameters($productId)
     {
-        $product["parameters"] = DbManager::requestMultiple(
+        return DbManager::requestMultiple(
             'SELECT parameter.name, parameter_has_product.value 
             FROM parameter 
             JOIN parameter_has_product ON parameter_has_product.parameter_id = parameter.id 
             JOIN product ON parameter_has_product.product_id = product.id
             WHERE product.id=?',
-            [$product["id"]]);
-        return $product;
+            [$productId]);
     }
 
     /**
+     * Discounts product based on the validity of discount and discout type
      * @param array $product
      * @return array
      * @throws Exception

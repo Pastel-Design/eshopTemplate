@@ -22,7 +22,6 @@ class ShippingAddress extends FormFactory
     private Form $form;
 
 
-
     /**
      * @var Address $address
      */
@@ -37,23 +36,23 @@ class ShippingAddress extends FormFactory
      * Přidání inputů pro adresu (řeší zbytečnej opakující se kód)
      * @return Form
      */
-    public static function getShippingAddressInputs(Form $form) : Form
+    public static function getShippingAddressInputs(Form $form): Form
     {
         $form->addGroup("Adresa");
         $form->addText('firstName', 'Jméno:')
             ->setHtmlAttribute("placeholder", "Jméno *")
             ->setHtmlAttribute("title", "Zadejte platné jméno")
-            ->addRule($form::PATTERN, "Zadejte platné jméno",'[A-ž-]{3,}')
+            ->addRule($form::PATTERN, "Zadejte platné jméno", '[A-ž-]{3,}')
             ->setRequired(true);
         $form->addText('lastName', 'Příjmení:')
             ->setHtmlAttribute("placeholder", "Příjmení *")
             ->setHtmlAttribute("title", "Zadejte platné příjmení")
-            ->addRule($form::PATTERN, "Zadejte platné příjmení",'[A-ž-]{3,}')
+            ->addRule($form::PATTERN, "Zadejte platné příjmení", '[A-ž-]{3,}')
             ->setRequired(true);
         $form->addText("address1", "Ulice a č. p.")
             ->setHtmlAttribute("placeholder", "Ulice a č. p. *")
             ->setHtmlAttribute("title", "Zadejte platný adresní řádek")
-            ->addRule($form::PATTERN, "Neplatný adresní řádek",'[A-ž ,\.\-\/\d]{2,}')
+            ->addRule($form::PATTERN, "Neplatný adresní řádek", '[A-ž ,\.\-\/\d]{2,}')
             ->setRequired(true);
         $form->addText("address2", "2. adresní řádek")
             ->setHtmlAttribute("placeholder", "2. adresní řádek")
@@ -63,40 +62,40 @@ class ShippingAddress extends FormFactory
         $form->addText("city", "Obec:")
             ->setHtmlAttribute("placeholder", "Obec *")
             ->setHtmlAttribute("title", "Zadejte platný název města")
-            ->addRule($form::PATTERN, "Neplatný název města",'([A-ž]+( )*){2,}')
+            ->addRule($form::PATTERN, "Neplatný název města", '([A-ž]+( )*){2,}')
             ->setRequired(true);
         $form->addText("zipCode", "PSČ:")
             ->setHtmlAttribute("placeholder", "PSČ *")
             ->setHtmlAttribute("title", "Zadejte platné PSČ")
-            ->addRule($form::PATTERN, "Neplatné PSČ",'\d{3,3}( )?\d{2,2}')
+            ->addRule($form::PATTERN, "Neplatné PSČ", '\d{3,3}( )?\d{2,2}')
             ->setRequired(true);
-        $form->addSelect("country", "Země: ", ['CZE'=>'Česká republika', 'SVK'=>'Slovensko','AUT'=>'Rakousko','POL'=>'Polsko', 'DEU'=>'Německo'])
+        $form->addSelect("country", "Země: ", ['CZE' => 'Česká republika', 'SVK' => 'Slovensko', 'AUT' => 'Rakousko', 'POL' => 'Polsko', 'DEU' => 'Německo'])
             ->setRequired();
-        $form->addSelect("areaCode", "Předvolba: ", ["+420"=>"+420", "+421"=>"+421", "+48"=>"+48"])
+        $form->addSelect("areaCode", "Předvolba: ", ["+420" => "+420", "+421" => "+421", "+48" => "+48"])
             ->setRequired();
         $form->addText('phone', 'Telefon:')
             ->setHtmlAttribute('placeholder', 'Telefon *')
             ->setHtmlAttribute("title", "Zadejte platné telefonní číslo")
-            ->addRule($form::PATTERN, " Zadejte platné telefonní číslo",'\d{3,3}( )?\d{3,3}( )?\d{3,3}')
+            ->addRule($form::PATTERN, " Zadejte platné telefonní číslo", '\d{3,3}( )?\d{3,3}( )?\d{3,3}')
             ->setRequired(true);
 
         return $form;
     }
 
-    public function create(callable $onSuccess) : Form
+    public function create(callable $onSuccess): Form
     {
         $this->getShippingAddressInputs($this->form);
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy", '(([A-ž]+)([ \d_\-\.&]*)){3,}');
 
         $this->form->addSubmit("submit", "Přidat");
 
-        if($this->form->isSuccess()){
+        if ($this->form->isSuccess()) {
             $values = $this->form->getValues("array");
-            try{
+            try {
                 $this->address = new Address();
                 $this->address->setValues(
                     $values["firstName"],
@@ -112,7 +111,7 @@ class ShippingAddress extends FormFactory
                     null,
                     null,
                 );
-            }catch (AddressException $exception){
+            } catch (AddressException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 
@@ -127,10 +126,9 @@ class ShippingAddress extends FormFactory
                     $this->address->address2,
                     $this->address->city,
                     $this->address->country,
-                    $this->address->zipcode,
-                    $_SESSION["user"]->id
-                ]);
-            }catch (\Exception|UserException $exception){
+                    $this->address->zipcode
+                ], $_SESSION["user"]->id);
+            } catch (\Exception|UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 

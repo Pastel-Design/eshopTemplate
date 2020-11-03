@@ -13,7 +13,8 @@ use app\config\FileUploadConfig;
 class FileManager
 {
     /**
-     * @return mixed
+     * Processes all uploaded files by its filetype
+     * @return string
      */
     static function processFiles()
     {
@@ -42,21 +43,19 @@ class FileManager
     }
 
     /**
+     * Processes file uploaded via input with single file
      * @param $upfileName
      * @return string
      */
     static function uploadFileSingle($upfileName)
     {
         try {
-            // Undefined | Multiple Files | $_FILES Corruption Attack
-            // If this request falls under any of them, treat it invalid.
             if (
                 !isset($_FILES[$upfileName]['error']) ||
                 is_array($_FILES[$upfileName]['error'])
             ) {
                 throw new RuntimeException('Invalid parameters.', 1);
             }
-            // Check $_FILES[$upfileName]['error'] value.
             switch ($_FILES[$upfileName]['error']) {
                 case UPLOAD_ERR_OK:
                     break;
@@ -68,12 +67,9 @@ class FileManager
                 default:
                     throw new RuntimeException('Unknown errors.', 1);
             }
-            // You should also check filesize here.
             if ($_FILES[$upfileName]['size'] > 75000000) {
                 throw new RuntimeException('Exceeded filesize limit.', 1);
             }
-            // DO NOT TRUST $_FILES[$upfileName]['mime'] VALUE !!
-            // Check MIME Type by yourself.
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
                     $finfo->file($_FILES[$upfileName]['tmp_name']),
@@ -116,6 +112,7 @@ class FileManager
     }
 
     /**
+     * Processes file uploaded via input with multiple files
      * @param $upfileName
      * @param $key
      * @return mixed
@@ -123,15 +120,12 @@ class FileManager
     static function uploadFileMultiple($upfileName, $key)
     {
         try {
-            // Undefined | Multiple Files | $_FILES Corruption Attack
-            // If this request falls under any of them, treat it invalid.
             if (
                 !isset($_FILES[$upfileName]['error'][$key]) ||
                 is_array($_FILES[$upfileName]['error'][$key])
             ) {
                 throw new RuntimeException('Invalid parameters.', 1);
             }
-            // Check $_FILES[$upfileName]['error'][$key] value.
             switch ($_FILES[$upfileName]['error'][$key]) {
                 case UPLOAD_ERR_OK:
                     break;
@@ -143,12 +137,9 @@ class FileManager
                 default:
                     throw new RuntimeException('Unknown errors.', 1);
             }
-            // You should also check filesize here.
             if ($_FILES[$upfileName]['size'][$key] > 75000000) {
                 throw new RuntimeException('Exceeded filesize limit.', 1);
             }
-            // DO NOT TRUST $_FILES[$upfileName]['mime'] VALUE !!
-            // Check MIME Type by yourself.
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             if (false === $ext = array_search(
                     $finfo->file($_FILES[$upfileName]['tmp_name'][$key]),
@@ -190,9 +181,13 @@ class FileManager
     }
 
     /**
+     * Processes uploaded image
      * @param $upfileName
+     * Uploaded files name
      * @param $ext
+     * Files extension
      * @param null $key
+     * Key of uploaded file in array, in case of uploading trough single input-multiple files
      * @return array
      */
     static function uploadImage($upfileName, $ext, $key = null)
@@ -239,9 +234,13 @@ class FileManager
     }
 
     /**
+     * Processes uploaded Video
      * @param $upfileName
+     * Uploaded files name
      * @param $ext
+     * Files extension
      * @param null $key
+     * Key of uploaded file in array, in case of uploading trough single input-multiple files
      * @return array
      */
     static function uploadVideo($upfileName, $ext, $key = null)
@@ -286,9 +285,13 @@ class FileManager
     }
 
     /**
+     * Processes uploaded appliacation
      * @param $upfileName
+     * Uploaded files name
      * @param $ext
+     * Files extension
      * @param null $key
+     * Key of uploaded file in array, in case of uploading trough single input-multiple files
      * @return array
      */
     static function uploadApplication($upfileName, $ext, $key = null)
@@ -331,9 +334,13 @@ class FileManager
     }
 
     /**
+     * Processes uploaded text file
      * @param $upfileName
+     * Uploaded files name
      * @param $ext
+     * Files extension
      * @param null $key
+     * Key of uploaded file in array, in case of uploading trough single input-multiple files
      * @return array
      */
     static function uploadTextfile($upfileName, $ext, $key = null)

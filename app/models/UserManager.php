@@ -14,24 +14,25 @@ use mysql_xdevapi\Exception;
 class UserManager
 {
     /**
-     * Výpis uživatele z databáze pomocí username|email
+     * Selects user from database
      * @param string $login
+     * username or email
      * @return object
      */
-    public static function getuserfromdatabase(string $login): object
+    public static function selectUser(string $login): object
     {
-        return (object)dbmanager::requestsingle('
-            select user.id, user.email, user.username, concat(user.area_code, user.phone) as phone, role.name as role_name, role.level as role_level, user.first_name, user.last_name 
-            from user,role 
-            where username = ? 
-            or email = ? 
-            and user.role_id = role.id',
+        return (object)DbManager::requestsingle('
+            SELECT user.id, user.email, user.username, CONCAT(user.area_code, user.phone) AS phone, role.name AS role_name, role.level AS role_level, user.first_name, user.last_name 
+            FROM user,role 
+            WHERE username = ? 
+            OR email = ? 
+            AND user.role_id = role.id',
             [$login, $login]);
     }
 
 
     /**
-     * Změna hesla uživatele.
+     * Changes users password
      * @param int $id
      * @param string $oldPassword
      * @param string $newPassword
@@ -42,7 +43,7 @@ class UserManager
         $passInDb = DbManager::requestUnit("SELECT password FROM user WHERE id = ?", [$id]);
         if (password_verify($oldPassword, $passInDb)) {
             $hash = password_hash($newPassword, PASSWORD_BCRYPT);
-            $passwordUpdate = dbmanager::requestinsert('update user set password = ? where id = ?;', [$hash, $id]);
+            $passwordUpdate = DbManager::requestInsert('UPDATE user SET password = ? WHERE id = ?;', [$hash, $id]);
             if ($passwordUpdate) {
                 return;
             } else {
@@ -54,29 +55,33 @@ class UserManager
     }
 
     /**
-     * <p>Přidání adresy uživateli.</p>
-     * <p>Parametr $type <b>musí</b> mít hodnotu <i>shipping</i> nebo <i>invoice</i> jinak funkce hází Exception </p>
-     * @param array $values <p>Poslední prvek pole je vždy user_id</p>
+     * <p>Adds users address</p>
+     * <p>Parameter $type <b>must</b> have value of <i>shipping</i> or <i>invoice</i>, otherwise return <b>Exception</b>  </p>
+     * @param array $values
+     * Address values
+     * @param int $user_id
      * @param string $type <p>default: <i>shipping</i></p>
      * @throws UserException
      * @throws \Exception
      */
-    public static function addAddress(array $values, string $type = "shipping"): void
+    public static function addAddress(array $values, int $user_id, string $type = "shipping"): void
     {
-        if ($type == "shipping") {
-            $sql = "INSERT INTO `shipping_address`(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
+        switch ($type) {
+            case "shipping":
+                $sql = "INSERT INTO `shipping_address`(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        } elseif ($type == "invoice") {
-            $sql = "INSERT INTO `invoice_address`( `first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `DIC`, `IC`, `user_id`)
+                break;
+            case "invoice":
+                $sql = "INSERT INTO `invoice_address`( `first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `DIC`, `IC`, `user_id`)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        } else {
-            throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+                break;
+            default:
+                throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+                break;
         }
-
-        $addressInsert = DbManager::requestInsert($sql, $values);
-        if ($addressInsert) {
-            return;
-        } else {
+        $params = array_merge($values, ["user_id" => $user_id]);
+        $addressInsert = DbManager::requestInsert($sql, $params);
+        if (!$addressInsert) {
             throw new UserException("Přidání adresy se nepovedlo");
         }
     }
@@ -123,7 +128,7 @@ class UserManager
                 } else {
                     throw new UserException("Smazání adresy se nepovedlo.");
                 }
-            }else{
+            } else {
                 throw new UserException("Požadovaná adresa neexistuje.");
             }
         } else {

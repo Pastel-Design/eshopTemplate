@@ -1,31 +1,33 @@
 <?php
+
 namespace app\models;
 
 require("../vendor/autoload.php");
+
 use app\config\ImageOptimizerConfig;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
 /**
  * Class ImageManager
+ * pro více info http://image.intervention.io/getting_started/introduction
  * @package app\models
  */
 class ImageManager
 {
-
-// pro více info http://image.intervention.io/getting_started/introduction
     /**
-     * Upraví obrázek do výchozího rozlišení definovaného v config file ImageManager.php
-     * @param string $imgURL //urlobrázku
+     * Edits image to default parameters defined in ImageOptimizerConfig
+     * @param string $imgURL
      * @return void
      */
-    static function defaultImage(string $imgURL) : void
+    static function defaultImage(string $imgURL): void
     {
         $img = Image::make($imgURL);
 
         $height = $img->height();
         $width = $img->width();
-        if ($width > $height) { //na šířku
+        //na šířku
+        if ($width > $height) {
             if ($width > ImageOptimizerConfig::$defaultImageWidth) {
                 $img->resize(ImageOptimizerConfig::$defaultImageWidth, null, function ($constraint) {
                     $constraint->aspectRatio();
@@ -33,7 +35,8 @@ class ImageManager
             } else {
                 $img->save($imgURL);
             }
-        } else { //na výšku
+        } //na výšku
+        else {
             if ($height > ImageOptimizerConfig::$defaultImageHeight) {
                 $img->resize(null, ImageOptimizerConfig::$defaultImageHeight, function ($constraint) {
                     $constraint->aspectRatio();
@@ -44,20 +47,21 @@ class ImageManager
         }
         $img->save($imgURL);
     }
+
     /**
-     * nakopíruje nový obrázek v rozlišení pro thumbnail definované v config file ImageManager.php do složky thumbnails
-     *
+     * Makes thumbnail version of image, by defined resolution in ImageOptimizerConfig
      * @param string $imgURL
      * @return void
      */
-    static function makeThumbnail(string $imgURL) : void
+    static function makeThumbnail(string $imgURL): void
     {
         $img = Image::make($imgURL);
         $imgName = array_reverse(explode("/", $imgURL))[0];
 
         $height = $img->height();
         $width = $img->width();
-        if ($width > $height) { //na šířku
+        //na šířku
+        if ($width > $height) {
             if ($width > ImageOptimizerConfig::$thumbnailWidth) {
                 $img->resize(ImageOptimizerConfig::$thumbnailWidth, null, function ($constraint) {
                     $constraint->aspectRatio();
@@ -65,7 +69,8 @@ class ImageManager
             } else {
                 $img->save("images/thumbnails/" . $imgName);
             }
-        } else { //na výšku
+        } //na výšku
+        else {
             if ($height > ImageOptimizerConfig::$thumbnailHeight) {
                 $img->resize(null, ImageOptimizerConfig::$thumbnailHeight, function ($constraint) {
                     $constraint->aspectRatio();

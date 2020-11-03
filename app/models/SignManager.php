@@ -3,12 +3,14 @@
 namespace app\models;
 
 use app\exceptions\SignException;
-use app\classes\User;
+use app\classes\UserClass as User;
 
 class SignManager
 {
     /**
+     * Logs an user in
      * @param $login
+     * email or username
      * @param $password
      * @return void
      * @throws SignException
@@ -20,7 +22,7 @@ class SignManager
             if (self::userActivated($login)) {
                 $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?", [$login, $login]);
                 if (password_verify($password, $DBPass)) {
-                    $_SESSION["user"] = UserManager::getUserFromDatabase($login);
+                    $_SESSION["user"] = UserManager::selectUser($login);
                 } else {
                     throw new SignException("Wrong password");
                 }
@@ -33,6 +35,7 @@ class SignManager
     }
 
     /**
+     * Signs user Up
      * @param User $user
      * @return bool
      * @throws SignException
@@ -41,13 +44,12 @@ class SignManager
     {
         (session_status() === 1 ? session_start() : null);
         if (!self::userExists($user->email)) :
-            DbManager::$connection->beginTransaction();
             $user->password = password_hash($user->password, PASSWORD_DEFAULT);
 
             $userInsert = DbManager::requestInsert('
             INSERT INTO user (email,username,password,phone,area_code,role_id,activated, registered,last_active,first_name,last_name)
             VALUES(?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?)
-            ', [$user->email, $user->username, $user->password,$user->phone, $user->area_code, $user->role_id, $user->activated,  $user->first_name, $user->last_name]);
+            ', [$user->email, $user->username, $user->password, $user->phone, $user->area_code, $user->role_id, $user->activated, $user->first_name, $user->last_name]);
             $userId = DbManager::requestUnit("SELECT id FROM user WHERE username = ?", [$user->username]);
             $user->setId($userId);
             $user->setUserIdToAddress();
@@ -58,13 +60,9 @@ class SignManager
             VALUES(?,?,?,?,?,?,?,?,?,?,?)
             ', [$invoiceAddress->first_name, $invoiceAddress->last_name, $invoiceAddress->firm_name, $invoiceAddress->address1, $invoiceAddress->address2, $invoiceAddress->city, $invoiceAddress->country, $invoiceAddress->zipcode, $invoiceAddress->dic, $invoiceAddress->ic, $invoiceAddress->user_id]);
             $user->invoice_address->id = (int)DbManager::$connection->lastInsertId();
-
-
             if ($userInsert != true || $invoiceAddressInsert != true) {
-                DbManager::$connection->rollback();
                 throw new SignException("Something went wrong in registration.");
             } else {
-                DbManager::$connection->commit();
                 $_SESSION["user"] = $user->getSessionInfo();
                 return true;
             }
@@ -74,23 +72,31 @@ class SignManager
     }
 
     /**
+     * Signs out an user
      * @return void
      */
     static function SignOut(): void
     {
-        (session_status() === 2 ? session_destroy() : null);
+        if(session_status() === 2){
+            unset($_SESSION["user"]);
+        }
     }
 
     /**
+     * Verifies if user exists
      * @param $login
+     * username or email
      * @return bool
      */
     static function userExists($login)
     {
         return (self::checkUsername($login) || self::checkEmail($login));
     }
+
     /**
+     * Verifies if users account has been activated
      * @param $login
+     * username or email
      * @return bool
      */
     static function userActivated($login)
@@ -99,6 +105,7 @@ class SignManager
     }
 
     /**
+     * Check if users username is used
      * @param $username
      * @return bool
      */
@@ -108,6 +115,7 @@ class SignManager
     }
 
     /**
+     * Check if users email is used
      * @param $email
      * @return bool
      */

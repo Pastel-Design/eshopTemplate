@@ -19,13 +19,13 @@ class InvoiceAddress extends FormFactory
     private Form $form;
 
 
-
     /**
      * @var Address $address
      */
     private Address $address;
 
     private UserManager $userManager;
+
     public function __construct()
     {
         $this->form = parent::getBootstrapForm("invoiceAddress");
@@ -45,26 +45,26 @@ class InvoiceAddress extends FormFactory
             ->setHtmlAttribute('placeholder', 'IČ *')
             ->setHtmlAttribute("title", "Zadejte platné IČ")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, 'Neplatný formát IČ','\d{8,8}')
+            ->addRule($this->form::PATTERN, 'Neplatný formát IČ', '\d{8,8}')
             ->setRequired(true);
         $this->form->addText('dic', 'DIČ:')
             ->setHtmlAttribute('placeholder', 'DIČ *')
             ->setHtmlAttribute("title", "Zadejte platné DIČ")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, 'Neplatný formát DIČ','(CZ\d{8,10})|(SK\d{10,10})')
+            ->addRule($this->form::PATTERN, 'Neplatný formát DIČ', '(CZ\d{8,10})|(SK\d{10,10})')
             ->setRequired(true);
         $this->form->addCheckbox("dphCheckbox", "Plátce DPH");
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy", '(([A-ž]+)([ \d_\-\.&]*)){3,}');
 
         $this->form->addSubmit("submit", "Registrovat");
 
-        if($this->form->isSuccess()){
+        if ($this->form->isSuccess()) {
             $values = $this->form->getValues("array");
-            try{
+            try {
                 $this->address = new Address();
                 $this->address->setValues(
                     $values["firstName"],
@@ -80,7 +80,7 @@ class InvoiceAddress extends FormFactory
                     $values["dic"],
                     $values["ic"]
                 );
-            }catch (AddressException $exception){
+            } catch (AddressException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 
@@ -97,10 +97,9 @@ class InvoiceAddress extends FormFactory
                     $this->address->country,
                     $this->address->zipcode,
                     $this->address->dic,
-                    $this->address->ic,
-                    $_SESSION["user"]->id
-                ], "invoice");
-            }catch (\Exception|UserException $exception){
+                    $this->address->ic
+                ], $_SESSION["user"]->id, "invoice");
+            } catch (\Exception|UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 

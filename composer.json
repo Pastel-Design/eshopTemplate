@@ -1,12 +1,15 @@
 {
-    "name": "pasteldesign/eshop",
-    "description": "Eshop template pro Pastel Design",
-    "license": "proprietary",
-    "require": {
-        "intervention/image": "2.*",
-        "swiftmailer/swiftmailer": "6.2.*",
-        "egulias/email-validator": "2.1.*",
-        "latte/latte": "2.*",
-        "nette/forms": "3.*"
-    }
+  "name": "pasteldesign/eshop",
+  "description": "Eshop template pro Pastel Design",
+  "license": "proprietary",
+  "require": {
+    "intervention/image": "2.*",
+    "swiftmailer/swiftmailer": "6.2.*",
+    "egulias/email-validator": "2.1.*",
+    "latte/latte": "2.*",
+    "nette/forms": "3.*",
+    "ext-pdo": "*",
+    "ext-fileinfo": "*",
+    "ext-mysql_xdevapi": "*"
+  }
 }

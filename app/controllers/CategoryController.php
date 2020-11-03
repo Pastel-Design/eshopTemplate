@@ -36,7 +36,7 @@ class CategoryController extends Controller
         $categoryDashname = $params[0];
         if ($this->categoryManager->categoryExists($categoryDashname)) {
             $category = $this->categoryManager->selectCategoryClass($categoryDashname);
-            $no_pages = $this->productManager->numberOfPages($this->categoryManager->getCategoryId($categoryDashname), 17);
+            $no_pages = $this->productManager->numberOfPages($category->getId($categoryDashname));
             if (isset($params[1])) {
                 if ($params[1] > 0 && $params[1] <= $no_pages) {
                     $page = $params[1];
@@ -71,8 +71,8 @@ class CategoryController extends Controller
         $categoryShortdesc = $category->getShortdesc();
         $categoryDashname = $category->getDashname();
 
-        $no_pages = $this->productManager->numberOfPages($category->getId(), 17);
-        $products = $this->productManager->selectAllProducts($category->getDashname(), $page - 1, 17);
+        $no_pages = $this->productManager->numberOfPages($category->getId());
+        $products = $this->productManager->selectAllProducts($category->getDashname(), $page - 1,);
 
         $this->data = ["products" => $products, "category_dash_name" => $categoryDashname, "category_name" => $categoryName, "no_pages" => $no_pages, "page" => $page];
         $this->head['page_title'] = "Kategorie " . $categoryName;

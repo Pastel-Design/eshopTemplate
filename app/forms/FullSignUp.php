@@ -3,8 +3,8 @@ namespace app\forms;
 
 require("../vendor/autoload.php");
 
-use app\classes\Address;
-use app\classes\UserClass;
+use app\classes\AddressClass as Address;
+use app\classes\UserClass as User;
 use app\exceptions\AddressException;
 use app\exceptions\SignException;
 use app\exceptions\UserException;
@@ -118,7 +118,7 @@ final class  FullSignUp extends FormFactory
             }
 
             try{
-                $this->user = new UserClass();
+                $this->user = new User();
                 $this->user->setValues(
                     $values["email"],
                     $values["username"],
