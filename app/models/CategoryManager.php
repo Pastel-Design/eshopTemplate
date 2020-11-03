@@ -91,7 +91,7 @@ class CategoryManager
      * Selects category by its class as an object
      * @param $dashname
      * Dash name of category
-     * @return CategoryClass
+     * @return CategoryClass|object|void
      */
 
     public function selectCategoryClass($dashname)

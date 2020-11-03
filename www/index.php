@@ -1,7 +1,6 @@
 <?php
-session_start();
 
-
+use app\models\CartManager;
 use app\models\DbManager;
 use app\router\Router;
 use app\config\DbConfig;
@@ -20,6 +19,8 @@ function autoloadFunction($class)
 
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
+session_start();
+
 try {
 //připojení k db
     DbManager::connect(DbConfig::$host, DbConfig::$username, DbConfig::$pass, DbConfig::$database);

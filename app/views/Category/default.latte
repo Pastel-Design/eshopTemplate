@@ -1,5 +1,6 @@
 {extends "../@layout.latte"}
 {block content}
+    {var_dump($_SESSION)}
     <h2>{$category_name}</h2>
     <div n:if="$products" class="card-columns">
         <div n:foreach="$products as $product" class="card">
@@ -12,7 +13,7 @@
                 <p class="card-text {if $product["discount"]}text-danger{/if}">{$product["price"]} Kč</p>
                 <p class="card-text text-muted">{$product["price_wo_dph"]} Kč bez dph</p>
                 <p class="card-text">{$product["shortdesc"]}</p>
-                <button class="btn btn-success">Koupit</button>
+                <button class="btn btn-success btn-buy" data-product-code="{$product["id"]}">Koupit</button>
             </div>
         </div>
     </div>

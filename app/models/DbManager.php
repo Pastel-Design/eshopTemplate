@@ -5,7 +5,6 @@ namespace app\models;
 use app\router\Router;
 use PDO;
 use PDOException as PDOException;
-use app\classes;
 
 /**
  * Class DbManager

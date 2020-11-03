@@ -3,6 +3,7 @@
 
 namespace app\models;
 
+use app\models\DbManager as DbManager;
 use DateTime;
 use Exception;
 
@@ -21,7 +22,7 @@ class ProductManager
      * @return array
      * @throws Exception
      */
-    public function selectAllProducts($category_id, int $offset=1, int $limit=40)
+    public function selectAllProducts($category_id, int $offset = 1, int $limit = 40)
     {
         $products = $this->selectProducts($category_id, $offset, $limit);
         $newProducts = array();
@@ -60,7 +61,7 @@ class ProductManager
      * @param int $limit
      * @return array
      */
-    public function selectProducts($category_dashname, int $offset=1, int $limit=40)
+    public function selectProducts($category_dashname, int $offset = 1, int $limit = 40)
     {
         $category_id = DbManager::requestUnit("SELECT id FROM category WHERE dash_name = ?", [$category_dashname]);
         $offset = $offset * $limit;
@@ -85,11 +86,12 @@ class ProductManager
      * @param $category_id
      * @param int $limit
      * Products per page
-     * @return array
+     * @return array|false|float
      */
-    public function numberOfPages($category_id, $limit=40){
+    public function numberOfPages($category_id, $limit = 40)
+    {
         $no_products = $this->countProducts($category_id);
-        return ceil($no_products/$limit);
+        return ceil($no_products / $limit);
     }
 
     /**
@@ -196,18 +198,67 @@ class ProductManager
                 }
                 $product["discount"] = $product["price"] - $lastPrice;
                 $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)), 0, ',', " ");
-                $product["price"] = number_format($product["price"],  0, ',', " ");
-                $product["oldprice"] = number_format($lastPrice,  0, ',', " ");
+                $product["price"] = number_format($product["price"], 0, ',', " ");
+                $product["oldprice"] = number_format($lastPrice, 0, ',', " ");
             } else {
                 $product["discount"] = 0;
-                $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)),  0, ',', " ");
-                $product["price"] = number_format($product["price"],  0, ',', " ");
+                $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)), 0, ',', " ");
+                $product["price"] = number_format($product["price"], 0, ',', " ");
             }
         } else {
             $product["discount"] = 0;
-            $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)),  0, ',', " ");
-            $product["price"] = number_format($product["price"],  0, ',', " ");
+            $product["price_wo_dph"] = number_format($product["price"] * (1 - ($product["dph"] / 100)), 0, ',', " ");
+            $product["price"] = number_format($product["price"], 0, ',', " ");
         }
+        return $product;
+    }
+
+    /**
+     * Checks wheter the product exists or not
+     * @param int $productId
+     * @return boolean
+     */
+    public function productExists(int $productId): bool
+    {
+        return (DbManager::requestUnit("SELECT id FROM product WHERE id = ?", [$productId])?true:false);
+    }
+
+    /**
+     * Gets products info for Cart
+     * @param int $productId
+     * @return array
+     * @throws Exception
+     */
+    public function getProductCartInfo(int $productId):array
+    {
+        $product = DbManager::requestSingle(
+            'SELECT product.id,product.name,product.dash_name,price,price-((dph/100)*price) as price_wo_dph,
+        dph,dostupnost_id,serial_number FROM product 
+        WHERE product.id = ?', [$productId]);
+
+        $mainImage = DbManager::requestUnit(
+            'SELECT CONCAT(image.name,".",image.data_type) AS main_image 
+                FROM image JOIN image_has_product 
+                ON image.id = image_has_product.image_id 
+                JOIN product ON product.id=image_has_product.product_id 
+                WHERE product.id=?
+                AND image_has_product.main_image = 1',
+            [$product["id"]]);
+        $product["image"] = $mainImage;
+
+        $dostupnost = DbManager::requestUnit(
+            'SELECT dostupnost.name 
+                FROM dostupnost JOIN product
+                ON dostupnost.id = product.dostupnost_id 
+                WHERE product.id=?',
+            [$product["id"]]);
+        $product["dostupnost"] = $dostupnost;
+        unset($product["dostupnost_id"]);
+        $product = $this->discountProduct($product);
+        $product["price"]=str_replace(" ","",str_replace(",",".",$product["price"]));
+        $product["price_wo_dph"]=str_replace(" ","",str_replace(",",".",$product["price_wo_dph"]));
+        unset($product["oldprice"]);
+        unset($product["discount"]);
         return $product;
     }
 }
