@@ -5,7 +5,8 @@ namespace app\models;
 
 use app\exceptions\UserException;
 use app\models\DbManager as DbManager;
-use mysql_xdevapi\Exception;
+use mysql_xdevapi\Exception as Exception;
+use stdClass;
 
 /**
  * Class UserManager
@@ -62,7 +63,7 @@ class UserManager
      * @param int $user_id
      * @param string $type <p>default: <i>shipping</i></p>
      * @throws UserException
-     * @throws \Exception
+     * @throws Exception
      */
     public static function addAddress(array $values, int $user_id, string $type = "shipping"): void
     {
@@ -76,7 +77,7 @@ class UserManager
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 break;
             default:
-                throw new \Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+                throw new Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
                 break;
         }
         $params = array_merge($values, ["user_id" => $user_id]);
@@ -87,52 +88,53 @@ class UserManager
     }
 
     /**
-     * <p>Vypsání adres uživatele. </p>
-     * @param int $id <p>ID uživatele.</p>
-     * @param string $type <p>Parametr $type <b>musí</b> mít hodnotu <i>shipping</i> nebo <i>invoice</i> jinak funkce hází Exception </p>
+     * Returns users adders, based on type
+     * @param int $user_id
+     * @param string $type
+     * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
      * @return array|null
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function getUserAddress(int $id, string $type = "shipping"): ?array
+    public static function getUserAddress(int $user_id, string $type = "shipping"): ?array
     {
         if ($type == "shipping" || $type == "invoice") {
             $type .= "_address";
             $sql = "SELECT * FROM {$type} WHERE user_id = ?";
-            if (DbManager::requestAffect($sql, [$id]) > 0) {
-                return DbManager::requestMultiple($sql, [$id]);
+            if (DbManager::requestAffect($sql, [$user_id]) > 0) {
+                return DbManager::requestMultiple($sql, [$user_id]);
             } else {
                 return null;
             }
         } else {
-            throw new \Exception("Parametr \$type funkce getUserAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+            throw new Exception("Parametr \$type funkce getUserAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
         }
     }
 
     /**
-     * <p>Smazání adresy uživatele.</p>
-     * @param int $id <p>ID adresy.</p>
-     * @param \stdClass $user <p>Objekt ze $_SESSION</p>
-     * @param string $type <p>Parametr $type <b>musí</b> mít hodnotu <i>shipping</i> nebo <i>invoice</i> jinak funkce hází Exception </p>
+     * Deletes users address
+     * @param int $address_id ID adresy
+     * @param stdClass $user
+     * Users object from Session
+     * @param string $type
+     * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
      * @throws UserException
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function deleteUserAddress(int $id, $user, string $type = "shipping"): void
+    public static function deleteUserAddress(int $address_id, stdClass $user, string $type = "shipping"): void
     {
         if ($type == "shipping" || $type == "invoice") {
             $type .= "_address";
             $sql = "DELETE FROM {$type} WHERE id = ? AND user_id = ?";
-            if (DbManager::requestAffect("SELECT * FROM {$type} WHERE id = ? AND user_id = ?", [$id, $user->id])) {
-                $addressDelete = DbManager::requestInsert($sql, [$id, $user->id]);
-                if ($addressDelete) {
-                    return;
-                } else {
+            if (DbManager::requestAffect("SELECT * FROM {$type} WHERE id = ? AND user_id = ?", [$address_id, $user->id])) {
+                $addressDelete = DbManager::requestInsert($sql, [$address_id, $user->id]);
+                if (!$addressDelete) {
                     throw new UserException("Smazání adresy se nepovedlo.");
                 }
             } else {
                 throw new UserException("Požadovaná adresa neexistuje.");
             }
         } else {
-            throw new \Exception("Parametr \$type funkce deleteUserAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+            throw new Exception("Parametr \$type funkce deleteUserAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
         }
     }
 
