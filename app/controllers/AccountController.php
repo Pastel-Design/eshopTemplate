@@ -67,7 +67,6 @@ class AccountController extends Controller
                 $this->data["shippingAddresses"] = UserManager::getUserAddress($_SESSION["user"]->id);
                 if((isset($params[0]) && !empty($params[0])) && (isset($params[1]) && !empty($params[1]))){
                     if(is_numeric($params[1])){
-
                         try{
                             switch ($params[0]) {
                                 case "delete-shipping-address":

@@ -9,6 +9,7 @@ use app\models\ImageManager;
 use app\models\ProductManager;
 use app\models\SignManager;
 use app\models\UserManager;
+use app\router\Router;
 
 /**
  * Class SandboxController
@@ -40,6 +41,7 @@ class SandboxController extends Controller
      */
     public function process(array $params,array $gets=null)
     {
+
         $this->head['page_title'] = "Testovací stránka";
         $this->head['page_keywords'] = "";
         $this->head['page_description'] = "";
