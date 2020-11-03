@@ -3,6 +3,7 @@
 
 namespace app\models;
 
+use app\classes\AddressClass;
 use app\exceptions\UserException;
 use app\models\DbManager as DbManager;
 use mysql_xdevapi\Exception as Exception;
@@ -58,44 +59,70 @@ class UserManager
     /**
      * <p>Adds users address</p>
      * <p>Parameter $type <b>must</b> have value of <i>shipping</i> or <i>invoice</i>, otherwise return <b>Exception</b>  </p>
-     * @param array $values
+     * @param AddressClass $address
      * Address values
      * @param int $user_id
      * @param string $type <p>default: <i>shipping</i></p>
      * @throws UserException
      * @throws Exception
      */
-    public static function addAddress(array $values, int $user_id, string $type = "shipping"): void
+    public static function addAddress(AddressClass $address, int $user_id, string $type = "shipping"): void
     {
         switch ($type) {
             case "shipping":
                 $sql = "INSERT INTO `shipping_address`(`first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `user_id`)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                $values = [
+                    $address->first_name,
+                    $address->last_name,
+                    $address->firm_name,
+                    $address->phone,
+                    $address->area_code,
+                    $address->address1,
+                    $address->address2,
+                    $address->city,
+                    $address->country,
+                    $address->zipcode,
+                    $user_id
+                ];
                 break;
             case "invoice":
                 $sql = "INSERT INTO `invoice_address`( `first_name`, `last_name`, `firm_name`, `phone`, `area_code`, `address1`, `address2`, `city`, `country`, `zipcode`, `DIC`, `IC`, `user_id`)
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                $values = [
+                    $address->first_name,
+                    $address->last_name,
+                    $address->firm_name,
+                    $address->phone,
+                    $address->area_code,
+                    $address->address1,
+                    $address->address2,
+                    $address->city,
+                    $address->country,
+                    $address->zipcode,
+                    $address->dic,
+                    $address->ic,
+                    $user_id
+                ];
                 break;
             default:
                 throw new Exception("Parametr \$type funkce addAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
-                break;
         }
-        $params = array_merge($values, [$user_id]);
-        $addressInsert = DbManager::requestInsert($sql, $params);
+        $addressInsert = DbManager::requestInsert($sql, $values);
         if (!$addressInsert) {
             throw new UserException("Přidání adresy se nepovedlo");
         }
     }
 
     /**
-     * Returns users adders, based on type
+     * Returns users addresses, based on type
      * @param int $user_id
      * @param string $type
      * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
      * @return array|null
      * @throws Exception
      */
-    public static function getUserAddress(int $user_id, string $type = "shipping"): ?array
+    public static function getUserAddresses(int $user_id, string $type = "shipping"): ?array
     {
         if ($type == "shipping" || $type == "invoice") {
             $type .= "_address";
@@ -113,20 +140,20 @@ class UserManager
     /**
      * Deletes users address
      * @param int $address_id ID adresy
-     * @param stdClass $user
+     * @param int $user_id
      * Users object from Session
      * @param string $type
      * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
      * @throws UserException
      * @throws Exception
      */
-    public static function deleteUserAddress(int $address_id, stdClass $user, string $type = "shipping"): void
+    public static function deleteUserAddress(int $address_id, int $user_id, string $type = "shipping"): void
     {
         if ($type == "shipping" || $type == "invoice") {
             $type .= "_address";
             $sql = "DELETE FROM {$type} WHERE id = ? AND user_id = ?";
-            if (DbManager::requestAffect("SELECT * FROM {$type} WHERE id = ? AND user_id = ?", [$address_id, $user->id])) {
-                $addressDelete = DbManager::requestInsert($sql, [$address_id, $user->id]);
+            if (DbManager::requestAffect("SELECT * FROM {$type} WHERE id = ? AND user_id = ?", [$address_id, $user_id])) {
+                $addressDelete = DbManager::requestInsert($sql, [$address_id, $user_id]);
                 if (!$addressDelete) {
                     throw new UserException("Smazání adresy se nepovedlo.");
                 }
