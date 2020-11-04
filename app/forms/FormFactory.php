@@ -7,13 +7,14 @@ namespace app\forms;
 use Nette\Forms\Form;
 
 /**
- * Class FormFactory
+ * Form FormFactory
+ *
  * @package app\forms
  */
 abstract class FormFactory
 {
 
-    protected function getForm(string $name) : Form
+    protected function getForm(string $name): Form
     {
         $form = new Form($name);
         $renderer = $form->getRenderer();
@@ -61,9 +62,11 @@ abstract class FormFactory
 
     /**
      * Creates and returns Form
+     *
      * @param callable $onSuccess
+     *
      * @return Form
      */
-    abstract function create(callable $onSuccess) : Form;
+    abstract function create(callable $onSuccess): Form;
 
 }

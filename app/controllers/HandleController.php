@@ -7,7 +7,8 @@ use app\models\ProductManager;
 use Exception;
 
 /**
- * Class HandleController
+ * Controller HandleController
+ *
  * @package app\controllers
  */
 class HandleController extends Controller
@@ -24,8 +25,10 @@ class HandleController extends Controller
 
     /**
      * Handles ajax requests
-     * @param array $params
+     *
+     * @param array      $params
      * @param array|null $gets
+     *
      * @return void
      * @throws Exception
      */
@@ -53,6 +56,7 @@ class HandleController extends Controller
 
     /**
      * @param mixed $params
+     *
      * @return void
      * @throws Exception
      */
@@ -63,7 +67,7 @@ class HandleController extends Controller
             http_response_code(404);
         }
         if ($this->productManager->productExists((int)$productId)) {
-            $this->data["cartMessage"]=CartManager::addProductToCart($productId);
+            $this->data["cartMessage"] = CartManager::addProductToCart($productId);
         }
     }
 }

@@ -11,7 +11,8 @@ use app\router\Router;
 use Exception;
 
 /**
- * Class SignController
+ * Controller SignController
+ *
  * @package app\controllers
  */
 class SignController extends Controller
@@ -34,8 +35,9 @@ class SignController extends Controller
     }
 
     /**
-     * @param array $params
+     * @param array      $params
      * @param array|null $gets
+     *
      * @return void
      * @throws Exception
      */
@@ -59,6 +61,7 @@ class SignController extends Controller
 
     /**
      * Renders signup view with signup form
+     *
      * @return void
      * @throws Exception
      */
@@ -75,6 +78,7 @@ class SignController extends Controller
 
     /**
      * Renders signin view with signin form
+     *
      * @return void
      */
     public function signIn()
@@ -91,6 +95,7 @@ class SignController extends Controller
 
     /**
      * Signs out a user
+     *
      * @return void
      */
     public function signOut()

@@ -8,7 +8,8 @@ use Transliterator;
 
 
 /**
- * Class Controller
+ * Controller Controller
+ *
  * @package app\controllers
  */
 abstract class Controller
@@ -66,7 +67,8 @@ abstract class Controller
 
     /**
      * Definition of process function for inheritance
-     * @param array $params
+     *
+     * @param array      $params
      * Main url parameters
      * @param array|null $gets
      * Get parameters from url
@@ -75,6 +77,7 @@ abstract class Controller
 
     /**
      * Renders selected view
+     *
      * @return void
      */
     public function writeView(): void
@@ -90,13 +93,15 @@ abstract class Controller
 
     /**
      * Sets value of $this->$view and sets css and js variables
-     * @param string $view
+     *
+     * @param string      $view
      * View name
      * @param string|null $js
      * @param string|null $css
+     *
      * @return void
      */
-    public function setView(string $view, ?string $js=null, ?string $css=null): void
+    public function setView(string $view, ?string $js = null, ?string $css = null): void
     {
         $this->view = $view;
         $this->head["js"] = $js;
@@ -105,6 +110,7 @@ abstract class Controller
 
     /**
      * View getter
+     *
      * @return string|null
      */
     public function getView(): ?string
@@ -114,7 +120,9 @@ abstract class Controller
 
     /**
      * Convert standard names to dash-based style
+     *
      * @param string $argument
+     *
      * @return string
      */
     public function basicToDash(string $argument): string
@@ -125,10 +133,11 @@ abstract class Controller
 
     /**
      * Adds flash message to <i>$_SESSION["flashes"]</i>
+     *
      * @param string $message
-     * Message to render.
+     *                     Message to render.
      * @param string $type default = <i>info</i>
-     * <p>Message type to differentiate in css</p>
+     *                     <p>Message type to differentiate in css</p>
      */
     protected function addFlashMessage(string $message, string $type = "info"): void
     {
@@ -137,16 +146,16 @@ abstract class Controller
 
     /**
      * Checks expiration of flash messages and sets messages to <i>head</i>
+     *
      * @return void
      */
     private function setFlashes(): void
     {
 
-        foreach ($_SESSION["flashes"] as $key => $flash){
+        foreach ($_SESSION["flashes"] as $key => $flash) {
             if ((time() - $flash["created"]) >= 5) {
                 unset($_SESSION["flashes"][$key]);
-            }
-            else{
+            } else {
                 $this->head["flashes"][] = $flash;
             }
         }

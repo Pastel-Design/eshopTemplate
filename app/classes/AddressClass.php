@@ -7,6 +7,7 @@ use app\config\RegexConfig;
 
 /**
  * Class AddressClass
+ *
  * @package app\classes
  */
 class AddressClass
@@ -14,20 +15,21 @@ class AddressClass
     public $id, $first_name, $last_name, $firm_name, $phone, $area_code, $address1, $address2, $city, $country, $zipcode, $dic, $ic, $user_id;
 
     /**
-     * @param string $first_name
-     * @param string $last_name
+     * @param string      $first_name
+     * @param string      $last_name
      * @param string|null $firm_name
-     * @param string $phone
-     * @param string $area_code
-     * @param string $address1
+     * @param string      $phone
+     * @param string      $area_code
+     * @param string      $address1
      * @param string|null $address2
-     * @param string $city
-     * @param string $country
-     * @param string $zipcode
+     * @param string      $city
+     * @param string      $country
+     * @param string      $zipcode
      * @param string|null $dic
      * @param string|null $ic
-     * @param int|null $id
-     * @param int|null $user_id
+     * @param int|null    $id
+     * @param int|null    $user_id
+     *
      * @throws AddressException
      */
     public function setValues(string $first_name, string $last_name, ?string $firm_name, string $phone, string $area_code, string $address1, ?string $address2, string $city, string $country, string $zipcode, ?string $dic, ?string $ic, int $id = null, int $user_id = null)

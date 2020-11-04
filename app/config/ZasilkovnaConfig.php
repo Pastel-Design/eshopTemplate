@@ -2,7 +2,8 @@
 
 namespace app\config;
 /**
- * Class ZasilkovnaConfig
+ * Config ZasilkovnaConfig
+ *
  * @package app\config
  */
 class ZasilkovnaConfig

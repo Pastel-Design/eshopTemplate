@@ -7,13 +7,15 @@ use RuntimeException;
 use app\config\FileUploadConfig;
 
 /**
- * Class FileManager
+ * Manager FileManager
+ *
  * @package app\models
  */
 class FileManager
 {
     /**
      * Processes all uploaded files by its filetype
+     *
      * @return string
      */
     static function processFiles()
@@ -44,7 +46,9 @@ class FileManager
 
     /**
      * Processes file uploaded via input with single file
+     *
      * @param $upfileName
+     *
      * @return string
      */
     static function uploadFileSingle($upfileName)
@@ -113,8 +117,10 @@ class FileManager
 
     /**
      * Processes file uploaded via input with multiple files
+     *
      * @param $upfileName
      * @param $key
+     *
      * @return mixed
      */
     static function uploadFileMultiple($upfileName, $key)
@@ -182,12 +188,14 @@ class FileManager
 
     /**
      * Processes uploaded image
-     * @param $upfileName
+     *
+     * @param      $upfileName
      * Uploaded files name
-     * @param $ext
+     * @param      $ext
      * Files extension
      * @param null $key
      * Key of uploaded file in array, in case of uploading trough single input-multiple files
+     *
      * @return array
      */
     static function uploadImage($upfileName, $ext, $key = null)
@@ -235,12 +243,14 @@ class FileManager
 
     /**
      * Processes uploaded Video
-     * @param $upfileName
+     *
+     * @param      $upfileName
      * Uploaded files name
-     * @param $ext
+     * @param      $ext
      * Files extension
      * @param null $key
      * Key of uploaded file in array, in case of uploading trough single input-multiple files
+     *
      * @return array
      */
     static function uploadVideo($upfileName, $ext, $key = null)
@@ -286,12 +296,14 @@ class FileManager
 
     /**
      * Processes uploaded appliacation
-     * @param $upfileName
+     *
+     * @param      $upfileName
      * Uploaded files name
-     * @param $ext
+     * @param      $ext
      * Files extension
      * @param null $key
      * Key of uploaded file in array, in case of uploading trough single input-multiple files
+     *
      * @return array
      */
     static function uploadApplication($upfileName, $ext, $key = null)
@@ -335,12 +347,14 @@ class FileManager
 
     /**
      * Processes uploaded text file
-     * @param $upfileName
+     *
+     * @param      $upfileName
      * Uploaded files name
-     * @param $ext
+     * @param      $ext
      * Files extension
      * @param null $key
      * Key of uploaded file in array, in case of uploading trough single input-multiple files
+     *
      * @return array
      */
     static function uploadTextfile($upfileName, $ext, $key = null)

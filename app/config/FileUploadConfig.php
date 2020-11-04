@@ -2,7 +2,8 @@
 
 namespace app\config;
 /**
- * Class FileUploadConfig
+ * Config FileUploadConfig
+ *
  * @package app\config
  */
 class FileUploadConfig
