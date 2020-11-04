@@ -24,7 +24,7 @@ function autoloadFunction($class)
 spl_autoload_register("autoloadFunction");
 session_start();
 //Vytvoření flashes v session
-$_SESSION["flashes"] = [];
+$_SESSION["flashes"];
 try {
 //připojení k db
     DbManager::connect(DbConfig::$host, DbConfig::$username, DbConfig::$pass, DbConfig::$database);
