@@ -50,24 +50,24 @@ class AccountController extends Controller
             try {
                 $this->data["changePasswordForm"] = $this->changePasswordForm->create(function () {
                     $this->addFlashMessage("Heslo úspěšně změněno.");
-                    //Router::reroute("account");
+                    Router::reroute("account");
                 });
 
                 $this->data["addInvoiceAddressForm"] = $this->invoiceAddressForm->create(function () {
                     $this->addFlashMessage("Adresa úspěšně přidána.");
-                    //Router::reroute("account");
+                    Router::reroute("account");
                 });
 
-                $this->data["addShippingAddressForm"] = $this->shippingAddressForm->create(function (){
+                $this->data["addShippingAddressForm"] = $this->shippingAddressForm->create(function () {
                     $this->addFlashMessage("Adresa úspěšně přidána");
-                   // Router::reroute("account");
+                    Router::reroute("account");
                 });
 
                 $this->data["invoiceAddresses"] = UserManager::getUserAddresses($_SESSION["user"]->id, "invoice");
                 $this->data["shippingAddresses"] = UserManager::getUserAddresses($_SESSION["user"]->id);
-                if((isset($params[0]) && !empty($params[0])) && (isset($params[1]) && !empty($params[1]))){
-                    if(is_numeric($params[1])){
-                        try{
+                if ((isset($params[0]) && !empty($params[0])) && (isset($params[1]) && !empty($params[1]))) {
+                    if (is_numeric($params[1])) {
+                        try {
                             switch ($params[0]) {
                                 case "delete-shipping-address":
                                     UserManager::deleteUserAddress($params[1], $_SESSION["user"]->id);
@@ -80,8 +80,8 @@ class AccountController extends Controller
                                 default:
                                     Router::reroute("account");
                             }
-                        }catch (UserException $exception){
-                            $this->addFlashMessage($exception->getMessage(),"error");
+                        } catch (UserException $exception) {
+                            $this->addFlashMessage($exception->getMessage(), "error");
                         }
                     }
                     //Router::reroute("account");

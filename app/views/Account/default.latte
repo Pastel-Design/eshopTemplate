@@ -1,6 +1,7 @@
 {extends "../@layout.latte"}
 
 {block content}
+    {var_dump($_SESSION["flashes"])}
     <div>
         <h1>Změna hesla</h1>
         {$changePasswordForm->render()}

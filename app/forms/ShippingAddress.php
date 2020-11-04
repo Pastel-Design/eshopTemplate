@@ -119,6 +119,7 @@ final class ShippingAddress extends FormFactory
 
             try {
                 UserManager::addAddress($this->address, $_SESSION["user"]->id);
+                $onSuccess();
             } catch (Exception|UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }

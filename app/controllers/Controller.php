@@ -11,7 +11,6 @@ use Transliterator;
  * Class Controller
  * @package app\controllers
  */
-
 abstract class Controller
 {
     /**
@@ -27,7 +26,7 @@ abstract class Controller
     /**
      * @var array $head
      */
-    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_description' => '', 'css' => '', 'js' => '','flashes'=>[]];
+    protected array $head = ['page_title' => '', 'page_keywords' => '', 'page_description' => '', 'css' => '', 'js' => '', 'flashes' => []];
 
     /**
      * @var string $controllerName
@@ -45,8 +44,8 @@ abstract class Controller
     public function __construct()
     {
         $this->latte = new Engine();
-        $this->latte->addFilter("convertCountry",function ($countryCode){
-            switch ($countryCode){
+        $this->latte->addFilter("convertCountry", function ($countryCode) {
+            switch ($countryCode) {
                 case "CZE":
                     return "Česká republika";
                 case "SVK":
@@ -62,6 +61,7 @@ abstract class Controller
             }
         });
         $this->categoryManagerNav = new CategoryManager();
+        $this->setFlashes();
     }
 
     /**
@@ -71,7 +71,7 @@ abstract class Controller
      * @param array|null $gets
      * Get parameters from url
      */
-    abstract function process(array $params,array $gets=null);
+    abstract function process(array $params, array $gets = null);
 
     /**
      * Renders selected view
@@ -81,7 +81,7 @@ abstract class Controller
     {
         if ($this->view) {
             $this->view = __DIR__ . "/../../app/views/" . $this->controllerName . "/" . $this->view . ".latte";
-            $params = array_merge($this->head,$this->data);
+            $params = array_merge($this->head, $this->data);
             $params["categories"] = $this->categoryManagerNav->selectCategories();
             $this->latte->render($this->view, $params);
         }
@@ -107,6 +107,7 @@ abstract class Controller
     {
         return $this->view;
     }
+
     /**
      * Convert standard names to dash-based style
      * @param string $argument
@@ -119,14 +120,31 @@ abstract class Controller
     }
 
     /**
-     * Adds flash message to view trough head
+     * Adds flash message to <i>$_SESSION["flashes"]</i>
      * @param string $message
-     * Message to render
-     * @param string $type default = "info"
-     * Message type to differentiate in css
+     * Message to render.
+     * @param string $type default = <i>info</i>
+     * <p>Message type to differentiate in css</p>
      */
-    protected function addFlashMessage(string $message, string $type = "info") : void
+    protected function addFlashMessage(string $message, string $type = "info"): void
     {
-        $this->head["flashes"][] = ["message"=>$message, "type"=>$type];
+        $_SESSION["flashes"][] = ["message" => $message, "type" => $type, "created" => time()];
+    }
+
+    /**
+     * Checks expiration of flash messages and sets messages to <i>head</i>
+     * @return void
+     */
+    private function setFlashes(): void
+    {
+
+        foreach ($_SESSION["flashes"] as $key => $flash){
+            if ((time() - $flash["created"]) >= 5) {
+                unset($_SESSION["flashes"][$key]);
+            }
+            else{
+                $this->head["flashes"][] = $flash;
+            }
+        }
     }
 }
