@@ -1,27 +1,5 @@
-.cart-products{
-    position: absolute;
-    z-index: 10;
-    top: 100px;
-    visibility: hidden;
-    opacity: 0;
-    transition-property: visibility, opacity;
-    transition-duration: 0ms;
-    transition-delay: 600ms;
-    display: flex;
-    flex-flow: column;
-}
-.cart-products>div{
-    width: 100%;
-}
-.cart-container{
-    cursor: pointer;
+.navbar-brand {
+  background-color: #3cd5f4;
 }
 
-.cart-container:hover .cart-products{
-    top: 100px;
-    visibility: visible;
-    opacity: 1;
-    transition-property: visibility, opacity;
-    transition-duration: 0ms;
-    transition-delay: 0ms;
-}
+/*# sourceMappingURL=style.css.map */

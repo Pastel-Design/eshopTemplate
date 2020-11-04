@@ -18,13 +18,13 @@ function autoloadFunction($class)
     require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
 }
 
-//Vytvoření flashes v session
-$_SESSION["flashes"];
+
 
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
 session_start();
-
+//Vytvoření flashes v session
+$_SESSION["flashes"] = [];
 try {
 //připojení k db
     DbManager::connect(DbConfig::$host, DbConfig::$username, DbConfig::$pass, DbConfig::$database);
