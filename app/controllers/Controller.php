@@ -92,11 +92,15 @@ abstract class Controller
      * Sets value of $this->$view and sets css and js variables
      * @param string $view
      * View name
+     * @param string|null $js
+     * @param string|null $css
      * @return void
      */
-    public function setView(string $view): void
+    public function setView(string $view, ?string $js=null, ?string $css=null): void
     {
         $this->view = $view;
+        $this->head["js"] = $js;
+        $this->head["css"] = $css;
     }
 
     /**
