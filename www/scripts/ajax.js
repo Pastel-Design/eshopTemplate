@@ -4,11 +4,18 @@ document.querySelectorAll('.btn-buy').forEach(item => {
     })
 })
 
-async function addToCart(productCode) {
-    try {
-        const response = await axios.get('/handle/addToCart/' + productCode);
-        console.log(response["data"]);
-    } catch (error) {
-        console.error(error);
-    }
+function addToCart(productCode) {
+    axios.get('/handle/addToCart/' + productCode, {
+        params: {}
+    })
+        .then(function (response) {
+            let data = response["data"];
+            console.log(data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
 }

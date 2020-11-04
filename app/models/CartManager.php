@@ -61,15 +61,19 @@ class CartManager
     public static function addProductToCart($productId)
     {
         if (is_int($productKey = self::isProductInCart($productId))) {
-            return self::incrementProduct($productKey);
+            $product = self::incrementProduct($productKey);
+
         } else {
             $product = (new CartManager())->productManager->getProductCartInfo($productId);
-            $product = array_merge($product,["amount"=>1,"totalPrice"=>(float)$product["price"]]);
+            $product = array_merge($product, ["amount" => 1, "totalPrice" => (float)$product["price"]]);
             $_SESSION["cart"]->products[] = $product;
             $_SESSION["cart"]->totalAmount++;
-            $_SESSION["cart"]->totalPrice=$_SESSION["cart"]->totalPrice+(float)$product["price"];
-            return true;
+            $_SESSION["cart"]->totalPrice = $_SESSION["cart"]->totalPrice + (float)$product["price"];
         }
+        unset($product["id"], $product["price_wo_dph"], $product["dph"], $product["serial_number"], $product["dostupnost"], $product["amount"], $product["price"]);
+        $product["totalSessionPrice"]=$_SESSION["cart"]->totalPrice;
+        $product["totalAmount"]=$_SESSION["cart"]->totalAmount;
+        return $product;
     }
 
     /**
@@ -79,12 +83,12 @@ class CartManager
     public static function incrementProduct($productKey)
     {
         $product = $_SESSION["cart"]->products[$productKey];
-        $product["totalPrice"]=$product["totalPrice"]+$product["price"];
+        $product["totalPrice"] = $product["totalPrice"] + $product["price"];
         $product["amount"]++;
         $_SESSION["cart"]->products[$productKey] = $product;
         $_SESSION["cart"]->totalAmount++;
-        $_SESSION["cart"]->totalPrice=$_SESSION["cart"]->totalPrice+(float)$product["price"];
-        return true;
+        $_SESSION["cart"]->totalPrice = $_SESSION["cart"]->totalPrice + (float)$product["price"];
+        return $product;
     }
 
 

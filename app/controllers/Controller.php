@@ -97,8 +97,6 @@ abstract class Controller
     public function setView(string $view): void
     {
         $this->view = $view;
-        $this->head['css'] = $this->view . ".css";
-        $this->head['js'] = $this->view . ".js";
     }
 
     /**

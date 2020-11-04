@@ -63,7 +63,7 @@ class HandleController extends Controller
             http_response_code(404);
         }
         if ($this->productManager->productExists((int)$productId)) {
-            $this->data["cartMessage"]=(CartManager::addProductToCart($productId)?"Produkt v košíku":"Něco se nepovedlo");
+            $this->data["cartMessage"]=CartManager::addProductToCart($productId);
         }
     }
 }
