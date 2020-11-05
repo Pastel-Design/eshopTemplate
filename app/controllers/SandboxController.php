@@ -12,7 +12,8 @@ use app\models\UserManager;
 use app\router\Router;
 
 /**
- * Class SandboxController
+ * Controller SandboxController
+ *
  * @package app\controllers
  */
 class SandboxController extends Controller
@@ -23,6 +24,7 @@ class SandboxController extends Controller
     protected ProductManager $productManager;
     protected SignManager $signManager;
     protected UserManager $userManager;
+
     public function __construct()
     {
         parent::__construct();
@@ -35,11 +37,12 @@ class SandboxController extends Controller
     }
 
     /**
-     * @param array $params
+     * @param array      $params
      * @param array|null $gets
+     *
      * @return void
      */
-    public function process(array $params,array $gets=null)
+    public function process(array $params, array $gets = null)
     {
 
         $this->head['page_title'] = "Testovací stránka";

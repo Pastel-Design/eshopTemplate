@@ -3,7 +3,8 @@
 namespace app\controllers;
 
 /**
- * Class HomeController
+ * Controller HomeController
+ *
  * @package app\controllers
  */
 class HomeController extends Controller
@@ -15,11 +16,13 @@ class HomeController extends Controller
 
     /**
      * Sets default homepage
-     * @param array $params
+     *
+     * @param array      $params
      * @param array|null $gets
+     *
      * @return void
      */
-    public function process(array $params,array $gets=null)
+    public function process(array $params, array $gets = null)
     {
         $this->head['page_title'] = "Domovská stránka";
         $this->head['page_keywords'] = "eshop";

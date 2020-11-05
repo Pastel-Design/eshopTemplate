@@ -8,7 +8,8 @@ use app\models\ProductManager as ProductManager;
 use Exception;
 
 /**
- * Class CartManager
+ * Manager CartManager
+ *
  * @package app\models
  */
 class CartManager
@@ -40,6 +41,7 @@ class CartManager
 
     /**
      * @param $productId
+     *
      * @return bool
      */
     public static function isProductInCart($productId)
@@ -55,6 +57,7 @@ class CartManager
 
     /**
      * @param $productId
+     *
      * @return bool
      * @throws Exception
      */
@@ -71,13 +74,14 @@ class CartManager
             $_SESSION["cart"]->totalPrice = $_SESSION["cart"]->totalPrice + (float)$product["price"];
         }
         unset($product["id"], $product["price_wo_dph"], $product["dph"], $product["serial_number"], $product["dostupnost"], $product["amount"], $product["price"]);
-        $product["totalSessionPrice"]=$_SESSION["cart"]->totalPrice;
-        $product["totalAmount"]=$_SESSION["cart"]->totalAmount;
+        $product["totalSessionPrice"] = $_SESSION["cart"]->totalPrice;
+        $product["totalAmount"] = $_SESSION["cart"]->totalAmount;
         return $product;
     }
 
     /**
      * @param $productKey
+     *
      * @return bool
      */
     public static function incrementProduct($productKey)

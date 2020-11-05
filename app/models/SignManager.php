@@ -4,14 +4,20 @@ namespace app\models;
 
 use app\exceptions\SignException;
 use app\classes\UserClass as User;
-
+/**
+ * Manager SignManager
+ *
+ * @package app\models
+ */
 class SignManager
 {
     /**
      * Logs an user in
+     *
      * @param $login
      * email or username
      * @param $password
+     *
      * @return void
      * @throws SignException
      */
@@ -36,7 +42,9 @@ class SignManager
 
     /**
      * Signs user Up
+     *
      * @param User $user
+     *
      * @return bool
      * @throws SignException
      */
@@ -73,19 +81,22 @@ class SignManager
 
     /**
      * Signs out an user
+     *
      * @return void
      */
     static function SignOut(): void
     {
-        if(session_status() === 2){
+        if (session_status() === 2) {
             unset($_SESSION["user"]);
         }
     }
 
     /**
      * Verifies if user exists
+     *
      * @param $login
      * username or email
+     *
      * @return bool
      */
     static function userExists($login)
@@ -95,8 +106,10 @@ class SignManager
 
     /**
      * Verifies if users account has been activated
+     *
      * @param $login
      * username or email
+     *
      * @return bool
      */
     static function userActivated($login)
@@ -106,7 +119,9 @@ class SignManager
 
     /**
      * Check if users username is used
+     *
      * @param $username
+     *
      * @return bool
      */
     static function checkUsername($username)
@@ -116,7 +131,9 @@ class SignManager
 
     /**
      * Check if users email is used
+     *
      * @param $email
+     *
      * @return bool
      */
     static function checkEmail($email)

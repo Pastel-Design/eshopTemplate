@@ -10,7 +10,11 @@ use app\exceptions\UserException;
 use app\models\UserManager;
 use Exception;
 use Nette\Forms\Form;
-
+/**
+ * Form InvoiceAddress
+ *
+ * @package app\forms
+ */
 final class InvoiceAddress extends FormFactory
 {
 
@@ -34,6 +38,7 @@ final class InvoiceAddress extends FormFactory
 
     /**
      * @param callable $onSuccess
+     *
      * @return Form
      * @throws Exception
      */

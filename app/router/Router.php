@@ -7,7 +7,8 @@ require(__DIR__ . "/../../vendor/autoload.php");
 use App\controllers\Controller;
 
 /**
- * Class Router
+ * Router
+ *
  * @package app\router
  */
 final class Router
@@ -48,6 +49,7 @@ final class Router
 
     /**
      * @param string $url
+     *
      * @return false|string[]
      */
     private function parseURL(string $url)
@@ -78,6 +80,7 @@ final class Router
 
     /**
      * @param string $text
+     *
      * @return string|string[]
      */
     private function dashToCamel(string $text)
@@ -87,6 +90,7 @@ final class Router
 
     /**
      * @param string $url
+     *
      * @return void
      */
     static function reroute(string $url): void

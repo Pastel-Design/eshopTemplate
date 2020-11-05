@@ -12,7 +12,8 @@ use Exception;
 use Nette\Forms\Form;
 
 /**
- * Class ShippingAddress
+ * Form ShippingAddress
+ *
  * @package app\forms
  */
 final class ShippingAddress extends FormFactory
@@ -35,7 +36,9 @@ final class ShippingAddress extends FormFactory
 
     /**
      * Přidání inputů pro adresu (řeší zbytečnej opakující se kód)
+     *
      * @param Form $form
+     *
      * @return Form
      */
     public static function getShippingAddressInputs(Form $form): Form

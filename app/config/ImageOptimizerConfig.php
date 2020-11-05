@@ -2,7 +2,8 @@
 
 namespace app\config;
 /**
- * Class ImageOptimizerConfig
+ * Config ImageOptimizerConfig
+ *
  * @package app\config
  */
 class ImageOptimizerConfig

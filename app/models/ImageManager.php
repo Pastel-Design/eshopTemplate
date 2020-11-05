@@ -9,15 +9,18 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 
 /**
- * Class ImageManager
+ * Manager ImageManager
  * pro více info http://image.intervention.io/getting_started/introduction
+ *
  * @package app\models
  */
 class ImageManager
 {
     /**
      * Edits image to default parameters defined in ImageOptimizerConfig
+     *
      * @param string $imgURL
+     *
      * @return void
      */
     static function defaultImage(string $imgURL): void
@@ -50,7 +53,9 @@ class ImageManager
 
     /**
      * Makes thumbnail version of image, by defined resolution in ImageOptimizerConfig
+     *
      * @param string $imgURL
+     *
      * @return void
      */
     static function makeThumbnail(string $imgURL): void

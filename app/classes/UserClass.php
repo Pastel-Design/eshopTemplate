@@ -10,6 +10,7 @@ use Exception;
 
 /**
  * Class User
+ *
  * @package app\classes
  */
 class UserClass

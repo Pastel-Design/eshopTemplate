@@ -13,7 +13,8 @@ use app\models\UserManager;
 use app\router\Router;
 
 /**
- * Class AccountController
+ * Controller AccountController
+ *
  * @package app\controllers
  */
 class AccountController extends Controller
@@ -40,8 +41,10 @@ class AccountController extends Controller
 
     /**
      * Processes params from URL
-     * @param array $params
+     *
+     * @param array      $params
      * @param array|null $gets
+     *
      * @return void
      */
     public function process(array $params, array $gets = null)

@@ -1,6 +1,5 @@
 {extends "../@layout.latte"}
 {block content}
-    {var_dump($_SESSION)}
     <h2>{$category_name}</h2>
     <div n:if="$products" class="card-columns">
         <div n:foreach="$products as $product" class="card">

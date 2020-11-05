@@ -10,15 +10,18 @@ use mysql_xdevapi\Exception as Exception;
 use stdClass;
 
 /**
- * Class UserManager
+ * Manager UserManager
+ *
  * @package app\models
  */
 class UserManager
 {
     /**
      * Selects user from database
+     *
      * @param string $login
      * username or email
+     *
      * @return object
      */
     public static function selectUser(string $login): object
@@ -35,9 +38,11 @@ class UserManager
 
     /**
      * Changes users password
-     * @param int $id
+     *
+     * @param int    $id
      * @param string $oldPassword
      * @param string $newPassword
+     *
      * @throws UserException
      */
     public static function changePassword(int $id, string $oldPassword, string $newPassword): void
@@ -58,11 +63,14 @@ class UserManager
 
     /**
      * <p>Adds users address</p>
-     * <p>Parameter $type <b>must</b> have value of <i>shipping</i> or <i>invoice</i>, otherwise return <b>Exception</b>  </p>
+     * <p>Parameter $type <b>must</b> have value of <i>shipping</i> or <i>invoice</i>, otherwise return
+     * <b>Exception</b>  </p>
+     *
      * @param AddressClass $address
-     * Address values
-     * @param int $user_id
-     * @param string $type <p>default: <i>shipping</i></p>
+     *                           Address values
+     * @param int          $user_id
+     * @param string       $type <p>default: <i>shipping</i></p>
+     *
      * @throws UserException
      * @throws Exception
      */
@@ -116,9 +124,11 @@ class UserManager
 
     /**
      * Returns users addresses, based on type
-     * @param int $user_id
+     *
+     * @param int    $user_id
      * @param string $type
      * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
+     *
      * @return array|null
      * @throws Exception
      */
@@ -139,11 +149,14 @@ class UserManager
 
     /**
      * Deletes users address
-     * @param int $address_id ID adresy
-     * @param int $user_id
-     * Users object from Session
+     *
+     * @param int    $address_id ID adresy
+     * @param int    $user_id
+     *                           Users object from Session
      * @param string $type
-     * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
+     *                           Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise
+     *                           throws Exception
+     *
      * @throws UserException
      * @throws Exception
      */

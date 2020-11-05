@@ -2,10 +2,12 @@
 
 namespace app\config;
 /**
- * Class RegexConfig
+ * Config RegexConfig
+ *
  * @package app\config
  */
-class RegexConfig{
+class RegexConfig
+{
     public static string $name = '/^[A-ž-]{3,}$/';
     public static string $firmName = '/^(([A-ž]+)([ \d\_\-\.\ \&]*)){3,}$/';
     public static string $areaCode = '/^\+4(8|9|3|20|21)$/';

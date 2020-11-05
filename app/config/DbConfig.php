@@ -2,7 +2,8 @@
 
 namespace app\config;
 /**
- * Class DbConfig
+ * Config DbConfig
+ *
  * @package app\config
  */
 class DbConfig

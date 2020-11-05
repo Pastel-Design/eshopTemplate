@@ -7,27 +7,43 @@ use app\config\RegexConfig;
 
 /**
  * Class AddressClass
+ *
  * @package app\classes
  */
 class AddressClass
 {
-    public $id, $first_name, $last_name, $firm_name, $phone, $area_code, $address1, $address2, $city, $country, $zipcode, $dic, $ic, $user_id;
+    public ?int $id;
+    public string $first_name;
+    public string $last_name;
+    public ?string $firm_name;
+    public string $phone;
+    public string $area_code;
+    public string $address1;
+    public ?string $address2;
+    public string $city;
+    public string $country;
+    public string $zipcode;
+    public ?string $dic;
+    public ?string $ic;
+    public ?int $user_id;
+
 
     /**
-     * @param string $first_name
-     * @param string $last_name
+     * @param string      $first_name
+     * @param string      $last_name
      * @param string|null $firm_name
-     * @param string $phone
-     * @param string $area_code
-     * @param string $address1
+     * @param string      $phone
+     * @param string      $area_code
+     * @param string      $address1
      * @param string|null $address2
-     * @param string $city
-     * @param string $country
-     * @param string $zipcode
+     * @param string      $city
+     * @param string      $country
+     * @param string      $zipcode
      * @param string|null $dic
      * @param string|null $ic
-     * @param int|null $id
-     * @param int|null $user_id
+     * @param int|null    $id
+     * @param int|null    $user_id
+     *
      * @throws AddressException
      */
     public function setValues(string $first_name, string $last_name, ?string $firm_name, string $phone, string $area_code, string $address1, ?string $address2, string $city, string $country, string $zipcode, ?string $dic, ?string $ic, int $id = null, int $user_id = null)

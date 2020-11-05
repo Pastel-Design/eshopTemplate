@@ -9,7 +9,8 @@ use app\models\SignManager;
 use Nette\Forms\Form;
 
 /**
- * Class FullSignUp
+ * Form FullSignIn
+ *
  * @package app\forms
  */
 final class  FullSignIn extends FormFactory
@@ -30,6 +31,7 @@ final class  FullSignIn extends FormFactory
 
     /**
      * @param callable $onSuccess
+     *
      * @return Form
      */
     public function create(callable $onSuccess): Form
@@ -43,10 +45,10 @@ final class  FullSignIn extends FormFactory
 
         $this->form->addSubmit("submit", "Přihlásit");
 
-        if($this->form->isSuccess()){
+        if ($this->form->isSuccess()) {
             $values = $this->form->getValues("array");
             try {
-                SignManager::SignIn($values["login"],$values["password"]);
+                SignManager::SignIn($values["login"], $values["password"]);
                 $onSuccess();
             } catch (SignException $exception) {
                 $this->form->addError($exception->getMessage());

@@ -9,16 +9,19 @@ use Exception;
 
 
 /**
- * Class ProductManager
+ * Manager ProductManager
+ *
  * @package app\models
  */
 class ProductManager
 {
     /**
      * Selects all products, discounted, with images
-     * @param $category_id
+     *
+     * @param     $category_id
      * @param int $offset
      * @param int $limit
+     *
      * @return array
      * @throws Exception
      */
@@ -56,9 +59,11 @@ class ProductManager
 
     /**
      * Selects products based on category
-     * @param $category_dashname
+     *
+     * @param     $category_dashname
      * @param int $offset
      * @param int $limit
+     *
      * @return array
      */
     public function selectProducts($category_dashname, int $offset = 1, int $limit = 40)
@@ -83,9 +88,11 @@ class ProductManager
 
     /**
      * Return number of pages of certain category, defined by products per page
-     * @param $category_id
+     *
+     * @param     $category_id
      * @param int $limit
      * Products per page
+     *
      * @return array|false|float
      */
     public function numberOfPages($category_id, $limit = 40)
@@ -96,7 +103,9 @@ class ProductManager
 
     /**
      * Counts products in certain category
+     *
      * @param $category_id
+     *
      * @return int
      */
     public function countProducts($category_id)
@@ -110,7 +119,9 @@ class ProductManager
 
     /**
      * Returns info about one particular product
+     *
      * @param $dashName
+     *
      * @return array
      * @throws Exception
      */
@@ -172,7 +183,9 @@ class ProductManager
 
     /**
      * Discounts product based on the validity of discount and discout type
+     *
      * @param array $product
+     *
      * @return array
      * @throws Exception
      */
@@ -215,21 +228,25 @@ class ProductManager
 
     /**
      * Checks wheter the product exists or not
+     *
      * @param int $productId
+     *
      * @return boolean
      */
     public function productExists(int $productId): bool
     {
-        return (DbManager::requestUnit("SELECT id FROM product WHERE id = ?", [$productId])?true:false);
+        return (DbManager::requestUnit("SELECT id FROM product WHERE id = ?", [$productId]) ? true : false);
     }
 
     /**
      * Gets products info for Cart
+     *
      * @param int $productId
+     *
      * @return array
      * @throws Exception
      */
-    public function getProductCartInfo(int $productId):array
+    public function getProductCartInfo(int $productId): array
     {
         $product = DbManager::requestSingle(
             'SELECT product.id,product.name,product.dash_name,price,price-((dph/100)*price) as price_wo_dph,
@@ -255,8 +272,8 @@ class ProductManager
         $product["dostupnost"] = $dostupnost;
         unset($product["dostupnost_id"]);
         $product = $this->discountProduct($product);
-        $product["price"]=str_replace(" ","",str_replace(",",".",$product["price"]));
-        $product["price_wo_dph"]=str_replace(" ","",str_replace(",",".",$product["price_wo_dph"]));
+        $product["price"] = str_replace(" ", "", str_replace(",", ".", $product["price"]));
+        $product["price_wo_dph"] = str_replace(" ", "", str_replace(",", ".", $product["price_wo_dph"]));
         unset($product["oldprice"]);
         unset($product["discount"]);
         return $product;

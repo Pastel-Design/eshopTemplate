@@ -1,4 +1,5 @@
 <?php
+
 namespace app\forms;
 
 require("../vendor/autoload.php");
@@ -13,7 +14,8 @@ use Exception;
 use Nette\Forms\Form;
 
 /**
- * Class FullSignUp
+ * Form FullSignUp
+ *
  * @package app\forms
  */
 final class  FullSignUp extends FormFactory
@@ -44,6 +46,7 @@ final class  FullSignUp extends FormFactory
 
     /**
      * @param callable $onSuccess
+     *
      * @return Form
      * @throws Exception
      */
@@ -52,22 +55,21 @@ final class  FullSignUp extends FormFactory
         $this->form->addGroup("Kontaktní údaje");
 
 
-
         $this->form->addGroup("Přihlašovací údaje");
         $this->form->addText('username', 'Uživatelské jméno:')
             ->setHtmlAttribute("placeholder", "Uživatelské jméno *")
-            ->setHtmlAttribute("title",  "Uživatelské jméno smí obsahovat pouze písmena, číslice a znaky _-.\nMusí být dlouhé minimálně 5 znaků")
-            ->addRule($this->form::PATTERN, "Uživatelské jméno nesplňuje podmínky",'([A-ž\d]+[_\-\.\d]?){5,}')
+            ->setHtmlAttribute("title", "Uživatelské jméno smí obsahovat pouze písmena, číslice a znaky _-.\nMusí být dlouhé minimálně 5 znaků")
+            ->addRule($this->form::PATTERN, "Uživatelské jméno nesplňuje podmínky", '([A-ž\d]+[_\-\.\d]?){5,}')
             ->setRequired(true);
         $this->form->addEmail('email', 'E-mail:')
             ->setHtmlAttribute('placeholder', 'E-mail *')
             ->setHtmlAttribute("title", "Zadejte platný email")
-            ->addRule($this->form::PATTERN,"Zadejte platný email", "[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([\.a-zA-Z0-9-]+)")
+            ->addRule($this->form::PATTERN, "Zadejte platný email", "[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([\.a-zA-Z0-9-]+)")
             ->setRequired(true);
         $this->form->addPassword('password', 'Heslo:')
             ->setHtmlAttribute("placeholder", "Heslo *")
             ->setHtmlAttribute("title", "Heslo musí obsahovat alespoň 8 znaků\nAlespoň jedno VELKÉ písmeno\nAlespoň jedno malé písmeno\nAlespoň jednu číslici")
-            ->addRule($this->form::PATTERN, "Heslo je příliš slabé",'(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}')
+            ->addRule($this->form::PATTERN, "Heslo je příliš slabé", '(?=.*[0-9]+)(?=.*[A-ž]*[A-Z]+).{8,}')
             ->setRequired(true);
 
         $this->form->addGroup("Firemní údaje");
@@ -76,28 +78,28 @@ final class  FullSignUp extends FormFactory
             ->setHtmlAttribute('placeholder', 'IČ *')
             ->setHtmlAttribute("title", "Zadejte platné IČ")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, 'Neplatný formát IČ','\d{8,8}')
+            ->addRule($this->form::PATTERN, 'Neplatný formát IČ', '\d{8,8}')
             ->setRequired(true);
         $this->form->addText('dic', 'DIČ:')
             ->setHtmlAttribute('placeholder', 'DIČ *')
             ->setHtmlAttribute("title", "Zadejte platné DIČ")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, 'Neplatný formát DIČ','(CZ\d{8,10})|(SK\d{10,10})')
+            ->addRule($this->form::PATTERN, 'Neplatný formát DIČ', '(CZ\d{8,10})|(SK\d{10,10})')
             ->setRequired(true);
         $this->form->addCheckbox("dphCheckbox", "Plátce DPH");
         $this->form->addText('firmName', 'Obchodní jméno:')
             ->setHtmlAttribute("placeholder", "Obchodní jméno *")
             ->setHtmlAttribute("title", "Zadejte platné Obchodní jméno")
             ->addCondition($this->form::FILLED)
-            ->addRule($this->form::PATTERN, "Neplatné jméno firmy",'(([A-ž]+)([ \d_\-\.&]*)){3,}');
+            ->addRule($this->form::PATTERN, "Neplatné jméno firmy", '(([A-ž]+)([ \d_\-\.&]*)){3,}');
 
         ShippingAddress::getShippingAddressInputs($this->form);
 
         $this->form->addSubmit("submit", "Registrovat");
 
-        if($this->form->isSuccess()){
+        if ($this->form->isSuccess()) {
             $values = $this->form->getValues("array");
-            try{
+            try {
                 $this->address = new Address();
                 $this->address->setValues(
                     $values["firstName"],
@@ -113,11 +115,11 @@ final class  FullSignUp extends FormFactory
                     $values["dic"],
                     $values["ic"]
                 );
-            }catch (AddressException $exception){
+            } catch (AddressException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 
-            try{
+            try {
                 $this->user = new User();
                 $this->user->setValues(
                     $values["email"],
@@ -136,14 +138,14 @@ final class  FullSignUp extends FormFactory
                     $this->address,
                     new Address()
                 );
-            }catch (UserException $exception){
+            } catch (UserException $exception) {
                 $this->form->addError($exception->getMessage());
             }
 
             try {
                 SignManager::SignUp($this->user);
                 $onSuccess();
-            }catch (SignException $exception){
+            } catch (SignException $exception) {
                 $this->form->addError($exception->getMessage());
             }
         }

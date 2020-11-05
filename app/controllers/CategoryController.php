@@ -9,7 +9,8 @@ use app\router\Router;
 use Exception;
 
 /**
- * Class CategoryController
+ * Controller CategoryController
+ *
  * @package app\controllers
  */
 class CategoryController extends Controller
@@ -26,8 +27,10 @@ class CategoryController extends Controller
 
     /**
      * Processes params from URL
-     * @param array $params
+     *
+     * @param array      $params
      * @param array|null $gets
+     *
      * @return void
      * @throws Exception
      */
@@ -56,10 +59,12 @@ class CategoryController extends Controller
     /**
      * Function renderCategory
      * Renders selected category with all its products
+     *
      * @param CategoryClass $category
      * Category object with info data about category
-     * @param int $page
+     * @param int           $page
      * Actual page
+     *
      * @return void
      * @throws Exception
      */

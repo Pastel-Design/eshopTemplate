@@ -3,7 +3,11 @@
 
 namespace app\classes;
 
-
+/**
+ * Class CategoryClass
+ *
+ * @package app\classes
+ */
 class CategoryClass
 {
     public $name, $dash_name, $meta_description, $meta_keywords, $shortdesc, $longdesc;

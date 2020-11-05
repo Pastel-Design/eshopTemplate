@@ -7,13 +7,15 @@ use app\classes\CategoryClass;
 use app\models\DbManager as DbManager;
 
 /**
- * Class ProductManager
+ * Manager ProductManager
+ *
  * @package app\models
  */
 class CategoryManager
 {
     /**
      * Selects all categories with their subcategories
+     *
      * @return array
      */
     public function selectCategories()
@@ -38,6 +40,7 @@ class CategoryManager
 
     /**
      * Selects all main categories with images
+     *
      * @return array
      */
     public function selectMainCategories()
@@ -49,7 +52,9 @@ class CategoryManager
 
     /**
      * Selects all sub categories
+     *
      * @param array $mainCategory
+     *
      * @return array
      */
     public function selectSubCategories(array $mainCategory)
@@ -63,7 +68,9 @@ class CategoryManager
 
     /**
      * Selects image for category
+     *
      * @param array $category
+     *
      * @return array
      */
     public function getCategoryImages(array $category)
@@ -78,8 +85,10 @@ class CategoryManager
 
     /**
      * Verifies if category exists
+     *
      * @param $dashName
      * Dash name of category
+     *
      * @return array
      */
     public function categoryExists($dashName)
@@ -89,8 +98,10 @@ class CategoryManager
 
     /**
      * Selects category by its class as an object
+     *
      * @param $dashname
      * Dash name of category
+     *
      * @return CategoryClass|object|void
      */
 
