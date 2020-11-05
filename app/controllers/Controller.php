@@ -96,7 +96,7 @@ abstract class Controller
      * @param string|null $css
      * @return void
      */
-    public function setView(string $view, ?string $js=null, ?string $css=null): void
+    public function setView(string $view, ?string $js = null, ?string $css = null): void
     {
         $this->view = $view;
         $this->head["js"] = $js;
@@ -141,13 +141,13 @@ abstract class Controller
      */
     private function setFlashes(): void
     {
-
-        foreach ($_SESSION["flashes"] as $key => $flash){
-            if ((time() - $flash["created"]) >= 5) {
-                unset($_SESSION["flashes"][$key]);
-            }
-            else{
-                $this->head["flashes"][] = $flash;
+        if (isset($_SESSION["flashes"])) {
+            foreach ($_SESSION["flashes"] as $key => $flash) {
+                if ((time() - $flash["created"]) >= 5) {
+                    unset($_SESSION["flashes"][$key]);
+                } else {
+                    $this->head["flashes"][] = $flash;
+                }
             }
         }
     }

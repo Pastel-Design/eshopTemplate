@@ -69,6 +69,7 @@ class SignController extends Controller
         $this->head['page_description'] = "Registrace na eshop";
         $this->data["form"] = $this->signUpFactory->create(function () {
             $this->addFlashMessage("Registrace proběhla úspěšně");
+            Router::reroute("home");
         });
         $this->setView("Up");
     }
@@ -85,6 +86,7 @@ class SignController extends Controller
         $this->setView('home');
         $this->data["form"] = $this->signInFactory->create(function () {
             $this->addFlashMessage("Přihlášení proběhlo úspěšně");
+            Router::reroute("home");
         });
         $this->setView("In");
     }
