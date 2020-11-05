@@ -36,9 +36,8 @@
     </div>
     <div class="p-1 cart-container">
         <i class="fa-shopping-cart fa fa-lg"></i>
-        <b>{if isset($_SESSION["cart"])}
-                {$_SESSION["cart"]->totalAmount}{number_format($_SESSION["cart"]->totalPrice, 0, ',', " ")}{else}0{/if}
-            Kč </b>
+        {if isset($_SESSION["cart"])}
+            {$_SESSION["cart"]->totalAmount}ks {number_format($_SESSION["cart"]->totalPrice, 0, ',', " ")}Kč{else}0Kč{/if}
         <div class="cart-products">
             {if isset($_SESSION["cart"])}
                 {foreach $_SESSION['cart']->products as $product}

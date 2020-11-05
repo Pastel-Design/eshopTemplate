@@ -68,6 +68,7 @@ class HandleController extends Controller
         }
         if ($this->productManager->productExists((int)$productId)) {
             $this->data["cartMessage"] = CartManager::addProductToCart($productId);
+            $this->data["code"]=0;
         }
     }
 }

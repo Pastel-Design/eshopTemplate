@@ -10,6 +10,9 @@ function addToCart(productCode) {
     })
         .then(function (response) {
             let data = response["data"];
+            if(data["code"]==0){
+
+            }
             console.log(data);
         })
         .catch(function (error) {

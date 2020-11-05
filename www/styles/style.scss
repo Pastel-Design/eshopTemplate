@@ -17,6 +17,8 @@
 
 .cart-container {
   cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .cart-container:hover .cart-products {

@@ -12,7 +12,21 @@ use app\config\RegexConfig;
  */
 class AddressClass
 {
-    public $id, $first_name, $last_name, $firm_name, $phone, $area_code, $address1, $address2, $city, $country, $zipcode, $dic, $ic, $user_id;
+    public ?int $id;
+    public string $first_name;
+    public string $last_name;
+    public ?string $firm_name;
+    public string $phone;
+    public string $area_code;
+    public string $address1;
+    public ?string $address2;
+    public string $city;
+    public string $country;
+    public string $zipcode;
+    public ?string $dic;
+    public ?string $ic;
+    public ?int $user_id;
+
 
     /**
      * @param string      $first_name
