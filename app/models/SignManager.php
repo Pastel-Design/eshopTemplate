@@ -4,6 +4,8 @@ namespace app\models;
 
 use app\exceptions\SignException;
 use app\classes\UserClass as User;
+use DateTime;
+
 /**
  * Manager SignManager
  *
@@ -29,6 +31,8 @@ class SignManager
                 $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?", [$login, $login]);
                 if (password_verify($password, $DBPass)) {
                     $_SESSION["user"] = UserManager::selectUser($login);
+                    $currentDate = new DateTime();
+                    DbManager::requestAffect("UPDATE user SET last_active = ? WHERE id = ?", [$currentDate->format("Y-m-d"),$_SESSION["user"]->id]);
                 } else {
                     throw new SignException("Wrong password");
                 }
