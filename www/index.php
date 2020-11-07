@@ -31,6 +31,10 @@ try {
     Router::reroute("error/500");
 }
 
+if(isset($_SESSION["user"])){
+    $currentDate = new DateTime();
+    DbManager::requestAffect("UPDATE user SET last_active = ? WHERE id = ?", [$currentDate->format("Y-m-d"),$_SESSION["user"]->id]);
+}
 
 //vytvoření instance směrovače a jeho zpracování url a následné vypsání základního pohledu
 $router = new Router();
