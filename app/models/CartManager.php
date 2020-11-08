@@ -6,6 +6,7 @@ use DateTime;
 use app\classes\CartClass as Cart;
 use app\models\ProductManager as ProductManager;
 use Exception;
+use PDOException;
 
 /**
  * Manager CartManager
@@ -26,7 +27,8 @@ class CartManager
      */
     public static function createCart()
     {
-        $_SESSION["cart"] = new Cart(null, 0, 0, new DateTime(), []);
+        $user_id = (isset($_SESSION["user"]->user_id) ? $_SESSION["user"]->user_id : null);
+        $_SESSION["cart"] = new Cart($user_id, 0, 0, new DateTime(), []);
     }
 
     /**
@@ -76,6 +78,8 @@ class CartManager
         unset($product["id"], $product["price_wo_dph"], $product["dph"], $product["serial_number"], $product["dostupnost"], $product["amount"], $product["price"]);
         $product["totalSessionPrice"] = $_SESSION["cart"]->totalPrice;
         $product["totalAmount"] = $_SESSION["cart"]->totalAmount;
+        $_SESSION["cart"]->updated = new DateTime();
+        self::updateDatabaseCart();
         return $product;
     }
 
@@ -95,5 +99,85 @@ class CartManager
         return $product;
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public static function updateDatabaseCart()
+    {
+        if (($_SESSION["cart"]->totalAmount !== 0)) {
+            if (isset($_SESSION["user"])) {
+                self::insertCartInDatabase();
+            }
+        } elseif (self::isCartInDatabase()) {
+            self::selectCartFromDatabase();
+        } else {
+            self::createCart();
+        }
+    }
+
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public static function selectCartFromDatabase()
+    {
+        $cartInfo = DbManager::requestSingle("SELECT * FROM shopping_cart WHERE user_id = ?", [$_SESSION["user"]->id]);
+        $products = DbManager::requestMultiple("SELECT * FROM product_has_shopping_cart WHERE shopping_cart_id = ?", [$cartInfo["id"]]);
+        $newProducts = array();
+        foreach ($products as $product) {
+            $amount = $product["amount"];
+            $product = (new CartManager())->productManager->getProductCartInfo($product["product_id"]);
+            $product["amount"] = $amount;
+            $product["totalPrice"] = (float)$product["price"] * $amount;
+            $newProducts[] = $product;
+        }
+        $_SESSION["cart"] = new Cart($cartInfo["user_id"], $cartInfo["amount"], $cartInfo["price"], new DateTime($cartInfo["updated"]), $newProducts);
+    }
+
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public static function insertCartInDatabase()
+    {
+        if (self::isCartInDatabase()) {
+            DbManager::requestInsert("UPDATE shopping_cart SET amount = ?, price = ?, updated = ? WHERE user_id = ?", [$_SESSION["cart"]->totalAmount, $_SESSION["cart"]->totalPrice, $_SESSION["cart"]->updated->format("Y-m-d H:i:s"), $_SESSION["cart"]->user_id]);
+            DbManager::requestAffect("DELETE FROM product_has_shopping_cart WHERE shopping_cart_id = ?", [$_SESSION["user"]->id]);
+        } else {
+            DbManager::requestInsert("INSERT INTO shopping_cart(user_id,amount,price,updated) VALUES(?,?,?,?)",
+                [$_SESSION["cart"]->user_id, $_SESSION["cart"]->totalAmount, $_SESSION["cart"]->totalPrice, $_SESSION["cart"]->updated->format("Y-m-d H:i:s")]);
+        }
+
+        foreach ($_SESSION["cart"]->products as $key => $product) {
+            if (!ProductManager::productExists($product["id"])) {
+                unset($_SESSION["cart"]->products[$key]);
+            } else {
+                DbManager::requestInsert("INSERT INTO product_has_shopping_cart(product_id, shopping_cart_id, amount) VALUES (?,?,?)",
+                    [$product["id"], $_SESSION["user"]->id, $product["amount"]]);
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public static function isCartInDatabase()
+    {
+        $updated = DbManager::requestUnit('SELECT updated FROM shopping_cart WHERE user_id = ?', [$_SESSION["user"]->id]);
+        if ($updated != null) {
+            $updated = new DateTime($updated);
+            $now = new DateTime();
+            if ($updated->diff($now)->days > 7) {
+                DbManager::requestAffect("DELETE FROM shopping_cart WHERE user_id = ?", [$_SESSION["user"]->id]);
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 
 }

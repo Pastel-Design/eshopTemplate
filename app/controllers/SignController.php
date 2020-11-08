@@ -90,7 +90,7 @@ class SignController extends Controller
         $this->setView('home');
         $this->data["form"] = $this->signInFactory->create(function () {
             $this->addFlashMessage("Přihlášení proběhlo úspěšně");
-            Router::reroute("home");
+            //Router::reroute("home");
         });
         $this->setView("In");
     }

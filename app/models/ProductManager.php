@@ -233,7 +233,7 @@ class ProductManager
      *
      * @return boolean
      */
-    public function productExists(int $productId): bool
+    public static function productExists(int $productId): bool
     {
         return (DbManager::requestUnit("SELECT id FROM product WHERE id = ?", [$productId]) ? true : false);
     }

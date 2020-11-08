@@ -4,6 +4,7 @@ namespace app\classes;
 
 use app\exceptions\AddressException;
 use app\config\RegexConfig;
+use function Sodium\add;
 
 /**
  * Class AddressClass
@@ -114,7 +115,7 @@ class AddressClass
             throw new AddressException("Invalid address1");
         }
         if ($address2 == "") {
-            $this->$address2 = "";
+            $this->address2 = $address2;
         } else {
             if (preg_match(RegexConfig::$addressLine, $address2) === 1) {
                 $this->address2 = $address2;

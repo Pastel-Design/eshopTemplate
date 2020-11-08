@@ -2,9 +2,11 @@
 
 namespace app\models;
 
+use app\classes\CartClass;
 use app\exceptions\SignException;
 use app\classes\UserClass as User;
 use DateTime;
+use Exception;
 
 /**
  * Manager SignManager
@@ -22,6 +24,7 @@ class SignManager
      *
      * @return void
      * @throws SignException
+     * @throws Exception
      */
     static function SignIn($login, $password)
     {
@@ -31,6 +34,10 @@ class SignManager
                 $DBPass = DbManager::requestUnit("SELECT password FROM user WHERE username = ? OR email = ?", [$login, $login]);
                 if (password_verify($password, $DBPass)) {
                     $_SESSION["user"] = UserManager::selectUser($login);
+                    if($_SESSION["cart"] instanceof CartClass){
+                        $_SESSION["cart"]->user_id=$_SESSION["user"]->id;
+                    }
+                    CartManager::updateDatabaseCart();
                     $currentDate = new DateTime();
                     DbManager::requestAffect("UPDATE user SET last_active = ? WHERE id = ?", [$currentDate->format("Y-m-d"),$_SESSION["user"]->id]);
                 } else {
@@ -76,6 +83,9 @@ class SignManager
                 throw new SignException("Something went wrong in registration.");
             } else {
                 $_SESSION["user"] = $user->getSessionInfo();
+                if(isset($_SESSION["cart"])){
+                    $_SESSION["cart"]->user_id=$_SESSION["user"]->id;
+                }
                 return true;
             }
         else :
@@ -92,6 +102,9 @@ class SignManager
     {
         if (session_status() === 2) {
             unset($_SESSION["user"]);
+            if(isset($_SESSION["cart"])){
+                $_SESSION["cart"]->user_id=null;
+            }
         }
     }
 

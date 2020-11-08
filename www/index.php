@@ -1,5 +1,6 @@
 <?php
 
+use app\classes\CartClass;
 use app\models\CartManager;
 use app\models\DbManager;
 use app\router\Router;
@@ -23,6 +24,14 @@ function autoloadFunction($class)
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
 session_start();
+
+if(isset($_SESSION["cart"])){
+    if(!$_SESSION["cart"] instanceof CartClass){
+        CartManager::createCart();
+    }
+}else{
+    CartManager::createCart();
+}
 //Vytvoření flashes v session
 try {
 //připojení k db

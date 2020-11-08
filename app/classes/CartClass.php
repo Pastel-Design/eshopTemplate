@@ -19,7 +19,7 @@ class CartClass
     public DateTime $updated;
     public array $products;
 
-    public function __construct($user_id, $totalAmount, $totalPrice, $updated, $products, $id = null)
+    public function __construct($user_id, $totalAmount, $totalPrice, $updated, $products)
     {
         $this->user_id = $user_id;
         $this->products = $products;

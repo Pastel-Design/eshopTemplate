@@ -158,6 +158,7 @@ class DbManager
             self::$connection->commit();
             return $result->execute($params);
         } catch (PDOException $excepiton) {
+            var_dump($excepiton);
             self::$connection->rollback();
             return false;
         }
@@ -181,6 +182,7 @@ class DbManager
             self::$connection->commit();
             return $result->rowCount();
         } catch (PDOException $excepiton) {
+            var_dump($excepiton);
             self::$connection->rollback();
             return false;
         }

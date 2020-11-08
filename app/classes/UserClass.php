@@ -236,7 +236,7 @@ class UserClass
     }
 
     /**
-     * @return \app\classes\Address
+     * @return Address
      */
     public function getInvoice_address(): Address
     {
@@ -244,7 +244,7 @@ class UserClass
     }
 
     /**
-     * @return \app\classes\Address
+     * @return Address
      */
     public function getShipping_address(): Address
     {
