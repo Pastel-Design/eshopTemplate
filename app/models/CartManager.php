@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\config\CartConfig;
 use DateTime;
 use app\classes\CartClass as Cart;
 use app\models\ProductManager as ProductManager;
@@ -169,7 +170,7 @@ class CartManager
         if ($updated != null) {
             $updated = new DateTime($updated);
             $now = new DateTime();
-            if ($updated->diff($now)->days > 7) {
+            if ($updated->diff($now)->days > CartConfig::$cartExpirationDays) {
                 DbManager::requestAffect("DELETE FROM shopping_cart WHERE user_id = ?", [$_SESSION["user"]->id]);
                 return false;
             } else {
