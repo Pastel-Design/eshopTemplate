@@ -7,7 +7,6 @@
 <header>
     {include "nav.latte"}
 </header>
-{var_dump($_SESSION)}
 {foreach  $flashes as $flash}
     <div class="flashMessage {$flash["type"]}">{$flash["message"]}</div>
 {/foreach}
