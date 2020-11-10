@@ -1,4 +1,21 @@
 {extends "../@layout.latte"}
 {block content}
-
+    <table class="table">
+        <tbody>
+        {foreach $_SESSION["cart"]->products as $product}
+            <tr data-product-code="{$product["id"]}">
+                <td><a href="{$product["dash_name"]}">{$product["name"]}</a></td>
+                <td>{$product["price"]}</td>
+                <td>{$product["amount"]}</td>
+                <td>{$product["totalPrice"]}</td>
+                <td><button class="btn cart-add" data-product-code="{$product["id"]}"><i class="fas fa-plus fa-lg"></i></button></td>
+                <td><button class="btn cart-remove" data-product-code="{$product["id"]}"><i class="fas fa-minus fa-lg"></i></button></td>
+                <td><button class="btn cart-delete" data-product-code="{$product["id"]}"><i class="fas fa-times fa-lg"></i></button></td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <button class="btn btn-success">
+        Objednat
+    </button>
 {/block}

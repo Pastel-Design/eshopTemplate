@@ -39,10 +39,15 @@ class CategoryController extends Controller
         $categoryDashname = $params[0];
         if ($this->categoryManager->categoryExists($categoryDashname)) {
             $category = $this->categoryManager->selectCategoryClass($categoryDashname);
-            $no_pages = $this->productManager->numberOfPages($category->getId($categoryDashname));
+            $no_pages = $this->productManager->numberOfPages($category->getId());
+
             if (isset($params[1])) {
-                if ($params[1] > 0 && $params[1] <= $no_pages) {
-                    $page = $params[1];
+                if ((string)(int)$params[1] != $params[1]) {
+                    if ($params[1] > 0 && $params[1] <= $no_pages) {
+                        $page = $params[1];
+                    } else {
+                        $page = 1;
+                    }
                 } else {
                     $page = 1;
                 }

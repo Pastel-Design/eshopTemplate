@@ -66,38 +66,16 @@ class CartManager
      */
     public static function addProductToCart($productId)
     {
-        if (is_int($productKey = self::isProductInCart($productId))) {
-            $product = self::incrementProduct($productKey);
-
-        } else {
+        if (!self::incrementProduct($productId)) {
             $product = (new CartManager())->productManager->getProductCartInfo($productId);
             $product = array_merge($product, ["amount" => 1, "totalPrice" => (float)$product["price"]]);
             $_SESSION["cart"]->products[] = $product;
             $_SESSION["cart"]->totalAmount++;
             $_SESSION["cart"]->totalPrice = $_SESSION["cart"]->totalPrice + (float)$product["price"];
         }
-        unset($product["id"], $product["price_wo_dph"], $product["dph"], $product["serial_number"], $product["dostupnost"], $product["amount"], $product["price"]);
-        $product["totalSessionPrice"] = $_SESSION["cart"]->totalPrice;
-        $product["totalAmount"] = $_SESSION["cart"]->totalAmount;
         $_SESSION["cart"]->updated = new DateTime();
         self::updateDatabaseCart();
-        return $product;
-    }
-
-    /**
-     * @param $productKey
-     *
-     * @return bool
-     */
-    public static function incrementProduct($productKey)
-    {
-        $product = $_SESSION["cart"]->products[$productKey];
-        $product["totalPrice"] = $product["totalPrice"] + $product["price"];
-        $product["amount"]++;
-        $_SESSION["cart"]->products[$productKey] = $product;
-        $_SESSION["cart"]->totalAmount++;
-        $_SESSION["cart"]->totalPrice = $_SESSION["cart"]->totalPrice + (float)$product["price"];
-        return $product;
+        return true;
     }
 
     /**
@@ -179,6 +157,66 @@ class CartManager
         } else {
             return false;
         }
+    }
+
+    /**
+     * @param $productId
+     *
+     * @return bool
+     */
+    public static function incrementProduct($productId)
+    {
+        if (!is_int($productKey = self::isProductInCart($productId))) {
+            return false;
+        }
+        $product = $_SESSION["cart"]->products[$productKey];
+        $product["totalPrice"] += $product["price"];
+        $product["amount"]++;
+        $_SESSION["cart"]->products[$productKey] = $product;
+        $_SESSION["cart"]->totalAmount++;
+        $_SESSION["cart"]->totalPrice += (float)$product["price"];
+        return true;
+    }
+
+    /**
+     * @param $productId
+     *
+     * @return bool
+     */
+    public static function decrementProduct($productId)
+    {
+        if (!is_int($productKey = self::isProductInCart($productId))) {
+            return false;
+        }
+        if ($_SESSION["cart"]->products[$productKey]["amount"] < 2) {
+            self::removeProduct($productId);
+            return "removed";
+        } else {
+            $product = $_SESSION["cart"]->products[$productKey];
+            $product["totalPrice"] -= $product["price"];
+            $product["amount"]--;
+            $_SESSION["cart"]->products[$productKey] = $product;
+            $_SESSION["cart"]->totalAmount--;
+            $_SESSION["cart"]->totalPrice -= (float)$product["price"];
+            return true;
+        }
+    }
+
+    /**
+     * @param $productId
+     *
+     * @return bool
+     */
+    public static function removeProduct($productId)
+    {
+        if (!is_int($productKey = self::isProductInCart($productId))) {
+            return false;
+        }
+        $product = $_SESSION["cart"]->products[$productKey];
+        $_SESSION["cart"]->totalAmount -= $product["amount"];
+        $_SESSION["cart"]->totalPrice -= (float)$product["totalPrice"];
+        unset($_SESSION["cart"]->products[$productKey]);
+        return true;
     }
 
 }

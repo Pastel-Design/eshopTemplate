@@ -24,7 +24,6 @@ function autoloadFunction($class)
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
 session_start();
-
 if(isset($_SESSION["cart"])){
     if(!$_SESSION["cart"] instanceof CartClass){
         CartManager::createCart();

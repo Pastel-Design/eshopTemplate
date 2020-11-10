@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" n:if="$categories">
-    <a class="navbar-brand" href="home">Eshop</a>
+    <a class="navbar-brand" href="home" id="eshop-name">Eshop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,7 +38,12 @@
         <a href="kosik">
             <i class="fa-shopping-cart fa fa-lg"></i>
             {if isset($_SESSION["cart"])}
-                {$_SESSION["cart"]->totalAmount}ks {number_format($_SESSION["cart"]->totalPrice, 0, ',', " ")}Kč{else}0Kč{/if}
+                <span id="nav-cart-amount">{$_SESSION["cart"]->totalAmount}&nbspKs </span>
+                <span id="nav-cart-price">{number_format($_SESSION["cart"]->totalPrice, 0, ',', " ")}&nbspKč</span>
+            {else}
+                <span id="nav-cart-amount"></span>
+                <span id="nav-cart-price">0&nbspKč</span>
+            {/if}
             <div class="cart-products">
             </div>
         </a>

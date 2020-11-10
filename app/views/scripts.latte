@@ -1,12 +1,12 @@
-<script type="module" src="www/scripts/ajax.js" ?v="{time()}" defer></script>
-<script src="www/scripts/script.js" ?v="{time()}" defer></script>
+<script type="module" src="www/scripts/ajax.js?v={time()}"  defer></script>
+<script src="www/scripts/script.js?v={time()}" defer></script>
 {if $js}
     <script src="www/scripts/{{$js}.js?v={time()}" defer></script>
 {/if}
 <!-- Bootstrap-->
-<script src="../node_modules/jquery/dist/jquery.slim.js" defer></script>
-<script src="../node_modules/bootstrap/dist/js/bootstrap.js" defer></script>
+<script src="../node_modules/jquery/dist/jquery.slim.js?v={time()}" defer></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js?v={time()}" defer></script>
 <!-- Nette forms-->
-<script src="../node_modules/nette-forms/src/assets/netteForms.js" async></script>
+<script src="../node_modules/nette-forms/src/assets/netteForms.js?v={time()}" async></script>
 <!-- Axios ajax-->
-<script src="../node_modules/axios/dist/axios.js" async></script>
+<script src="../node_modules/axios/dist/axios.js?v={time()}" async></script>
