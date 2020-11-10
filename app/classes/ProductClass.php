@@ -10,13 +10,31 @@ namespace app\classes;
  */
 class ProductClass
 {
-    public $id, $name, $title_name, $dash_name, $shortdesc, $longdesc, $price, $price_wo_dph, $dph, $amount, $on_sale, $serial_number, $meta_description, $meta_keywords, $images, $dostupnost, $discount, $oldprice, $parameters;
+    public ?int $id;
+    public string $name;
+    public string $title_name;
+    public string $dash_name;
+    public string $shortdesc;
+    public string $longdesc;
+    public float $price;
+    public float $price_wo_dph;
+    public int $dph;
+    public int $amount;
+    public int $on_sale;
+    public string $serial_number;
+    public string $meta_description;
+    public string $meta_keywords;
+    public array $images;
+    public string $dostupnost;
+    public int $discount;
+    public float $oldprice;
+    public array $parameters;
 
     public function __construct()
     {
     }
 
-    public function setValuesProductInfo($id, $name, $title_name, $dash_name, $longdesc, $price, $price_wo_dph, $dph, $amount, $on_sale, $serial_number, $meta_description, $meta_keywords, $images, $dostupnost, $discount, $oldprice, $parameters)
+    public function setValues($id, $name, $title_name, $dash_name, $longdesc, $price, $price_wo_dph, $dph, $amount, $on_sale, $serial_number, $meta_description, $meta_keywords, $images, $dostupnost, $discount, $oldprice, $parameters)
     {
         $this->id = $id;
         $this->name = $name;

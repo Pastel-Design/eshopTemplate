@@ -16,25 +16,46 @@ use Exception;
 class UserClass
 {
 
-    public $role, $role_level, $role_id, $activated, $registered_date, $last_active, $first_name, $last_name, $invoice_address, $shipping_address, $no_orders, $area_code, $phone, $password, $username, $email, $id;
+    public string$role;
+    public int $role_level;
+    public int $role_id;
+    public int $activated;
+    public DateTime $registered_date;
+    public DateTime $last_active;
+    public string $first_name;
+    public string $last_name;
+    public Address $invoice_address;
+    public Address $shipping_address;
+    public int $no_orders;
+    public string $area_code;
+    public string $phone;
+    public string $password;
+    public string $username;
+    public string $email;
+    public ?int $id;
+
+    public function __construct()
+    {
+    }
 
     /**
-     * @param string $email
-     * @param string $username
-     * @param string $password
-     * @param string $phone
-     * @param string $area_code
-     * @param int $no_orders
-     * @param string $role
-     * @param int $role_level
-     * @param int $role_id
-     * @param int $activated
-     * @param string $registered_date
-     * @param string $first_name
-     * @param string $last_name
-     * @param Address $invoice_address
-     * @param Address $shipping_address
+     * @param string   $email
+     * @param string   $username
+     * @param string   $password
+     * @param string   $phone
+     * @param string   $area_code
+     * @param int      $no_orders
+     * @param string   $role
+     * @param int      $role_level
+     * @param int      $role_id
+     * @param int      $activated
+     * @param string   $registered_date
+     * @param string   $first_name
+     * @param string   $last_name
+     * @param Address  $invoice_address
+     * @param Address  $shipping_address
      * @param int|null $id
+     *
      * @return bool
      * @throws UserException
      */
@@ -262,6 +283,7 @@ class UserClass
 
     /**
      * @param int|null $id
+     *
      * @return void
      */
     public function setId(?int $id): void
