@@ -24,6 +24,7 @@ class CategoryClass
 
     public function __construct()
     {
+
     }
 
     /**
