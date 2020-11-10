@@ -10,13 +10,20 @@ namespace app\classes;
  */
 class CategoryClass
 {
-    public $name, $dash_name, $meta_description, $meta_keywords, $shortdesc, $longdesc;
-    public $visible, $main_category, $category_id, $image_id;
-    public $id;
+    public string $name;
+    public string $dash_name;
+    public string $meta_description;
+    public string $meta_keywords;
+    public string $shortdesc;
+    public string $longdesc;
+    public int $visible;
+    public int $main_category;
+    public ?int $category_id;
+    public int $image_id;
+    public ?int $id;
 
     public function __construct()
     {
-
     }
 
     /**

@@ -82,7 +82,7 @@ class CategoryController extends Controller
         $categoryDashname = $category->getDashname();
 
         $no_pages = $this->productManager->numberOfPages($category->getId());
-        $products = $this->productManager->selectAllProducts($category->getDashname(), $page - 1,);
+        $products = $this->productManager->selectAllProducts($category->getDashname(), $page - 1);
 
         $this->data = ["products" => $products, "category_dash_name" => $categoryDashname, "category_name" => $categoryName, "no_pages" => $no_pages, "page" => $page];
         $this->head['page_title'] = "Kategorie " . $categoryName;

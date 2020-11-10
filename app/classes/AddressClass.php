@@ -28,7 +28,9 @@ class AddressClass
     public ?string $ic;
     public ?int $user_id;
 
-
+    public function __construct()
+    {
+    }
     /**
      * @param string      $first_name
      * @param string      $last_name
