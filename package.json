@@ -1,7 +1,12 @@
 {
   "name": "eshopTemplate",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "nette-forms": "^3.1.0"
+  },
   "devDependencies": {
     "axios": "^0.21.0"
   }

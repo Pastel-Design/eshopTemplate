@@ -11,7 +11,7 @@ function addToCart(productCode) {
         .then(function (response) {
             let data = response["data"];
             if(data["code"]==0){
-
+                writeProduct(data["cartMessage"]);
             }
             console.log(data);
         })
@@ -21,4 +21,8 @@ function addToCart(productCode) {
         .then(function () {
             // always executed
         });
+}
+
+function writeProduct(product){
+
 }

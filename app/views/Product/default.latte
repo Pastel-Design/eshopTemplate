@@ -17,7 +17,9 @@
     <p>Dostupnost: {$product["dostupnost"]}</p>
     <p>Počet kusů na skladě: {$product["amount"]}</p>
     <p>{$product["longdesc"]}</p>
-    <img n:foreach="$product['images'] as $image" src="images/{$image}" height="250px">
+    {if $product['images'][0]}
+        <img n:foreach="$product['images'] as $image" src="images/{$image}" height="250px">
+    {/if}
     <h4>Parametry</h4>
     <ul n:if="$product['parameters']">
         <li n:foreach="$product['parameters'] as $parameter">

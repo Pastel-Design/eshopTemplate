@@ -35,19 +35,13 @@
         </div>
     </div>
     <div class="p-1 cart-container">
-        <i class="fa-shopping-cart fa fa-lg"></i>
-        {if isset($_SESSION["cart"])}
-            {$_SESSION["cart"]->totalAmount}ks {number_format($_SESSION["cart"]->totalPrice, 0, ',', " ")}Kč{else}0Kč{/if}
-        <div class="cart-products">
+        <a href="kosik">
+            <i class="fa-shopping-cart fa fa-lg"></i>
             {if isset($_SESSION["cart"])}
-                {foreach $_SESSION['cart']->products as $product}
-                    <div>
-                        <a href="product/{$product["dash_name"]}">{$product["name"]}</a>{$product["amount"]}ks {$product["totalPrice"]}Kč
-                    </div>
-                {/foreach}
-            {else}
-            {/if}
-        </div>
+                {$_SESSION["cart"]->totalAmount}ks {number_format($_SESSION["cart"]->totalPrice, 0, ',', " ")}Kč{else}0Kč{/if}
+            <div class="cart-products">
+            </div>
+        </a>
     </div>
 
 </nav>

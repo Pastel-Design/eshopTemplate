@@ -35,9 +35,6 @@ class ProductController extends Controller
      */
     public function process(array $params, array $gets = null)
     {
-        $this->head['page_title'] = "Domovská stránka";
-        $this->head['page_keywords'] = "eshop";
-        $this->head['page_description'] = "Domovská stránka eshopu Zlatá Loď";
         if (!$params) {
             Router::reroute("error/404");
         } else {
