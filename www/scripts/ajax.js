@@ -20,3 +20,11 @@ document.querySelectorAll('.cart-delete').forEach(item => {
         ajaxFunctions.cartDelete(item.getAttribute("data-product-code"))
     })
 })
+document.querySelectorAll('.delete-address').forEach(item => {
+    item.addEventListener('click', event => {
+        let type = item.getAttribute("address-type");
+        let id = item.getAttribute("address-id")
+        ajaxFunctions.addressDelete(type,id);
+        console.log("true");
+    })
+})

@@ -99,3 +99,33 @@ export function cartDelete(productCode) {
             // always executed
         });
 }
+
+function displayRemoveAddressMessage(message) {
+    let p = document.createElement("p");
+    p.classList.add("message");
+    p.innerText = message;
+    let tables = document.querySelectorAll('table');
+    for (let table of tables){
+        table.append(p);
+    }
+    setTimeout(function (){
+        window.location.reload(false);
+    },3000);
+}
+
+export function addressDelete(type, addressId) {
+    axios.get('/handle/addressRemove/' + type + '/' + addressId, {
+        params: {}
+    })
+        .then(function (response) {
+            let data = response["data"];
+            console.log(response);
+            displayRemoveAddressMessage(data["message"]);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .then(function () {
+        })
+}
+

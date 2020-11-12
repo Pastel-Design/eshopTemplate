@@ -37,7 +37,6 @@ class UserClass
     public function __construct()
     {
     }
-
     /**
      * @param string   $email
      * @param string   $username
@@ -49,7 +48,7 @@ class UserClass
      * @param int      $role_level
      * @param int      $role_id
      * @param int      $activated
-     * @param string   $registered_date
+     * @param DateTime   $registered_date
      * @param string   $first_name
      * @param string   $last_name
      * @param Address  $invoice_address
@@ -59,7 +58,7 @@ class UserClass
      * @return bool
      * @throws UserException
      */
-    public function setValues(string $email, string $username, string $password, string $phone, string $area_code, int $no_orders, string $role, int $role_level, int $role_id, int $activated, string $registered_date, string $first_name, string $last_name, Address $invoice_address, Address $shipping_address, int $id = null)
+    public function setValues(string $email, string $username, string $password, string $phone, string $area_code, int $no_orders, string $role, int $role_level, int $role_id, int $activated, DateTime $registered_date, string $first_name, string $last_name, Address $invoice_address, Address $shipping_address, int $id = null)
     {
         $this->id = $id;
         if (preg_match(RegexConfig::$email, $email) === 1) {
@@ -116,7 +115,7 @@ class UserClass
         $this->activated = $activated;
         $this->registered_date = $registered_date;
         $date = new DateTime();
-        $this->last_active = $date->format("d-m-Y H:i:s");
+        $this->last_active = $date; // ->format("d-m-Y H:i:s");
         if (preg_match(RegexConfig::$name, $first_name) === 1) {
             $this->first_name = $first_name;
         } else {
@@ -226,8 +225,9 @@ class UserClass
      */
     public function getRegistered_date(): string
     {
-        $date = new DateTime($this->registered_date);
-        return $date->format("d-m-Y");
+            $date = new DateTime($this->registered_date);
+            return $date->format("d-m-Y");
+
     }
 
     /**
