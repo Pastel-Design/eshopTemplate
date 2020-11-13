@@ -100,17 +100,26 @@ export function cartDelete(productCode) {
         });
 }
 
-function displayRemoveAddressMessage(message) {
-    let p = document.createElement("p");
-    p.classList.add("message");
-    p.innerText = message;
-    let tables = document.querySelectorAll('table');
-    for (let table of tables){
-        table.append(p);
+function displayRemoveAddressMessage(addressId,type) {
+    let addressRow = document.querySelectorAll("tr[address-type-id='"+ type+ "-" + addressId + "']")[0];
+    addressRow.remove();
+    let addressTableRows = document.querySelector("#"+type+"-table tbody").children;
+    if(addressTableRows.length===0){
+        let addressTable = document.querySelector("#"+type+"-table");
+        let addressContainer = addressTable.parentElement;
+        let message = document.createElement("h3");
+        switch (type){
+            case "shipping":
+                message.innerText="Nemáte žádné doručovací adresy";
+                break;
+            case "invoice":
+                message.innerText="Nemáte žádné fakturační adresy";
+                break;
+        }
+        addressTable.remove();
+        addressContainer.appendChild(message);
     }
-    setTimeout(function (){
-        window.location.reload(false);
-    },3000);
+
 }
 
 export function addressDelete(type, addressId) {
@@ -118,9 +127,8 @@ export function addressDelete(type, addressId) {
         params: {}
     })
         .then(function (response) {
-            let data = response["data"];
             console.log(response);
-            displayRemoveAddressMessage(data["message"]);
+            displayRemoveAddressMessage(addressId,type);
         })
         .catch(function (error) {
             console.log(error);

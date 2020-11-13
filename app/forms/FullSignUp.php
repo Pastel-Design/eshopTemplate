@@ -10,6 +10,7 @@ use app\exceptions\AddressException;
 use app\exceptions\SignException;
 use app\exceptions\UserException;
 use app\models\SignManager;
+use DateTime;
 use Exception;
 use Nette\Forms\Form;
 
@@ -132,7 +133,7 @@ final class  FullSignUp extends FormFactory
                     5,
                     5,
                     1,
-                    new \DateTime(),
+                    new DateTime(),
                     $values["firstName"],
                     $values["lastName"],
                     $this->address,

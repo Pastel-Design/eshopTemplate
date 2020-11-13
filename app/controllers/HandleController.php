@@ -29,7 +29,7 @@ class HandleController extends Controller
     /**
      * Handles ajax requests
      *
-     * @param array $params
+     * @param array      $params
      * @param array|null $gets
      *
      * @return void
@@ -166,10 +166,9 @@ class HandleController extends Controller
                         default:
                             Router::reroute("account");
                     }
-                    $this->data["message"] = "Adresa bude brzy smazána.";
                 } catch (UserException $exception) {
                     $this->addFlashMessage($exception->getMessage(), "error");
-                    $this->data["message"] = $exception->getMessage();
+                    $this->data["errorMessage"] = $exception->getMessage();
                 }
             }
         }

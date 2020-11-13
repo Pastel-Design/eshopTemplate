@@ -11,9 +11,10 @@
         {$addInvoiceAddressForm->render()}
 
         <h2>Moje fakturační adresy:</h2>
-        {if !is_null($invoiceAddresses)}
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
+        <div class="table-responsive">
+            {if !is_null($invoiceAddresses)}
+
+                <table class="table table-striped table-bordered" id="invoice-table">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">:-)</th>
@@ -31,8 +32,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr n:foreach="$invoiceAddresses as $address">
-                        <td><i class="fas fa-trash delete-address" address-type="invoice" address-id="{$address["id"]}"></i></td>
+                    <tr n:foreach="$invoiceAddresses as $address" address-type-id="invoice-{$address["id"]}">
+                        <td>
+                            <i class="fas fa-trash delete-address" address-type="invoice" address-id="{$address["id"]}"></i>
+                        </td>
                         <td>{$address["first_name"]}</td>
                         <td>{$address["last_name"]}</td>
                         <td>{$address["address1"]}</td>
@@ -47,19 +50,20 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        {else}
-            <h3>Nemáte žádné fakturační adresy</h3>
-        {/if}
+
+            {else}
+                <h3>Nemáte žádné fakturační adresy</h3>
+            {/if}
+        </div>
     </div>
     <div>
         <h1>Doručovací adresy:</h1>
         {$addShippingAddressForm->render()}
+        <div class="table-responsive">
+            <h2>Moje Doručovací adresy:</h2>
+            {if !is_null($shippingAddresses)}
 
-        <h2>Moje Doručovací adresy:</h2>
-        {if !is_null($shippingAddresses)}
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" id="shipping-table">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">:-)</th>
@@ -76,8 +80,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr n:foreach="$shippingAddresses as $address">
-                        <td><i class="fas fa-trash delete-shipping" address-type="shipping" address-id="{$address["id"]}"></i></td>
+                    <tr n:foreach="$shippingAddresses as $address" address-type-id="shipping-{$address["id"]}">
+                        <td>
+                            <i class="fas fa-trash delete-address" address-type="shipping" address-id="{$address["id"]}"></i>
+                        </td>
                         <td>{$address["first_name"]}</td>
                         <td>{$address["last_name"]}</td>
                         <td>{$address["address1"]}</td>
@@ -90,9 +96,10 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        {else}
-            <h3>Nemáte žádné doručovací adresy</h3>
-        {/if}
+
+            {else}
+                <h3>Nemáte žádné doručovací adresy</h3>
+            {/if}
+        </div>
     </div>
 {/block}
