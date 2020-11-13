@@ -16,7 +16,7 @@ use Exception;
 class UserClass
 {
 
-    public string$role;
+    public string $role;
     public int $role_level;
     public int $role_id;
     public int $activated;
