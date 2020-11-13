@@ -68,27 +68,6 @@ class AccountController extends Controller
 
                 $this->data["invoiceAddresses"] = UserManager::getUserAddresses($_SESSION["user"]->id, "invoice");
                 $this->data["shippingAddresses"] = UserManager::getUserAddresses($_SESSION["user"]->id);
-                if ((isset($params[0]) && !empty($params[0])) && (isset($params[1]) && !empty($params[1]))) {
-                    if (is_numeric($params[1])) {
-                        try {
-                            switch ($params[0]) {
-                                case "delete-shipping-address":
-                                    UserManager::deleteUserAddress($params[1], $_SESSION["user"]->id);
-                                    Router::reroute("account");
-                                    break;
-                                case "delete-invoice-address":
-                                    UserManager::deleteUserAddress($params[1], $_SESSION["user"]->id, "invoice");
-                                    Router::reroute("account");
-                                    break;
-                                default:
-                                    Router::reroute("account");
-                            }
-                        } catch (UserException $exception) {
-                            $this->addFlashMessage($exception->getMessage(), "error");
-                        }
-                    }
-                    //Router::reroute("account");
-                }
             } catch (\Exception $exception) {
                 echo "<div class='error'>{$exception->getMessage()}</div>";
             }

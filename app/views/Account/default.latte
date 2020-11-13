@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                     <tr n:foreach="$invoiceAddresses as $address">
-                        <td><a class="fas fa-trash" href="account/delete-invoice-address/{$address["id"]}"></a></td>
+                        <td><i class="fas fa-trash delete-address" address-type="invoice" address-id="{$address["id"]}"></i></td>
                         <td>{$address["first_name"]}</td>
                         <td>{$address["last_name"]}</td>
                         <td>{$address["address1"]}</td>
@@ -77,7 +77,7 @@
                     </thead>
                     <tbody>
                     <tr n:foreach="$shippingAddresses as $address">
-                        <td><a class="fas fa-trash" href="account/delete-shipping-address/{$address["id"]}"></a></td>
+                        <td><i class="fas fa-trash delete-shipping" address-type="shipping" address-id="{$address["id"]}"></i></td>
                         <td>{$address["first_name"]}</td>
                         <td>{$address["last_name"]}</td>
                         <td>{$address["address1"]}</td>

@@ -132,7 +132,7 @@ final class  FullSignUp extends FormFactory
                     5,
                     5,
                     1,
-                    $this->user->getRegistered_date(),
+                    new \DateTime(),
                     $values["firstName"],
                     $values["lastName"],
                     $this->address,
