@@ -31,7 +31,7 @@ if(isset($_SESSION["cart"])){
 }else{
     CartManager::createCart();
 }
-//Vytvoření flashes v session
+
 try {
 //připojení k db
     DbManager::connect(DbConfig::$host, DbConfig::$username, DbConfig::$pass, DbConfig::$database);

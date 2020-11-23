@@ -1,0 +1,128 @@
+Date : 2020-11-17 21:58:55
+Directory : d:\wamp\www\eshopTemplate
+Total : 73 files,  5202 codes, 1378 comments, 648 blanks, all 7228 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| PHP        |         41 |      2,694 |      1,095 |        416 |      4,205 |
+| JSON       |          4 |      1,270 |          0 |          3 |      1,273 |
+| SQL        |          1 |        618 |        274 |        178 |      1,070 |
+| Latte      |         21 |        437 |          0 |         25 |        462 |
+| JavaScript |          3 |        153 |          4 |         14 |        171 |
+| YAML       |          1 |         24 |          4 |         10 |         38 |
+| SCSS       |          1 |          3 |          0 |          0 |          3 |
+| CSS        |          1 |          3 |          1 |          2 |          6 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                   | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                      |         73 |      5,202 |      1,378 |        648 |      7,228 |
+| .github                                                                |          1 |         24 |          4 |         10 |         38 |
+| .github\workflows                                                      |          1 |         24 |          4 |         10 |         38 |
+| Database                                                               |          1 |        618 |        274 |        178 |      1,070 |
+| app                                                                    |         61 |      3,099 |      1,088 |        431 |      4,618 |
+| app\classes                                                            |          5 |        516 |        203 |         73 |        792 |
+| app\config                                                             |          6 |         65 |         30 |          9 |        104 |
+| app\controllers                                                        |         10 |        492 |        254 |         97 |        843 |
+| app\exceptions                                                         |          3 |         18 |         15 |         11 |         44 |
+| app\forms                                                              |          6 |        410 |        102 |         83 |        595 |
+| app\models                                                             |          8 |      1,073 |        457 |        110 |      1,640 |
+| app\router                                                             |          1 |         61 |         27 |         15 |        103 |
+| app\views                                                              |         21 |        437 |          0 |         25 |        462 |
+| app\views\Account                                                      |          1 |         98 |          0 |          7 |        105 |
+| app\views\Category                                                     |          2 |        130 |          0 |          1 |        131 |
+| app\views\Error                                                        |          6 |         30 |          0 |          6 |         36 |
+| app\views\Home                                                         |          1 |          7 |          0 |          0 |          7 |
+| app\views\Kosik                                                        |          1 |         21 |          0 |          0 |         21 |
+| app\views\Product                                                      |          1 |         29 |          0 |          1 |         30 |
+| app\views\Sandbox                                                      |          1 |          4 |          0 |          0 |          4 |
+| app\views\Sign                                                         |          2 |          8 |          0 |          0 |          8 |
+| app\zasilkovna                                                         |          1 |         27 |          0 |          8 |         35 |
+| www                                                                    |          6 |        191 |         12 |         26 |        229 |
+| www\scripts                                                            |          3 |        153 |          4 |         14 |        171 |
+| www\styles                                                             |          2 |          6 |          1 |          2 |          9 |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                               | language   | code       | comment    | blank      | total      |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| d:\wamp\www\eshopTemplate\.github\workflows\php.yml                    | YAML       |         24 |          4 |         10 |         38 |
+| d:\wamp\www\eshopTemplate\Database\exported_database.sql               | SQL        |        618 |        274 |        178 |      1,070 |
+| d:\wamp\www\eshopTemplate\app\classes\AddressClass.php                 | PHP        |        192 |         65 |         19 |        276 |
+| d:\wamp\www\eshopTemplate\app\classes\CartClass.php                    | PHP        |         19 |          5 |          6 |         30 |
+| d:\wamp\www\eshopTemplate\app\classes\CategoryClass.php                | PHP        |         63 |         38 |         16 |        117 |
+| d:\wamp\www\eshopTemplate\app\classes\ProductClass.php                 | PHP        |         48 |          5 |          5 |         58 |
+| d:\wamp\www\eshopTemplate\app\classes\UserClass.php                    | PHP        |        194 |         90 |         27 |        311 |
+| d:\wamp\www\eshopTemplate\app\config\CartConfig.php                    | PHP        |          6 |          5 |          1 |         12 |
+| d:\wamp\www\eshopTemplate\app\config\DbConfig.php                      | PHP        |          9 |          5 |          1 |         15 |
+| d:\wamp\www\eshopTemplate\app\config\FileUploadConfig.php              | PHP        |         13 |          5 |          2 |         20 |
+| d:\wamp\www\eshopTemplate\app\config\ImageOptimizerConfig.php          | PHP        |          9 |          5 |          2 |         16 |
+| d:\wamp\www\eshopTemplate\app\config\RegexConfig.php                   | PHP        |         20 |          5 |          1 |         26 |
+| d:\wamp\www\eshopTemplate\app\config\ZasilkovnaConfig.php              | PHP        |          8 |          5 |          2 |         15 |
+| d:\wamp\www\eshopTemplate\app\controllers\AccountController.php        | PHP        |         48 |         19 |         14 |         81 |
+| d:\wamp\www\eshopTemplate\app\controllers\CategoryController.php       | PHP        |         55 |         26 |         12 |         93 |
+| d:\wamp\www\eshopTemplate\app\controllers\Controller.php               | PHP        |         77 |         59 |         19 |        155 |
+| d:\wamp\www\eshopTemplate\app\controllers\ErrorController.php          | PHP        |         23 |         13 |          4 |         40 |
+| d:\wamp\www\eshopTemplate\app\controllers\HandleController.php         | PHP        |        124 |         41 |         12 |        177 |
+| d:\wamp\www\eshopTemplate\app\controllers\HomeController.php           | PHP        |         16 |         13 |          4 |         33 |
+| d:\wamp\www\eshopTemplate\app\controllers\KosikController.php          | PHP        |         17 |         14 |          6 |         37 |
+| d:\wamp\www\eshopTemplate\app\controllers\ProductController.php        | PHP        |         34 |         23 |          7 |         64 |
+| d:\wamp\www\eshopTemplate\app\controllers\SandboxController.php        | PHP        |         36 |         11 |          7 |         54 |
+| d:\wamp\www\eshopTemplate\app\controllers\SignController.php           | PHP        |         62 |         35 |         12 |        109 |
+| d:\wamp\www\eshopTemplate\app\exceptions\AddressException.php          | PHP        |          6 |          5 |          4 |         15 |
+| d:\wamp\www\eshopTemplate\app\exceptions\SignException.php             | PHP        |          6 |          5 |          3 |         14 |
+| d:\wamp\www\eshopTemplate\app\exceptions\UserException.php             | PHP        |          6 |          5 |          4 |         15 |
+| d:\wamp\www\eshopTemplate\app\forms\ChangePassword.php                 | PHP        |         42 |         16 |         11 |         69 |
+| d:\wamp\www\eshopTemplate\app\forms\FormFactory.php                    | PHP        |         47 |         12 |         13 |         72 |
+| d:\wamp\www\eshopTemplate\app\forms\FullSignIn.php                     | PHP        |         34 |         16 |         11 |         61 |
+| d:\wamp\www\eshopTemplate\app\forms\FullSignUp.php                     | PHP        |        115 |         23 |         18 |        156 |
+| d:\wamp\www\eshopTemplate\app\forms\InvoiceAddress.php                 | PHP        |         72 |         17 |         14 |        103 |
+| d:\wamp\www\eshopTemplate\app\forms\ShippingAddress.php                | PHP        |        100 |         18 |         16 |        134 |
+| d:\wamp\www\eshopTemplate\app\models\CartManager.php                   | PHP        |        152 |         53 |         18 |        223 |
+| d:\wamp\www\eshopTemplate\app\models\CategoryManager.php               | PHP        |         56 |         45 |         12 |        113 |
+| d:\wamp\www\eshopTemplate\app\models\DbManager.php                     | PHP        |        103 |         74 |         14 |        191 |
+| d:\wamp\www\eshopTemplate\app\models\FileManager.php                   | PHP        |        312 |         75 |         12 |        399 |
+| d:\wamp\www\eshopTemplate\app\models\ImageManager.php                  | PHP        |         59 |         22 |          9 |         90 |
+| d:\wamp\www\eshopTemplate\app\models\ProductManager.php                | PHP        |        188 |         71 |         22 |        281 |
+| d:\wamp\www\eshopTemplate\app\models\SignManager.php                   | PHP        |         90 |         59 |         12 |        161 |
+| d:\wamp\www\eshopTemplate\app\models\UserManager.php                   | PHP        |        113 |         58 |         11 |        182 |
+| d:\wamp\www\eshopTemplate\app\router\Router.php                        | PHP        |         61 |         27 |         15 |        103 |
+| d:\wamp\www\eshopTemplate\app\views\@layout.latte                      | Latte      |         16 |          0 |          4 |         20 |
+| d:\wamp\www\eshopTemplate\app\views\@layout_plain.latte                | Latte      |          9 |          0 |          3 |         12 |
+| d:\wamp\www\eshopTemplate\app\views\Account\default.latte              | Latte      |         98 |          0 |          7 |        105 |
+| d:\wamp\www\eshopTemplate\app\views\Category\category_pagination.latte | Latte      |        110 |          0 |          0 |        110 |
+| d:\wamp\www\eshopTemplate\app\views\Category\default.latte             | Latte      |         20 |          0 |          1 |         21 |
+| d:\wamp\www\eshopTemplate\app\views\Error\400.latte                    | Latte      |          5 |          0 |          1 |          6 |
+| d:\wamp\www\eshopTemplate\app\views\Error\401.latte                    | Latte      |          5 |          0 |          1 |          6 |
+| d:\wamp\www\eshopTemplate\app\views\Error\404.latte                    | Latte      |          5 |          0 |          1 |          6 |
+| d:\wamp\www\eshopTemplate\app\views\Error\405.latte                    | Latte      |          5 |          0 |          1 |          6 |
+| d:\wamp\www\eshopTemplate\app\views\Error\410.latte                    | Latte      |          5 |          0 |          1 |          6 |
+| d:\wamp\www\eshopTemplate\app\views\Error\500.latte                    | Latte      |          5 |          0 |          1 |          6 |
+| d:\wamp\www\eshopTemplate\app\views\Home\default.latte                 | Latte      |          7 |          0 |          0 |          7 |
+| d:\wamp\www\eshopTemplate\app\views\Kosik\default.latte                | Latte      |         21 |          0 |          0 |         21 |
+| d:\wamp\www\eshopTemplate\app\views\Product\default.latte              | Latte      |         29 |          0 |          1 |         30 |
+| d:\wamp\www\eshopTemplate\app\views\Sandbox\default.latte              | Latte      |          4 |          0 |          0 |          4 |
+| d:\wamp\www\eshopTemplate\app\views\Sign\In.latte                      | Latte      |          4 |          0 |          0 |          4 |
+| d:\wamp\www\eshopTemplate\app\views\Sign\Up.latte                      | Latte      |          4 |          0 |          0 |          4 |
+| d:\wamp\www\eshopTemplate\app\views\footer.latte                       | Latte      |          3 |          0 |          1 |          4 |
+| d:\wamp\www\eshopTemplate\app\views\head.latte                         | Latte      |         20 |          0 |          0 |         20 |
+| d:\wamp\www\eshopTemplate\app\views\nav.latte                          | Latte      |         50 |          0 |          2 |         52 |
+| d:\wamp\www\eshopTemplate\app\views\scripts.latte                      | Latte      |         12 |          0 |          0 |         12 |
+| d:\wamp\www\eshopTemplate\app\zasilkovna\uploadPacket.php              | PHP        |         27 |          0 |          8 |         35 |
+| d:\wamp\www\eshopTemplate\composer.json                                | JSON       |         15 |          0 |          0 |         15 |
+| d:\wamp\www\eshopTemplate\composer.lock                                | JSON       |      1,199 |          0 |          1 |      1,200 |
+| d:\wamp\www\eshopTemplate\package-lock.json                            | JSON       |         43 |          0 |          1 |         44 |
+| d:\wamp\www\eshopTemplate\package.json                                 | JSON       |         13 |          0 |          1 |         14 |
+| d:\wamp\www\eshopTemplate\www\index.php                                | PHP        |         32 |          7 |         10 |         49 |
+| d:\wamp\www\eshopTemplate\www\scripts\ajax.js                          | JavaScript |         29 |          0 |          1 |         30 |
+| d:\wamp\www\eshopTemplate\www\scripts\ajaxFunctions.js                 | JavaScript |        124 |          4 |         12 |        140 |
+| d:\wamp\www\eshopTemplate\www\scripts\script.js                        | JavaScript |          0 |          0 |          1 |          1 |
+| d:\wamp\www\eshopTemplate\www\styles\style.css                         | CSS        |          3 |          1 |          2 |          6 |
+| d:\wamp\www\eshopTemplate\www\styles\style.scss                        | SCSS       |          3 |          0 |          0 |          3 |
+| Total                                                                  |            |      5,202 |      1,378 |        648 |      7,228 |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+

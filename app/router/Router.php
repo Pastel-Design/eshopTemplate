@@ -23,8 +23,8 @@ final class Router
 
         $parsedParams = $this->parseURL($params[0]);
         /**
-         * @var TYPE_NAME $parsedGET
-         * @var TYPE_NAME $parsedURL
+         * @var array $parsedGET
+         * @var array $parsedURL
          */
         extract($parsedParams);
 
@@ -44,7 +44,7 @@ final class Router
         }
         $this->controller->controllerName = $controllerName;
         $this->controller->process($parsedURL, $parsedGET);
-        $this->controller->writeView($controllerName);
+        $this->controller->writeView();
     }
 
     /**

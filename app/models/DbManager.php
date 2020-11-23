@@ -82,8 +82,7 @@ class DbManager
             $result->setFetchMode(PDO::FETCH_CLASS, $class);
             return $result->fetch();
         } catch (PDOException $excepiton) {
-            var_dump($excepiton);
-            //Router::reroute("error/500");
+            Router::reroute("error/500");
         }
     }
 
