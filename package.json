@@ -1,5 +1,8 @@
 {
-  "name": "eshopTemplate",
+  "name": "eshop-template",
+  "description": "Template for Pastel Designs eshop",
+  "repository": "https://github.com/Pastel-Design/eshopTemplate",
+  "license": "proprietary",
   "version": "1.0.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
