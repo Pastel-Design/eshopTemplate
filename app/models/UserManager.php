@@ -7,7 +7,6 @@ use app\classes\AddressClass;
 use app\exceptions\UserException;
 use app\models\DbManager as DbManager;
 use mysql_xdevapi\Exception as Exception;
-use stdClass;
 
 /**
  * Manager UserManager
@@ -39,7 +38,7 @@ class UserManager
     /**
      * Changes users password
      *
-     * @param int    $id
+     * @param int $id
      * @param string $oldPassword
      * @param string $newPassword
      *
@@ -68,8 +67,8 @@ class UserManager
      *
      * @param AddressClass $address
      *                           Address values
-     * @param int          $user_id
-     * @param string       $type <p>default: <i>shipping</i></p>
+     * @param int $user_id
+     * @param string $type <p>default: <i>shipping</i></p>
      *
      * @throws UserException
      * @throws Exception
@@ -125,7 +124,7 @@ class UserManager
     /**
      * Returns users addresses, based on type
      *
-     * @param int    $user_id
+     * @param int $user_id
      * @param string $type
      * Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise throws Exception
      *
@@ -150,8 +149,8 @@ class UserManager
     /**
      * Deletes users address
      *
-     * @param int    $address_id ID adresy
-     * @param int    $user_id
+     * @param int $address_id ID adresy
+     * @param int $user_id
      *                           Users object from Session
      * @param string $type
      *                           Parameter $type <b>must</b> have value <i>shipping</i> or <i>invoice</i> otherwise
@@ -175,6 +174,27 @@ class UserManager
             }
         } else {
             throw new Exception("Parametr \$type funkce deleteUserAddress() musí být: 'shipping'||'invoice' a ne '{$type}'");
+        }
+    }
+
+    /**
+     * Selects user orders and order statuses
+     * @param int $user_id user id from SESSION
+     * @return array
+     * @throws UserException
+     */
+    public static function getUserOrders(int $user_id): array
+    {
+        $user_select = "SELECT * FROM user WHERE id = ?";
+        if (DbManager::requestAffect($user_select, [$user_id]) == 1) {
+            $orders_select = "SELECT * FROM user_order, order_status WHERE user_order.user_id = ? AND user_order.order_status_id = order_status.id";
+            if (DbManager::requestAffect($orders_select, [$user_id]) == 0) {
+                return [];
+            } else {
+                return DbManager::requestMultiple($orders_select, [$user_id]);
+            }
+        } else {
+            throw new UserException("Tento uživatel neexistuje.");
         }
     }
 

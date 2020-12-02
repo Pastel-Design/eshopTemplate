@@ -68,6 +68,7 @@ class AccountController extends Controller
 
                 $this->data["invoiceAddresses"] = UserManager::getUserAddresses($_SESSION["user"]->id, "invoice");
                 $this->data["shippingAddresses"] = UserManager::getUserAddresses($_SESSION["user"]->id);
+                $this->data["orders"] = UserManager::getUserOrders($_SESSION["user"]->id);
             } catch (\Exception $exception) {
                 echo "<div class='error'>{$exception->getMessage()}</div>";
             }

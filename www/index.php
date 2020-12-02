@@ -16,7 +16,9 @@ require("../vendor/autoload.php");
  */
 function autoloadFunction($class)
 {
-    require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
+    if(file_exists("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php")){
+        require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
+    }
 }
 
 
