@@ -16,13 +16,11 @@ require("../vendor/autoload.php");
  */
 function autoloadFunction($class)
 {
-    if(file_exists("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php")){
-        require("../" . preg_replace("/[\\ ]+/", "/", $class) . ".php");
+    $classname="../" . preg_replace("/[\\ ]+/", "/", $class) . ".php";
+    if (is_readable($classname)) {
+        require($classname);
     }
 }
-
-
-
 //registrace funkce pro její použití jako php autoload funkce
 spl_autoload_register("autoloadFunction");
 session_start();

@@ -28,7 +28,7 @@ class CartManager
      */
     public static function createCart()
     {
-        $user_id = (isset($_SESSION["user"]->user_id) ? $_SESSION["user"]->user_id : null);
+        $user_id = (isset($_SESSION["user"]->id) ? $_SESSION["user"]->id : null);
         $_SESSION["cart"] = new Cart($user_id, 0, 0, new DateTime(), []);
     }
 
@@ -102,7 +102,7 @@ class CartManager
     public static function selectCartFromDatabase()
     {
         $cartInfo = DbManager::requestSingle("SELECT * FROM shopping_cart WHERE user_id = ?", [$_SESSION["user"]->id]);
-        $products = DbManager::requestMultiple("SELECT * FROM product_has_shopping_cart WHERE shopping_cart_id = ?", [$cartInfo["id"]]);
+        $products = DbManager::requestMultiple("SELECT * FROM product_has_shopping_cart WHERE shopping_cart_id = ?", [$_SESSION["user"]->id]);
         $newProducts = array();
         foreach ($products as $product) {
             $amount = $product["amount"];
@@ -149,6 +149,8 @@ class CartManager
             $updated = new DateTime($updated);
             $now = new DateTime();
             if ($updated->diff($now)->days > CartConfig::$cartExpirationDays) {
+                var_dump("ff");
+                DbManager::requestAffect("DELETE FROM product_has_shopping_cart WHERE shopping_cart_id = ?", [$_SESSION["user"]->id]);
                 DbManager::requestAffect("DELETE FROM shopping_cart WHERE user_id = ?", [$_SESSION["user"]->id]);
                 return false;
             } else {
